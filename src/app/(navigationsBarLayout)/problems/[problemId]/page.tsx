@@ -22,7 +22,7 @@ const MOCK_DATA: IProblemIdResponse = {
 };
 export default function ProblemPage() {
   return (
-    <main className="flex h-full">
+    <main className="flex pt-20 h-full">
       <ProblemSection problem={MOCK_DATA.result} />
       <div className="h-full w-[1px] bg-white" />
       <section className="flex flex-col flex-1">

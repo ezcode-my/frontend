@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="w-full h-100dvh">
+    <div className="w-full h-full">
       <NavigationBar />
       <div className="w-full h-full">{children}</div>
     </div>
