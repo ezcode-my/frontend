@@ -6,7 +6,7 @@ import { API_URL } from '@/api/constants/api.constants';
 import connectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
 
 //문제 제출하기
-export const submitAnswer = async (
+export const submitSourceCodeData = async (
   problemId: ProblemId,
   accessToken: string,
   submitData: IProblemRequestData

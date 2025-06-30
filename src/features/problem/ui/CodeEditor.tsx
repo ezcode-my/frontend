@@ -2,34 +2,39 @@
 
 import CodeMirror from '@uiw/react-codemirror';
 import { useState } from 'react';
-import {
-  CODEMIRROR_EXTENSIONS,
-  CodeMirrorBasicSetup,
-} from '../../../shared/lib/codemirror/codeMirror.setup';
 import LanguageSelector from './LanguageSelector';
-import { INITIAL_LANG, INITIAL_VALUE } from '../../../shared/lib/codemirror/codeMirror.initialDoc';
+import { CODEMIRROR_EXTENSIONS, CodeMirrorBasicSetup } from '@/shared/lib/codemirror';
+import {
+  ICodeEditorLanguageOption,
+  INITIAL_LANG,
+  INITIAL_VALUE,
+} from '@/shared/lib/codemirror/codeMirror.Docs';
 
-export default function CodeEditor() {
+interface ICodeEditorProps {
+  onChangeSourceCodeData: (key: string, value: string | number) => void;
+}
+
+export default function CodeEditor({ onChangeSourceCodeData }: ICodeEditorProps) {
   const [currentLanguage, setCurrentLanguage] = useState<string>(INITIAL_LANG);
-  const [value, setValue] = useState(
-    INITIAL_VALUE[currentLanguage as keyof typeof INITIAL_VALUE] || ''
-  );
-
-  const onChange = (value: string) => {
-    setValue(value);
-  };
 
   return (
     <section className="flex-1 h-full">
       <LanguageSelector
         currentLanguage={currentLanguage}
-        onSelect={(value: string) => setCurrentLanguage(value)}
+        onSelect={(option: ICodeEditorLanguageOption) => {
+          setCurrentLanguage(option.value);
+          onChangeSourceCodeData('languageId', option.id);
+          onChangeSourceCodeData(
+            'sourceCode',
+            INITIAL_VALUE[option.value as keyof typeof INITIAL_VALUE]
+          );
+        }}
       />
       <CodeMirror
         basicSetup={CodeMirrorBasicSetup}
-        value={value}
+        value={INITIAL_VALUE[currentLanguage as keyof typeof INITIAL_VALUE]}
         theme={'dark'}
-        onChange={onChange}
+        onChange={(value) => onChangeSourceCodeData('sourceCode', value)}
         extensions={[CODEMIRROR_EXTENSIONS[currentLanguage]]}
         aria-autocomplete="none"
         autoCapitalize="off"

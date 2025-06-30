@@ -1,24 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { submitAnswer } from '../lib/submitAnswer';
+import { submitSourceCodeData } from '../lib/submitSourceCodeData';
 import ResolvingResult from './ResolvingResult';
+import { ICodeEditorSourceCodeData } from '@/shared/lib/codemirror/codeMirror.Docs';
 
 interface TerminalOutputProps {
   problemId: string;
   token: string;
+  sourceCodeData: ICodeEditorSourceCodeData;
 }
 
-export default function TerminalOutput({ problemId, token }: TerminalOutputProps) {
+export default function TerminalOutput({ problemId, token, sourceCodeData }: TerminalOutputProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const testData = {
-    languageId: 2, //파이썬
-    sourceCode: 'print("Hello World");',
-  };
 
-  const handleSubmit = async () => {
+  const handleSubmitSourceCodeData = async () => {
     try {
-      await submitAnswer(problemId, token, testData);
+      await submitSourceCodeData(problemId, token, sourceCodeData);
       setIsSubmitted(true);
     } catch (error) {
       console.error('제출 실패:', error);
@@ -28,7 +26,7 @@ export default function TerminalOutput({ problemId, token }: TerminalOutputProps
   return (
     <section className="flex-1 h-full">
       <div>
-        <button onClick={handleSubmit}>제출</button>
+        <button onClick={handleSubmitSourceCodeData}>제출</button>
       </div>
       <div>
         <div>결과창</div>

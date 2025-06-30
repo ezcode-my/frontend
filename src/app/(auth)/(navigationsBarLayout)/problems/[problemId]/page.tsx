@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { CodeEditor, ProblemSection, TerminalOutput } from '@/features/problem';
-import { getProblem } from '@/features/problem/actions/problem.actions';
+import { getProblem, ProblemSection, ProblemWorksSection } from '@/features/problem';
 
 interface IProblemPageProps {
   params: Promise<{ problemId: string }>;
@@ -29,11 +28,7 @@ export default async function ProblemPage({ params }: IProblemPageProps) {
         <ProblemSection problem={result} />
       </div>
       <div className="h-full w-[1px] bg-white" />
-      <section className="flex flex-col flex-1">
-        <CodeEditor />
-        <div className="h-[1px] w-full bg-white" />
-        <TerminalOutput problemId={problemId} token={token} />
-      </section>
+      <ProblemWorksSection problemId={problemId} token={token} />
     </main>
   );
 }

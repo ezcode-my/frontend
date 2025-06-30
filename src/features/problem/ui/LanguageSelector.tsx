@@ -9,28 +9,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  ICodeEditorLanguageOption,
+  LANGUAGE_SELECTOR_OPTIONS,
+} from '@/shared/lib/codemirror/codeMirror.Docs';
 
-export default function LanguageSelector({
-  currentLanguage,
-  onSelect,
-}: {
+interface ILanguageSelector {
   currentLanguage: string;
-  onSelect: (value: string) => void;
-}) {
-  const handleChangeCurrentLanguage = (value: string) => {
-    onSelect(value);
-  };
+  onSelect: (option: ICodeEditorLanguageOption) => void;
+}
 
+export default function LanguageSelector({ currentLanguage, onSelect }: ILanguageSelector) {
   return (
-    <Select onValueChange={handleChangeCurrentLanguage}>
+    <Select>
       <SelectTrigger>
         <SelectValue placeholder={currentLanguage}></SelectValue>
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="python">python</SelectItem>
-          <SelectItem value="c++">c++</SelectItem>
-          <SelectItem value="java">java</SelectItem>
+          {LANGUAGE_SELECTOR_OPTIONS.map((option) => (
+            <SelectItem key={option.id} value={option.value} onClick={() => onSelect(option)}>
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
