@@ -2,13 +2,13 @@
 
 import CodeMirror from '@uiw/react-codemirror';
 import { useState } from 'react';
-import LanguageSelector from './LanguageSelector';
 import { CODEMIRROR_EXTENSIONS, CodeMirrorBasicSetup } from '@/shared/lib/codemirror';
 import {
   ICodeEditorLanguageOption,
   INITIAL_LANG,
   INITIAL_VALUE,
 } from '@/shared/lib/codemirror/codeMirror.Docs';
+import { LanguageSelector } from '@/shared';
 
 interface ICodeEditorProps {
   onChangeSourceCodeData: (key: string, value: string | number) => void;

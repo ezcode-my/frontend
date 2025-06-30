@@ -6,9 +6,11 @@ import { BASE_URL } from '@/constants/env';
 import { sharedStompRef } from '@/shared/lib/stomp/sharedStompRef';
 
 export default function connectProblemWebSocket(accessToken: string, sessionKey: string) {
-  if (sharedStompRef.current || !accessToken) {
-    console.log('already stomp connected');
-    return sharedStompRef;
+  const problemStompRef = sharedStompRef;
+
+  if (problemStompRef.current || !accessToken) {
+    console.log('already problem stomp connected');
+    return problemStompRef;
   }
   const socket = new SockJS(`${BASE_URL}/ws?token=${encodeURIComponent(accessToken)}`);
 
@@ -33,6 +35,6 @@ export default function connectProblemWebSocket(accessToken: string, sessionKey:
     });
   };
 
-  sharedStompRef.current = client;
+  problemStompRef.current = client;
   client.activate();
 }
