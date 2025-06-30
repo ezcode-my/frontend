@@ -22,3 +22,5 @@ export interface IProblemIdResponse {
 }
 
 export type ProblemId = string;
+
+export type CodeEditorLanguageType = 'Python' | 'Java' | 'C' | 'Cpp';
