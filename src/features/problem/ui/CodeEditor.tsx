@@ -2,9 +2,12 @@
 
 import CodeMirror from '@uiw/react-codemirror';
 import { useState } from 'react';
-import { CODEMIRROR_EXTENSIONS, CodeMirrorBasicSetup } from '../lib/codeMirror.setup';
+import {
+  CODEMIRROR_EXTENSIONS,
+  CodeMirrorBasicSetup,
+} from '../../../shared/lib/codemirror/codeMirror.setup';
 import LanguageSelector from './LanguageSelector';
-import { INITIAL_LANG, INITIAL_VALUE } from '../lib/codeMirror.initialDoc';
+import { INITIAL_LANG, INITIAL_VALUE } from '../../../shared/lib/codemirror/codeMirror.initialDoc';
 
 export default function CodeEditor() {
   const [currentLanguage, setCurrentLanguage] = useState<string>(INITIAL_LANG);
