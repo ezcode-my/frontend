@@ -32,16 +32,16 @@ const buildUrl = (endpoint: string, params?: Record<string, string>): string => 
 const defaultConfig: Partial<RequestConfig> = {
   credentials: 'include',
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 };
 const refreshToken = async (refreshToken: string) => {
   try {
     const response = await fetch(`${BASE_URL}/api${API_URL.AUTH.REFRESH}`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${refreshToken}`
-      }
+        Authorization: `Bearer ${refreshToken}`,
+      },
     });
 
     const data = await response.json();
@@ -53,7 +53,10 @@ const refreshToken = async (refreshToken: string) => {
   }
 };
 
-const request = async <T>(endpoint: string, config: RequestConfig & { method: string }): Promise<ApiResponse<T>> => {
+const request = async <T>(
+  endpoint: string,
+  config: RequestConfig & { method: string }
+): Promise<ApiResponse<T>> => {
   const url = buildUrl(endpoint, config?.params);
 
   try {
@@ -90,7 +93,6 @@ const request = async <T>(endpoint: string, config: RequestConfig & { method: st
 };
 
 const ApiHelper = {
-
   /**
    * GET 요청
    * @template T 응답 데이터의 타입
