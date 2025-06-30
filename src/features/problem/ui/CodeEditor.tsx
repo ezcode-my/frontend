@@ -1,10 +1,38 @@
+'use client';
+
+import CodeMirror from '@uiw/react-codemirror';
+import { useState } from 'react';
+import { CODEMIRROR_EXTENSIONS, CodeMirrorBasicSetup } from '../lib/codeMirror.setup';
+import LanguageSelector from './LanguageSelector';
+import { INITIAL_LANG, INITIAL_VALUE } from '../lib/codeMirror.initialDoc';
+
 export default function CodeEditor() {
-  //npm install @uiw/react-codemirror 예정
+  const [currentLanguage, setCurrentLanguage] = useState<string>(INITIAL_LANG);
+  const [value, setValue] = useState(
+    INITIAL_VALUE[currentLanguage as keyof typeof INITIAL_VALUE] || ''
+  );
+
+  const onChange = (value: string) => {
+    setValue(value);
+  };
 
   return (
     <section className="flex-1 h-full">
-      <div>언어선택 드롭다운</div>
-      <div>여기는 코드 작성하는 에디터</div>
+      <LanguageSelector
+        currentLanguage={currentLanguage}
+        onSelect={(value: string) => setCurrentLanguage(value)}
+      />
+      <CodeMirror
+        basicSetup={CodeMirrorBasicSetup}
+        value={value}
+        theme={'dark'}
+        onChange={onChange}
+        extensions={[CODEMIRROR_EXTENSIONS[currentLanguage]]}
+        aria-autocomplete="none"
+        autoCapitalize="off"
+        height="100%"
+        className="h-[450px] overflow-scroll "
+      />
     </section>
   );
 }
