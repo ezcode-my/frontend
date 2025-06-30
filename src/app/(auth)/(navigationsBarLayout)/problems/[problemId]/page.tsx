@@ -1,29 +1,31 @@
-import { CodeEditor, IProblemIdResponse, ProblemSection, TerminalOutput } from '@/features/problem';
+import { Button } from '@/components/ui/button';
+import { CodeEditor, ProblemSection, TerminalOutput } from '@/features/problem';
+import { getProblem } from '@/features/problem/actions/getProblem';
 
-const MOCK_DATA: IProblemIdResponse = {
-  success: true,
-  status: 200,
-  message: '정상적으로 수행되었습니다.',
-  result: {
-    id: 303,
-    creator: 'ㅇ1 희망자',
-    categories: ['조건문'],
-    title: '문제 300',
-    description:
-      '예외 처리를 꼼꼼히 해야 정답을 받을 수 있습니다. 입력값의 범위를 정확히 분석해야 합니다. 효율적인 알고리즘이 필요한 문제입니다. 자료구조의 이해가 필요한 문제입니다. 수학적 사고가 필요한 문제입니다. 시간 복잡도와 공간 복잡도 모두 중요합니다.',
-    score: 10,
-    difficulty: 'LV1',
-    memoryLimit: 256,
-    timeLimit: 2,
-    reference: 'DOVELET',
-    createdAt: '2025-06-26T21:54:17.569809',
-    modifiedAt: '2025-06-26T21:54:17.569809',
-  },
-};
-export default function ProblemPage() {
+interface IProblemPageProps {
+  params: Promise<{ problemId: string }>;
+}
+export default async function ProblemPage({ params }: IProblemPageProps) {
+  const problemId = (await params).problemId;
+
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJnYnRteGxmQG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jyg7ISg7ZalIiwibmlja25hbWUiOiLjhYfjhYXjhY4iLCJ1c2VyUm9sZSI6IkFETUlOIiwidGllciI6Ik5FV0JJRSIsImV4cCI6MTc1MTg4MDIyMiwiaWF0IjoxNzUxMjc1NDIyfQ.Ud6bxBDvnGpOQeg48A86sBhvjqIUBvwGuL7HQJNII8s';
+
+  const result = await getProblem(problemId, token);
+
+  if (!result) {
+    console.error('문제를 불러오는 데 실패했습니다.');
+    return <div>문제를 불러오는 데 실패했습니다.</div>;
+  }
   return (
     <main className="flex pt-20 h-full">
-      <ProblemSection problem={MOCK_DATA.result} />
+      <div className="flex-1 flex flex-col gap-[29px]">
+        <div className="flex gap-4">
+          <Button>문제</Button>
+          <Button>토론</Button>
+        </div>
+        <ProblemSection problem={result} />
+      </div>
       <div className="h-full w-[1px] bg-white" />
       <section className="flex flex-col flex-1">
         <CodeEditor />

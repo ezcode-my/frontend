@@ -1,10 +1,13 @@
-import { IProblemIdResponse } from '../types/problem.type';
+import { IProblemResult } from '../types/problem.type';
 
-export default function ProblemSection({ problem }: { problem: IProblemIdResponse['result'] }) {
+interface IProblemSectionProps {
+  problem: IProblemResult;
+}
+export default function ProblemSection({ problem }: IProblemSectionProps) {
   const { title, difficulty, categories, description } = problem;
 
   return (
-    <section className="flex-1">
+    <section>
       <div>
         <h1>
           <span>{title}</span>난이도{difficulty}
