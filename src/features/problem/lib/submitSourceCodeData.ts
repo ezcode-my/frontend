@@ -3,7 +3,7 @@ import { IProblemResponseData } from '../types/problem.response.data.type';
 import { ProblemId } from '../types/problem.type';
 import { IProblemRequestData } from '../types/request.data.type';
 import { API_URL } from '@/api/constants/api.constants';
-import connectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
+import useConnectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
 
 //문제 제출하기
 export const submitSourceCodeData = async (
@@ -25,7 +25,7 @@ export const submitSourceCodeData = async (
       throw new Error(`문제 제출 실패: ${res.data.message}`);
     }
     const sessionKey = Array.isArray(res.data.result) ? res.data.result[0] : undefined;
-    connectProblemWebSocket(accessToken, sessionKey);
+    useConnectProblemWebSocket(accessToken, sessionKey);
   } catch (error) {
     console.error(error);
   }
