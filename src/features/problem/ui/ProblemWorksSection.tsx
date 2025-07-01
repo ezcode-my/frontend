@@ -8,10 +8,9 @@ import useConnectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
 
 interface IProblemWorksSectionProps {
   problemId: string;
-  token: string;
 }
 
-export default function ProblemWorksSection({ problemId, token }: IProblemWorksSectionProps) {
+export default function ProblemWorksSection({ problemId }: IProblemWorksSectionProps) {
   const [sourceCodeData, setSourceCodeData] = useState(INITIAL_SOURCE_CODE_DATA);
   const [sessionKey, setSessionKey] = useState('');
 
@@ -19,7 +18,7 @@ export default function ProblemWorksSection({ problemId, token }: IProblemWorksS
     setSourceCodeData((prev) => ({ ...prev, [key]: value }));
   };
 
-  useConnectProblemWebSocket(token, sessionKey);
+  useConnectProblemWebSocket(sessionKey);
 
   return (
     <section className="flex flex-col flex-1">
@@ -29,7 +28,6 @@ export default function ProblemWorksSection({ problemId, token }: IProblemWorksS
         <TerminalOutput />
         <TerminalPanel
           problemId={problemId}
-          token={token}
           sourceCodeData={sourceCodeData}
           onSubmit={(sessionKey) => setSessionKey(sessionKey)}
         />

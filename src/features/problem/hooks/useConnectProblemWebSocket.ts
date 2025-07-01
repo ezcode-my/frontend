@@ -6,10 +6,11 @@ import { BASE_URL } from '@/constants/env';
 import { sharedStompRef } from '@/shared/lib/stomp/sharedStompRef';
 import { useProblemWebSocketStoreActions } from '@/features/problem/model/submitProblemStore';
 import { useEffect } from 'react';
+import useAccessToken from '@/entities/auth/hooks/useAuthToken';
 
-export default function useConnectProblemWebSocket(accessToken: string, sessionKey: string) {
+export default function useConnectProblemWebSocket(sessionKey: string) {
+  const accessToken = useAccessToken();
   const { setStatus, setMessage, clearMessages } = useProblemWebSocketStoreActions();
-
   const problemStompRef = sharedStompRef;
 
   useEffect(() => {

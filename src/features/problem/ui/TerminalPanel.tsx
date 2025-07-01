@@ -4,20 +4,14 @@ import { ICodeEditorSourceCodeData } from '@/shared/lib/codemirror';
 
 interface TerminalPanelProps {
   problemId: string;
-  token: string;
   sourceCodeData: ICodeEditorSourceCodeData;
   onSubmit: (sessionKey: string) => void;
 }
 
-export default function TerminalPanel({
-  problemId,
-  token,
-  sourceCodeData,
-  onSubmit,
-}: TerminalPanelProps) {
+export default function TerminalPanel({ problemId, sourceCodeData, onSubmit }: TerminalPanelProps) {
   const handleSubmitSourceCodeData = async () => {
     try {
-      const sessionKey = await submitSourceCodeData(problemId, token, sourceCodeData);
+      const sessionKey = await submitSourceCodeData(problemId, sourceCodeData);
       onSubmit(sessionKey);
     } catch (error) {
       console.error('제출 실패:', error);
