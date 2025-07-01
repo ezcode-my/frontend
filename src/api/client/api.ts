@@ -1,12 +1,20 @@
 import { BASE_URL } from '@/constants/env';
 import { IApiResponseFormat } from '../interceptor/interceptor.interface';
 import { getSession } from 'next-auth/react';
-import { requestInterceptor } from '../interceptor/request.interceptor';
 import { responseInterceptor } from '../interceptor/response.interceptor';
 import { API_URL } from '../constants/api.constants';
+import {
+  requestClientInterceptor,
+  requestServerInterceptor,
+} from '../interceptor/request.interceptor';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
+
+type ReqType = 'client' | 'server';
 
 interface RequestConfig extends RequestInit {
   params?: Record<string, string>;
+  reqType?: ReqType;
 }
 
 interface ApiResponse<T = unknown> {
@@ -34,6 +42,7 @@ const defaultConfig: Partial<RequestConfig> = {
   headers: {
     'Content-Type': 'application/json',
   },
+  reqType: 'client',
 };
 const refreshToken = async (refreshToken: string) => {
   try {
@@ -60,24 +69,39 @@ const request = async <T>(
   const url = buildUrl(endpoint, config?.params);
 
   try {
-    const interceptedConfig = await requestInterceptor(config);
+    console.log('config.reqType', config.reqType);
+    const interceptedConfig = await (config.reqType === 'server'
+      ? requestServerInterceptor(config)
+      : requestClientInterceptor(config));
+
     const response = await fetch(url, interceptedConfig);
 
     if (response.status === 401) {
-      const session = await getSession();
+      const session =
+        config.reqType === 'server' ? await getServerSession(authOptions) : await getSession();
+
       if (!session?.refreshToken) {
         throw new Error('No refresh token');
       }
 
       try {
         const newAccessToken = await refreshToken(session.refreshToken as string);
-        const retryConfig = await requestInterceptor({
-          ...config,
-          headers: {
-            ...config.headers,
-            Authorization: `Bearer ${newAccessToken}`,
-          },
-        });
+
+        const retryConfig = await (config.reqType === 'server'
+          ? requestServerInterceptor({
+              ...config,
+              headers: {
+                ...config.headers,
+                Authorization: `Bearer ${newAccessToken}`,
+              },
+            })
+          : requestClientInterceptor({
+              ...config,
+              headers: {
+                ...config.headers,
+                Authorization: `Bearer ${newAccessToken}`,
+              },
+            }));
 
         const retryResponse = await fetch(url, retryConfig);
         return responseInterceptor<T>(retryResponse);
@@ -105,6 +129,7 @@ const ApiHelper = {
       method: 'GET',
       ...defaultConfig,
       ...config,
+      reqType: config?.reqType || 'client',
     });
   },
 
@@ -122,6 +147,7 @@ const ApiHelper = {
       body: JSON.stringify(data),
       ...defaultConfig,
       ...config,
+      reqType: config?.reqType || 'client',
     });
   },
 
@@ -139,6 +165,7 @@ const ApiHelper = {
       body: JSON.stringify(data),
       ...defaultConfig,
       ...config,
+      reqType: config?.reqType || 'client',
     });
   },
 
@@ -154,6 +181,7 @@ const ApiHelper = {
       method: 'DELETE',
       ...defaultConfig,
       ...config,
+      reqType: config?.reqType || 'client',
     });
   },
 };
