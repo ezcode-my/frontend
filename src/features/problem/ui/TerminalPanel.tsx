@@ -6,7 +6,7 @@ interface TerminalPanelProps {
   problemId: string;
   token: string;
   sourceCodeData: ICodeEditorSourceCodeData;
-  onSubmit: (status: boolean) => void;
+  onSubmit: (sessionKey: string) => void;
 }
 
 export default function TerminalPanel({
@@ -17,8 +17,8 @@ export default function TerminalPanel({
 }: TerminalPanelProps) {
   const handleSubmitSourceCodeData = async () => {
     try {
-      await submitSourceCodeData(problemId, token, sourceCodeData);
-      onSubmit(true);
+      const sessionKey = await submitSourceCodeData(problemId, token, sourceCodeData);
+      onSubmit(sessionKey);
     } catch (error) {
       console.error('제출 실패:', error);
     }

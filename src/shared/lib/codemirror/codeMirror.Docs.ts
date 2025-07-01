@@ -11,7 +11,7 @@ export const INITIAL_LANG = 'python';
 //언어별 id (웹소켓이 전달받는 언어 id)
 export const LANGUAGE_ID = {
   java: 1,
-  python: 2,
+  python: 4,
   'c++': 3,
 };
 

@@ -1,25 +1,19 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { IStompFinalResultMessage, IStompResultMessage } from '../types/problem.response.data.type';
 import { Spinner } from '@/shared/ui/loading-indicators';
+import useProblemWebSocketStore from '@/features/problem/model/submitProblemStore';
 
-export default function TerminalOutput({ isSubmitted = false }: { isSubmitted?: boolean }) {
-  const [result, setResult] = useState<IStompResultMessage>({} as IStompResultMessage);
-  const [final, setFinal] = useState<IStompFinalResultMessage | null>(null);
+export default function TerminalOutput() {
+  const { status, initCase, results, finalResult } = useProblemWebSocketStore((state) => state);
+  console.log('init', initCase);
 
-  useEffect(() => {
-    const storedResults = localStorage.getItem('results');
-    const storedFinal = localStorage.getItem('final');
-
-    setResult(storedResults ? JSON.parse(storedResults) : ({} as IStompResultMessage));
-    setFinal(storedFinal ? JSON.parse(storedFinal) : ({} as IStompFinalResultMessage));
-  }, [isSubmitted]);
-
+  const accuracy = finalResult
+    ? ((finalResult.passedCount / finalResult.totalCount) * 100).toFixed(2)
+    : '00.00';
   return (
     <section className="flex flex-col w-full px-[14px] py-[22px]">
-      {isSubmitted ? (
+      {status ? (
         <div className="flex flex-col justify-between h-full">
-          <table>
+          <table className="text-left">
             <thead>
               <tr>
                 <th>번호</th>
@@ -31,26 +25,33 @@ export default function TerminalOutput({ isSubmitted = false }: { isSubmitted?: 
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>{result.seqId}</td>
-                <td>입력값</td>
-                <td>기댓값</td>
-                <td>{result.actualOutput}</td>
-                <td>{result.executionTime}ms</td>
-                <td>{result.memoryUsage}KB</td>
-              </tr>
+              {results &&
+                results.map((res) => (
+                  <tr key={res.seqId}>
+                    <td>{res.seqId || ''}</td>
+                    <td>{initCase ? initCase.input : ''}</td>
+                    <td>{initCase ? initCase.output : ''}</td>
+                    <td>{res.actualOutput || ''}</td>
+                    <td>{res.executionTime || ''}ms</td>
+                    <td>{res.memoryUsage || ''}KB</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
 
-          {final ? (
+          {finalResult ? (
             <div className="bg-[#363636] w-full h-[70px] rounded-[10px] flex  items-center justify-center">
               <p className="text-[22px]">
-                최종: {final.passedCount}/{final.totalCount} 정답 ({final.isCorrect}) | 정답률
-                00.00%, ({final.passedCount}개 정답/{final.totalCount}개 문제중)
+                최종: {finalResult.passedCount}/{finalResult.totalCount} 정답 (
+                {finalResult.isCorrect ? '통과' : '실패'}) | 정답률 {accuracy}%, (
+                {finalResult.passedCount}개 정답/
+                {finalResult.totalCount}개 문제중)
               </p>
             </div>
           ) : (
-            <Spinner />
+            <>
+              <Spinner className="size-8 text-green-900" /> 채점중 입니다
+            </>
           )}
         </div>
       ) : (

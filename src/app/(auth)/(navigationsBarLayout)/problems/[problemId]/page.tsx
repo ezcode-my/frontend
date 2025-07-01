@@ -7,7 +7,7 @@ export default async function ProblemPage({ params }: IProblemPageProps) {
   const problemId = (await params).problemId;
 
   const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJnYnRteGxmQG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jyg7ISg7ZalIiwibmlja25hbWUiOiLjhYfjhYXjhY4iLCJ1c2VyUm9sZSI6IkFETUlOIiwidGllciI6Ik5FV0JJRSIsImV4cCI6MTc1MTk1NDQ1MywiaWF0IjoxNzUxMzQ5NjUzfQ.li7o7Gsini-TEjT8FOXiKsSlGUNXk0qJykYUPok5mCY';
+    'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzIiwiZW1haWwiOiJnYnRteGxmQG5hdmVyLmNvbSIsInVzZXJuYW1lIjoi7Jyg7ISg7ZalIiwibmlja25hbWUiOiLsnKDriqXtlZzruYTrsoQ2OTEiLCJ1c2VyUm9sZSI6IkFETUlOIiwidGllciI6Ik5FV0JJRSIsImV4cCI6MTc1MTk2MzY3MywiaWF0IjoxNzUxMzU4ODczfQ.nk8v7r_eqNol8yk-uHqvKjx4IQjY5w2NpnLxWm4aWLQ';
   const result = await getProblem(problemId, token);
   // const testCase = await getTestCase(problemId, token);
 
