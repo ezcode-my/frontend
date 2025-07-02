@@ -10,7 +10,7 @@ export default function RootLayout({
     <AuthProvider>
       <div className="w-full h-100dvh">
         <NavigationBar />
-        <div className="w-full h-full">{children}</div>
+        <div className="w-full h-full mt-[80px]">{children}</div>
       </div>
     </AuthProvider>
   );
