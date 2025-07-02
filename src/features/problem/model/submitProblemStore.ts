@@ -1,7 +1,11 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { useShallow } from 'zustand/shallow';
-import { IMessageInitialState, IProblemWebSocketStore } from './submitProblemStore.types';
+import {
+  IMessageInitialState,
+  IProblemStompResult,
+  IProblemWebSocketStore,
+} from './submitProblemStore.types';
 
 /** 인증 스토어 */
 const useProblemWebSocketStore = create<IProblemWebSocketStore>()(
@@ -18,13 +22,13 @@ const useProblemWebSocketStore = create<IProblemWebSocketStore>()(
       },
 
       setMessage: (key, message) => {
-        set((state: any) => {
+        set((state: IMessageInitialState) => {
           if (key === 'results') {
-            const newResults = [...(state.results ?? []), message];
+            const newResults = [...(state.results ?? []), message] as Array<IProblemStompResult>;
             newResults.sort((a, b) => a.seqId - b.seqId);
             return {
               ...state,
-              results: newResults,
+              results: newResults as IProblemStompResult[],
             };
           }
           return {

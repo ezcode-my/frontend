@@ -8,7 +8,7 @@ interface IProblemStompInitCase {
 }
 
 //웹소켓 메시지로 받는 result type - destination(/testcase)
-interface IProblemStompResult {
+export interface IProblemStompResult {
   actualOutput: string;
   executionTime: number;
   isPassed: boolean;
@@ -24,9 +24,6 @@ interface IProblemStompFinalResult {
   isCorrect: boolean;
   message: string;
 }
-
-/** 상태 키 타입 */
-type StatusKey = 'isSubmitted' | 'isLoading';
 
 /** 메시지 키 타입 */
 type MessageKey = 'initCases' | 'results' | 'finalResult' | 'error' | 'git-status';
@@ -45,7 +42,7 @@ export interface IMessageInitialState {
 interface IMessageInitialAction {
   actions: {
     setStatus: (status: boolean) => void;
-    setMessage: (key: MessageKey, message: any) => void;
+    setMessage: (key: MessageKey, message: unknown) => void;
     clearMessages: () => void;
   };
 }

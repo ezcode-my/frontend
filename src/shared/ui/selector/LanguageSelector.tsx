@@ -9,14 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  ICodeEditorLanguageOption,
-  LANGUAGE_SELECTOR_OPTIONS,
-} from '@/shared/lib/codemirror/codeMirror.Docs';
+import { LANGUAGE_SELECTOR_OPTIONS } from '@/shared/lib/codemirror/codeMirror.Docs';
+import { ILanguageSelectOption } from '@/shared/types/problem.type';
 
 interface ILanguageSelector {
   currentLanguage: string;
-  onSelect: (option: ICodeEditorLanguageOption) => void;
+  onSelect: (option: ILanguageSelectOption) => void;
 }
 
 export default function LanguageSelector({ currentLanguage, onSelect }: ILanguageSelector) {

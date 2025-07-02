@@ -59,7 +59,7 @@ export default function TerminalOutput() {
           )}
         </div>
       ) : (
-        <p>'코드제출'을 먼저 실행 해주세요</p>
+        <p>코드제출을 먼저 실행 해주세요</p>
       )}
     </section>
   );

@@ -63,5 +63,5 @@ export default function useConnectProblemWebSocket(sessionKey: string) {
       client.deactivate();
       setStatus(false);
     };
-  }, [accessToken, sessionKey]);
+  }, [accessToken, sessionKey, problemStompRef, setMessage, clearMessages, setStatus]);
 }
