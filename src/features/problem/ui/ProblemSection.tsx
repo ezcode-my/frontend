@@ -1,11 +1,11 @@
 import { Button } from '@/components/ui/button';
-import { IProblemResult } from '../types/problem.type';
+import { IDetailProblemResponse } from '../types/problem.response.data.type';
 
 interface IProblemSectionProps {
-  problem: IProblemResult;
+  detailProblem: IDetailProblemResponse;
 }
-export default function ProblemSection({ problem }: IProblemSectionProps) {
-  const { title, difficulty, categories, description } = problem;
+export default function ProblemSection({ detailProblem }: IProblemSectionProps) {
+  const { title, difficulty, categories, description } = detailProblem;
   return (
     <section className="flex-1 flex flex-col gap-[29px] pl-[81px] pr-[78px] overflow-scroll">
       <div className="flex gap-4">

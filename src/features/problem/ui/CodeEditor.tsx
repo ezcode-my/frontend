@@ -2,26 +2,28 @@
 
 import CodeMirror from '@uiw/react-codemirror';
 import { useState } from 'react';
-import { CODEMIRROR_EXTENSIONS, CodeMirrorBasicSetup } from '@/shared/lib/codemirror';
 import {
-  ICodeEditorLanguageOption,
+  CODEMIRROR_EXTENSIONS,
+  CodeMirrorBasicSetup,
+  ILanguageSelectOption,
   INITIAL_LANG,
   INITIAL_VALUE,
-} from '@/shared/lib/codemirror/codeMirror.Docs';
-import { LanguageSelector } from '@/shared';
+  LanguageSelector,
+  ProblemLanguageType,
+} from '@/shared';
 
 interface ICodeEditorProps {
   onChangeSourceCodeData: (key: string, value: string | number) => void;
 }
 
 export default function CodeEditor({ onChangeSourceCodeData }: ICodeEditorProps) {
-  const [currentLanguage, setCurrentLanguage] = useState<string>(INITIAL_LANG);
+  const [currentLanguage, setCurrentLanguage] = useState<ProblemLanguageType>(INITIAL_LANG);
 
   return (
     <section className="flex-1 h-full">
       <LanguageSelector
         currentLanguage={currentLanguage}
-        onSelect={(option: ICodeEditorLanguageOption) => {
+        onSelect={(option: ILanguageSelectOption) => {
           setCurrentLanguage(option.value);
           onChangeSourceCodeData('languageId', option.id);
           onChangeSourceCodeData(

@@ -4,7 +4,6 @@ import CodeEditor from './CodeEditor';
 import TerminalOutput from './TerminalOutput';
 import { INITIAL_SOURCE_CODE_DATA } from '@/shared/lib/codemirror/codeMirror.Docs';
 import TerminalPanel from './TerminalPanel';
-import useConnectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
 
 interface IProblemWorksSectionProps {
   problemId: string;
@@ -12,13 +11,10 @@ interface IProblemWorksSectionProps {
 
 export default function ProblemWorksSection({ problemId }: IProblemWorksSectionProps) {
   const [sourceCodeData, setSourceCodeData] = useState(INITIAL_SOURCE_CODE_DATA);
-  const [sessionKey, setSessionKey] = useState('');
 
   const handleChangeSourceCodeData = (key: string, value: string | number) => {
     setSourceCodeData((prev) => ({ ...prev, [key]: value }));
   };
-
-  useConnectProblemWebSocket(sessionKey);
 
   return (
     <section className="flex flex-col flex-1">
@@ -26,11 +22,7 @@ export default function ProblemWorksSection({ problemId }: IProblemWorksSectionP
       <div className="h-[1px] w-full bg-white" />
       <div className="flex flex-1">
         <TerminalOutput />
-        <TerminalPanel
-          problemId={problemId}
-          sourceCodeData={sourceCodeData}
-          onSubmit={(sessionKey) => setSessionKey(sessionKey)}
-        />
+        <TerminalPanel problemId={problemId} sourceCodeData={sourceCodeData} />
       </div>
     </section>
   );

@@ -23,13 +23,11 @@ export default function useConnectProblemWebSocket(sessionKey: string) {
 
     const socket = new SockJS(`${BASE_URL}/ws?token=${encodeURIComponent(accessToken)}`);
     const client = new Client({ webSocketFactory: () => socket, reconnectDelay: 5000 });
-    const base = `/topic/submission/${sessionKey}`;
-
+    const base = `/user/queue/submission/${sessionKey}`;
     client.onConnect = () => {
       setStatus(true);
-
       client.subscribe(`${base}/init`, (msg: IMessage) =>
-        setMessage('initCase', JSON.parse(msg.body))
+        setMessage('initCases', JSON.parse(msg.body))
       );
       client.subscribe(`${base}/case`, (msg: IMessage) => {
         setMessage('results', JSON.parse(msg.body));
@@ -37,12 +35,12 @@ export default function useConnectProblemWebSocket(sessionKey: string) {
       client.subscribe(`${base}/final`, (msg: IMessage) =>
         setMessage('finalResult', JSON.parse(msg.body))
       );
-      client.subscribe(`${base}/error`, (msg: IMessage) =>
+      client.subscribe(`/topic/submission/${sessionKey}/error`, (msg: IMessage) =>
         setMessage('error', JSON.parse(msg.body))
       );
-      client.subscribe(`${base}/git-status`, (msg: IMessage) =>
-        setMessage('git-status', JSON.parse(msg.body))
-      );
+      client.subscribe(`${base}/git-status`, (msg: IMessage) => {
+        setMessage('git-status', JSON.parse(msg.body));
+      });
     };
 
     // 에러 발생 시 스토어 초기화

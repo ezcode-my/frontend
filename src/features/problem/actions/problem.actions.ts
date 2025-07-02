@@ -1,15 +1,16 @@
 'use server';
 
 import ApiHelper from '@/api/client/api';
-import { IProblemResult, ProblemId } from '../types/problem.type';
 import { API_URL } from '@/api/constants/api.constants';
+import { IDetailProblemResponse } from '../types/problem.response.data.type';
+import { ProblemId } from '@/shared';
 
 const reqType = 'server';
 
 //문제 불러오기
-export const getProblem = async (problemId: ProblemId) => {
+export const getDetailProblem = async (problemId: ProblemId) => {
   try {
-    const response = await ApiHelper.get<IProblemResult>(
+    const response = await ApiHelper.get<IDetailProblemResponse>(
       `${API_URL.PROBLEM.GET_PROBLEMS}/${problemId}`,
       { reqType: reqType }
     );

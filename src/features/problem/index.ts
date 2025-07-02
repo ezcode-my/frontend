@@ -5,12 +5,10 @@ export { default as CodeEditor } from './ui/CodeEditor';
 export { default as ProblemWorksSection } from './ui/ProblemWorksSection';
 
 //types
-export type { IProblemIdResponse } from './types/problem.type';
-export type { ProblemId } from './types/problem.type';
-export type { CodeEditorLanguageType } from './types/problem.type';
+export type { IProblemResponseData } from './types/problem.response.data.type';
 
 //actions
-export { getProblem } from './actions/problem.actions';
+export { getDetailProblem } from './actions/problem.actions';
 
 //libs
 export { submitSourceCodeData } from './lib/submitSourceCodeData';

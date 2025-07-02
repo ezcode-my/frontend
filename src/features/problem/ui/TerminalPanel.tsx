@@ -1,22 +1,26 @@
+'use client';
 import Image from 'next/image';
 import { submitSourceCodeData } from '../lib/submitSourceCodeData';
-import { ICodeEditorSourceCodeData } from '@/shared/lib/codemirror';
+import { useState } from 'react';
+import useConnectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
+import { IProblemRequestData } from '../types/problem.request.data.type';
 
 interface TerminalPanelProps {
   problemId: string;
-  sourceCodeData: ICodeEditorSourceCodeData;
-  onSubmit: (sessionKey: string) => void;
+  sourceCodeData: IProblemRequestData;
 }
 
-export default function TerminalPanel({ problemId, sourceCodeData, onSubmit }: TerminalPanelProps) {
+export default function TerminalPanel({ problemId, sourceCodeData }: TerminalPanelProps) {
+  const [sessionKey, setSessionKey] = useState('');
   const handleSubmitSourceCodeData = async () => {
     try {
       const sessionKey = await submitSourceCodeData(problemId, sourceCodeData);
-      onSubmit(sessionKey);
+      setSessionKey(sessionKey);
     } catch (error) {
       console.error('제출 실패:', error);
     }
   };
+  useConnectProblemWebSocket(sessionKey);
 
   return (
     <div className="flex flex-col w-[68px] px-[10px] pt-[19px]">

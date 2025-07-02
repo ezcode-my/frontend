@@ -1,9 +1,9 @@
 'use client';
 import ApiHelper from '@/api/client/api';
-import { IProblemResponseData } from '../types/problem.response.data.type';
-import { ProblemId } from '../types/problem.type';
-import { IProblemRequestData } from '../types/request.data.type';
 import { API_URL } from '@/api/constants/api.constants';
+import { ProblemId } from '@/shared/types/problem.type';
+import { IProblemRequestData } from '../types/problem.request.data.type';
+import { IProblemResponseData } from '../types/problem.response.data.type';
 
 //문제 제출하기
 export const submitSourceCodeData = async (
