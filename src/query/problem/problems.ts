@@ -7,7 +7,7 @@ const queryParams: Record<string, string> = {};
 if (difficulty && difficulty !== "전체") queryParams.difficulty = difficulty;
 if (categoryCode && categoryCode !== "전체") queryParams.categoryCode = categoryCode;
   return useQuery({
-    queryKey: ['problemList', page, size, sort,categoryCode,difficulty], // 쿼리 키는 파라미터별로 다르게
+    queryKey: ['problemList', page, size, sort,categoryCode,difficulty], 
     queryFn: async () => {
       const response = await ApiHelper.get<ProblemList>(
         `/problems?page=${page}&size=${size}&sort=${sort}`,{params : queryParams }
