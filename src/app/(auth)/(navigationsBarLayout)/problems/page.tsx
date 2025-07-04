@@ -1,3 +1,13 @@
+'use client';
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import ProblemTable from './Table';
 const ProblemsList = () => {
   return (
@@ -5,15 +15,41 @@ const ProblemsList = () => {
       <section className="flex flex-col gap-10">
         <div className="flex flex-row justify-between items-center">
           <div className="flex gap-3">
-            <select className="flex bg-green-700 text-white rounded-[15px] px-4 py-1 shadow">
-              <option label="카테고리" />
-              <option label="a" />
-            </select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="카테고리"></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem
+                    value="1"
+                    onClick={() => {
+                      console.log('123');
+                    }}
+                  >
+                    {1}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
 
-            <select className="flex items-center gap-1 bg-green-700 text-white rounded-[15px] px-4 py-1 shadow">
-              <option label="난이도" />
-              <option label="a" />
-            </select>
+            <Select>
+              <SelectTrigger>
+                <SelectValue placeholder="난이도"></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem
+                    value="1"
+                    onClick={() => {
+                      console.log('123');
+                    }}
+                  >
+                    {1}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <div className="flex flex-row gap-1 bg-[#30333C] rounded-[25px] px-5 py-3">
             <input className="min-w-[400px] border-none outline-none" />

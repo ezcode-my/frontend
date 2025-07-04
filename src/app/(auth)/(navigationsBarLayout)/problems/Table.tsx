@@ -1,9 +1,12 @@
 'use client';
 
+import Image from 'next/image';
+import React, { useState, useEffect, useMemo } from 'react';
+
 import { SkeletonBox } from '@/components/Skeleton';
 import { useProblemListQuery } from '@/query/problem/problems';
 
-import React, { useEffect, useState } from 'react';
+const PAGE_LIMIT = 15;
 
 const getLevelColorClass = (levelStr: string): string => {
   const level = parseInt(levelStr.replace(/[^0-9]/g, ''), 10);
@@ -14,113 +17,119 @@ const getLevelColorClass = (levelStr: string): string => {
 };
 
 export default function ProblemTable() {
-  const [currentPage, setCurrentPage] = useState('0');
-  const { data, isLoading } = useProblemListQuery(currentPage, '10', '');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageGroupStart, setPageGroupStart] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const { data, isLoading } = useProblemListQuery(currentPage, 10, '');
+
   useEffect(() => {
-    console.log('isloading', isLoading);
-  }, [isLoading]);
+    if (data?.data.result.totalPages) {
+      setTotalPages(data.data.result.totalPages - 1);
+    }
+  }, [data]);
+
+  const pageNumbers = useMemo(() => {
+    const end = Math.min(pageGroupStart + PAGE_LIMIT - 1, totalPages);
+    return Array.from({ length: end - pageGroupStart + 1 }, (_, i) => pageGroupStart + i);
+  }, [pageGroupStart, totalPages]);
+
+  const handlePrevGroup = () => {
+    if (isLoading || pageGroupStart <= 1) return;
+    setPageGroupStart((prev) => prev - PAGE_LIMIT);
+    setCurrentPage(pageGroupStart - 1);
+  };
+
+  const handleNextGroup = () => {
+    if (isLoading || pageGroupStart + PAGE_LIMIT > totalPages) return;
+    setPageGroupStart((prev) => prev + PAGE_LIMIT);
+    setCurrentPage(pageGroupStart + PAGE_LIMIT);
+  };
+
   return (
-    <div className="flex flex-col w-full  text-white font-sans bg-black rounded-md p-4">
-      {isLoading ? (
-        <table className="w-full border-collapse text-sm">
-          <thead>
-            <tr className="border-b border-gray-700">
-              <th className="py-3 px-2 text-center">문제번호</th>
-              <th className="py-3 px-2 text-center">제목</th>
-              <th className="py-3 px-2 text-center">점수</th>
-              <th className="py-3 px-2 text-center">난이도</th>
-              <th className="py-3 px-2 text-center">정답 제출 수</th>
-              <th className="py-3 px-2 text-center">총 제출 횟수</th>
-              <th className="py-3 px-2 text-center">정답률</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.from({ length: 10 }).map((_, rowIndex) => (
-              <tr key={rowIndex} className="border-b border-gray-800 ">
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-                <td className="text-center py-3 px-2">
-                  <SkeletonBox width={60} height={16} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <table className="w-full border-collapse text-sm">
-          <thead>
-            <tr className="border-b border-gray-700">
-              <th className="py-3 px-2 text-center">문제번호</th>
-              <th className="py-3 px-2 text-center">제목</th>
-              <th className="py-3 px-2 text-center">점수</th>
-              <th className="py-3 px-2 text-center">난이도</th>
-              <th className="py-3 px-2 text-center">정답 제출 수</th>
-              <th className="py-3 px-2 text-center">총 제출 횟수</th>
-              <th className="py-3 px-2 text-center">정답률</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data.data.result.content.map((item) => (
+    <div className="flex flex-col w-full text-white font-sans bg-black rounded-md p-4">
+      {/* 테이블 */}
+      <table className="w-full border-collapse text-sm">
+        <thead>
+          <tr className="border-b border-gray-700">
+            <th className="py-3 px-2 text-center">문제번호</th>
+            <th className="py-3 px-2 text-center">제목</th>
+            <th className="py-3 px-2 text-center">점수</th>
+            <th className="py-3 px-2 text-center">난이도</th>
+            <th className="py-3 px-2 text-center">정답 제출 수</th>
+            <th className="py-3 px-2 text-center">총 제출 횟수</th>
+            <th className="py-3 px-2 text-center">정답률</th>
+          </tr>
+        </thead>
+        <tbody>
+          {isLoading
+            ? Array.from({ length: 10 }).map((_, idx) => (
+                <tr key={idx} className="border-b border-gray-800">
+                  {Array.from({ length: 7 }).map((__, colIdx) => (
+                    <td key={colIdx} className="text-center py-3 px-2">
+                      <SkeletonBox width={60} height={16} />
+                    </td>
+                  ))}
+                </tr>
+              ))
+            : data?.data.result.content.map((item) => (
                 <tr
                   key={item.id}
                   className="border-b border-gray-800 hover:bg-gray-900 cursor-pointer"
                 >
-                  <td className=" text-center py-3 px-2">{item.id}</td>
+                  <td className="text-center py-3 px-2">{item.id}</td>
                   <td className="text-center py-3 px-2">{item.title}</td>
-                  <td className="text-center py-3 px-2 ">{item.score}</td>
-                  <td className={`text-center py-3 px-2  ${getLevelColorClass(item.difficulty)}`}>
+                  <td className="text-center py-3 px-2">{item.score}</td>
+                  <td className={`text-center py-3 px-2 ${getLevelColorClass(item.difficulty)}`}>
                     {item.difficulty}
                   </td>
-                  <td className=" text-center py-3 px-2 ">{item.correctSubmissions}건</td>
-                  <td className=" text-center py-3 px-2 ">{item.totalSubmissions}건</td>
-                  <td className=" text-center py-3 px-2 ">
+                  <td className="text-center py-3 px-2">{item.correctSubmissions}건</td>
+                  <td className="text-center py-3 px-2">{item.totalSubmissions}건</td>
+                  <td className="text-center py-3 px-2">
                     {item.totalSubmissions === 0
-                      ? '0'
-                      : Math.round((item.correctSubmissions / item.totalSubmissions) * 10) / 10}
-                    %
+                      ? '0%'
+                      : `${
+                          Math.round((item.correctSubmissions / item.totalSubmissions) * 10) / 10
+                        }%`}
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </table>
-      )}
+        </tbody>
+      </table>
 
       {/* 페이지네이션 */}
       <div className="flex justify-center items-center gap-2 mt-4 text-gray-400">
-        <button className="text-xl hover:text-white">&laquo;</button>
-        <button className="text-xl hover:text-white">&lsaquo;</button>
+        <Image
+          className="cursor-pointer"
+          src="/icons/arrow/arrowLeft.svg"
+          width={8}
+          height={8}
+          alt="page-arrow"
+          priority
+          onClick={handlePrevGroup}
+        />
 
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+        {pageNumbers.map((num) => (
           <button
             key={num}
             className={`w-8 h-8 rounded-md flex items-center justify-center hover:bg-blue-600 transition ${
-              Number(currentPage) === num ? 'bg-blue-600 text-white' : ''
+              currentPage === num ? 'bg-blue-600 text-white' : ''
             }`}
-            onClick={() => !isLoading && setCurrentPage(String(num))}
+            onClick={() => !isLoading && setCurrentPage(num)}
           >
             {num}
           </button>
         ))}
 
-        <button className="text-xl hover:text-white">&rsaquo;</button>
-        <button className="text-xl hover:text-white">&raquo;</button>
+        <Image
+          className="cursor-pointer"
+          src="/icons/arrow/arrowRight.svg"
+          width={8}
+          height={8}
+          alt="page-arrow"
+          priority
+          onClick={handleNextGroup}
+        />
       </div>
     </div>
   );
