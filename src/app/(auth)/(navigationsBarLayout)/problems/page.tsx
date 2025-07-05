@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Select,
@@ -7,46 +7,60 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import ProblemTable from './Table';
+} from "@/components/ui/select";
+import ProblemTable from "./Table";
+import { useState } from "react";
+import Image from "next/image";
+
 const ProblemsList = () => {
+  const categoryCodeItem = ["전체", "BFS", "DFS", "수학", "조건문"];
+  const difficultyItem = ["전체", "LV1", "LV2", "LV3", "LV4", "LV5", "LV6", "LV7"];
+  const [categoryCode, setCategoryCode] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+
   return (
-    <div className="flex-col px-10 py-18 w-full pt-[140px]">
+    <div className="flex flex-col px-10 py-18 w-full pt-[140px] gap-4">
       <section className="flex flex-col gap-10">
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-row justify-between items-center  ">
           <div className="flex gap-3">
-            <Select>
+            <Select
+              onValueChange={(value) => {
+                setCategoryCode(value);
+              }}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="카테고리"></SelectValue>
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent style={{ zIndex: 999, position: "relative", backgroundColor: "#000" }}>
                 <SelectGroup>
-                  <SelectItem
-                    value="1"
-                    onClick={() => {
-                      console.log('123');
-                    }}
-                  >
-                    {1}
-                  </SelectItem>
+                  {categoryCodeItem.map((item) => {
+                    return (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectGroup>
               </SelectContent>
             </Select>
 
-            <Select>
+            <Select
+              onValueChange={(value) => {
+                setDifficulty(value);
+              }}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="난이도"></SelectValue>
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent style={{ zIndex: 999, position: "relative", backgroundColor: "#000" }}>
                 <SelectGroup>
-                  <SelectItem
-                    value="1"
-                    onClick={() => {
-                      console.log('123');
-                    }}
-                  >
-                    {1}
-                  </SelectItem>
+                  {difficultyItem.map((item) => {
+                    return (
+                      <SelectItem key={item} value={item}>
+                        {item}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -67,11 +81,42 @@ const ProblemsList = () => {
             </svg>
           </div>
         </div>
-        <div className="flex flex-row gap-8">
-          <span></span>
-        </div>
+        {(categoryCode !== "전체" || difficulty !== "전체") && (
+          <div className="flex flex-row gap-8">
+            {categoryCode !== "전체" && categoryCode && (
+              <div className="flex flex-row gap-1 items-center">
+                <span>{categoryCode}</span>
+                <Image
+                  src="/icons/close/closeWithBorder.svg"
+                  className="cursor-pointer"
+                  alt="close"
+                  width={16}
+                  height={16}
+                  onClick={() => {
+                    setCategoryCode("");
+                  }}
+                />
+              </div>
+            )}
+            {difficulty !== "전체" && difficulty && (
+              <div className="flex flex-row gap-1 items-center">
+                <span>{difficulty}</span>
+                <Image
+                  src="/icons/close/closeWithBorder.svg"
+                  className="cursor-pointer"
+                  alt="close"
+                  width={16}
+                  height={16}
+                  onClick={() => {
+                    setDifficulty("");
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )}
       </section>
-      <ProblemTable />
+      <ProblemTable categoryCode={categoryCode} difficulty={difficulty} />
     </div>
   );
 };
