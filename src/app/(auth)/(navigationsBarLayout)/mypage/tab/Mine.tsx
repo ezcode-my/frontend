@@ -9,7 +9,7 @@ import { TPeriod } from '@/shared/types/mypage.type';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-import { DailySolved, HeatmapItem } from '@/query/mypage/mypage.interface';
+import { IHeatmapItem } from '@/query/mypage/mypage.interface';
 import { Heatmap } from '../Heatmap';
 const SummaryStatItem = ({ title, value }: { title: string; value: string | number }) => (
   <div className="flex flex-col gap-2">
@@ -47,7 +47,7 @@ export const Mine = () => {
   const myInfo = data?.data.result;
   const myRanking = ranking?.data.result;
   const aiReviewCnt = aiReview?.data.result.reviewToken;
-  const [heatmapData, setHeatmapData] = useState<HeatmapItem[]>([]);
+  const [heatmapData, setHeatmapData] = useState<IHeatmapItem[]>([]);
   const levelCalculator = (count: number) => {
     if (count === 0) {
       return 0;
@@ -104,9 +104,8 @@ export const Mine = () => {
           </div>
         </div>
       </section>
-      <section className="w-full">
-        {heatmapData.length > 0 && <Heatmap data={heatmapData} />}
-      </section>
+
+      {heatmapData.length > 0 && <Heatmap data={heatmapData} />}
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import { DailySolved, HeatmapItem } from '@/query/mypage/mypage.interface';
+import { DailySolved, IHeatmapItem } from '@/query/mypage/mypage.interface';
 import { ActivityCalendar } from 'react-activity-calendar';
 import { eachDayOfInterval, format, startOfYear, endOfYear } from 'date-fns';
-export const Heatmap = ({ data }: { data: HeatmapItem[] }) => {
+export const Heatmap = ({ data }: { data: IHeatmapItem[] }) => {
   const allDatesOfYear = eachDayOfInterval({
     start: startOfYear(new Date()),
     end: endOfYear(new Date()),

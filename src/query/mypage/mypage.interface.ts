@@ -25,7 +25,7 @@ export interface DailySolved  {
     userId : number
   }
 
-  export interface HeatMapItem {
+  export interface IHeatmapItem {
     date : string
     count : number
     level : number
