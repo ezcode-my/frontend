@@ -20,9 +20,9 @@ export async function middleware(request: NextRequest) {
         secret: process.env.NEXTAUTH_SECRET,
     });
 
-    // if (!token || token.error) {
-    //     return NextResponse.redirect(new URL('/signin', request.url));
-    // }
+    if (!token || token.error) {
+        return NextResponse.redirect(new URL('/signin', request.url));
+    }
 
     return NextResponse.next();
 }
