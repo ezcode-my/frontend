@@ -84,7 +84,7 @@ export default function ProblemTable({
                   ))}
                 </tr>
               ))
-            : data.map((item) => (
+            : data.map((item: any) => (
                 <tr
                   key={item.id}
                   className="border-b border-gray-800 hover:bg-gray-900 cursor-pointer"
