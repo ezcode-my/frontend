@@ -4,7 +4,8 @@ import { ProblemId } from '@/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ICreateReplyMutationRequest,
-  ICreateReplyMutationResponse,
+  IEditReplyMutationRequest,
+  IReplyMutationResponse,
 } from './replies.mutation.types';
 
 /** 댓글 생성 뮤테이션  */
@@ -14,7 +15,7 @@ export const useCreateReplyMutation = (problemId: ProblemId, discussionId: numbe
 
   return useMutation({
     mutationFn: async (params: ICreateReplyMutationRequest) => {
-      const response = await ApiHelper.post<ICreateReplyMutationResponse>(
+      const response = await ApiHelper.post<IReplyMutationResponse>(
         `${path}/${discussionId}/replies`,
         params
       );
@@ -24,6 +25,25 @@ export const useCreateReplyMutation = (problemId: ProblemId, discussionId: numbe
       queryClient.invalidateQueries({
         queryKey: ['replies', problemId, discussionId],
       });
+    },
+  });
+};
+
+/** 댓글 수정 뮤테이션 수정시에는 invalidation 필요 없음 */
+export const useEditReplyMutation = (
+  problemId: ProblemId,
+  discussionId: number,
+  replyId: number
+) => {
+  const path = getProblemIdPath(problemId, 'discussions');
+
+  return useMutation({
+    mutationFn: async (params: IEditReplyMutationRequest) => {
+      const response = await ApiHelper.put<IReplyMutationResponse>(
+        `${path}/${discussionId}/replies/${replyId}`,
+        params
+      );
+      return response.data;
     },
   });
 };

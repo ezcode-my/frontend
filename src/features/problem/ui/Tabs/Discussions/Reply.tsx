@@ -3,6 +3,7 @@ import Vote from './Vote';
 import { Button } from '@/components/ui/button';
 import { ProblemId } from '@/shared';
 import { ChangeEvent, useState } from 'react';
+import { useEditReplyMutation } from '@/query/discussions/replies/replies.mutation';
 
 interface IReplyProps {
   reply: IReply;
@@ -12,8 +13,11 @@ export default function Reply({ reply, problemId }: IReplyProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [currentValue, setCurrentValue] = useState(reply.content);
 
+  const { mutateAsync } = useEditReplyMutation(problemId, reply.discussionId, reply.replyId);
+
   const handleClickEditButton = () => {
-    if (!isEdit) {
+    if (isEdit) {
+      mutateAsync({ content: currentValue });
     }
     setIsEdit((prev) => !prev);
   };
