@@ -1,6 +1,6 @@
 export const Solved = () => {
   return (
-    <div>
+    <div className="w-full flex flex-col">
       <table>
         <thead>
           <tr className="border-b border-gray-700">

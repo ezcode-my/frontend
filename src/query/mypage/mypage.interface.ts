@@ -30,3 +30,12 @@ export interface IHeatmapItem {
   count: number;
   level: number;
 }
+
+export interface ChangePasswordBody {
+  oldPassword: string;
+  newPassword: string;
+}
+
+export interface ChangePasswordRequest {
+  message: string;
+}

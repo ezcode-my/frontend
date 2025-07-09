@@ -15,6 +15,9 @@ export const API_URL = {
   PROBLEM: {
     GET_PROBLEMS: '/problems',
   },
+  MYPAGE: {
+    CHANGE_PASSWORD: '/users/password',
+  },
 };
 
 /** API 요청 주소 */
