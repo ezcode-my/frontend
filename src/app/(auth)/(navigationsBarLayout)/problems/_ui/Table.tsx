@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { SkeletonBox } from '@/components/Skeleton';
-import { ProblemList } from '@/query/problem/problem.interface';
+import { ProblemList, ProblemsContent } from '@/query/problem/problem.interface';
 
 const PAGE_LIMIT = 15;
 
@@ -23,7 +23,7 @@ export default function ProblemTable({
   setCurrentPage,
   totalPages,
 }: {
-  data: ProblemList | undefined;
+  data: ProblemsContent[];
   isLoading: boolean;
   currentPage: number;
   setCurrentPage: (page: number) => void;
@@ -54,9 +54,7 @@ export default function ProblemTable({
     setPageGroupStart((prev) => prev + PAGE_LIMIT);
     setCurrentPage(pageGroupStart + PAGE_LIMIT);
   };
-  useEffect(() => {
-    console.log(isLoading, data);
-  }, [isLoading, data]);
+
   return (
     <div className="flex flex-col w-full text-white font-sans bg-black rounded-md p-4">
       <table className="w-full border-collapse text-sm">
@@ -72,7 +70,7 @@ export default function ProblemTable({
           </tr>
         </thead>
         <tbody>
-          {isLoading || !data?.content
+          {isLoading || !data
             ? Array.from({ length: 10 }).map((_, idx) => (
                 <tr key={idx} className="border-b border-gray-800">
                   {Array.from({ length: 7 }).map((__, colIdx) => (

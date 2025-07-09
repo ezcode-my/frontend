@@ -32,10 +32,8 @@ const ProblemsList = () => {
     search
   );
 
-  const totalPages = data?.data.result.totalPages ?? 0;
-  useEffect(() => {
-    console.log('data', data?.data.result);
-  }, [data]);
+  const totalPages = data?.totalPages ?? 0;
+
   return (
     <div className="flex flex-col px-10 py-18 w-full pt-[140px] gap-4">
       <section className="flex flex-col gap-10">
@@ -136,7 +134,7 @@ const ProblemsList = () => {
       </section>
 
       <ProblemTable
-        data={data?.data.result}
+        data={data?.content || []}
         isLoading={isLoading}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
