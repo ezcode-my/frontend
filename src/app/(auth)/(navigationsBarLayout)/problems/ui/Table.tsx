@@ -56,9 +56,7 @@ export default function ProblemTable({
     setPageGroupStart((prev) => prev + PAGE_LIMIT);
     setCurrentPage(pageGroupStart + PAGE_LIMIT);
   };
-  useEffect(() => {
-    console.log(isLoading, data);
-  }, [isLoading, data]);
+
   return (
     <div className="flex flex-col w-full text-white font-sans bg-black rounded-md p-4">
       <table className="w-full border-collapse text-sm">
