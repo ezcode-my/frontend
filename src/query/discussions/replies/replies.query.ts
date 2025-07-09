@@ -2,14 +2,14 @@ import ApiHelper from '@/api/client/api';
 import { getProblemIdPath } from '@/api/constants/api.constants';
 import { ProblemId } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
-import { IGetRepliesResponse } from './replies.type';
+import { IGetRepliesResponse } from './replies.query.types';
 
 export const useRepliesQuery = (problemId: ProblemId, discussionId: number) => {
   const queryParams = {};
   const path = getProblemIdPath(problemId, 'discussions');
 
   return useQuery({
-    queryKey: ['replies'],
+    queryKey: ['replies', problemId, discussionId],
     queryFn: async () => {
       const response = await ApiHelper.get<IGetRepliesResponse>(`${path}/${discussionId}/replies`, {
         params: queryParams,

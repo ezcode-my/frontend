@@ -5,20 +5,23 @@ import {
   TVoteStatus,
 } from '@/features/problem/types/discussion.response.data.type';
 import { useVoteStatusMutation } from '@/query/discussions';
+import { IReply } from '@/query/discussions/replies/replies.query.types';
+import { ProblemId } from '@/shared';
 import DownVoteIcon from '@/shared/ui/icons/vote-icons/DownVoteIcon';
 import UpVoteIcon from '@/shared/ui/icons/vote-icons/UpVoteIcon';
 import { useEffect, useState } from 'react';
 
 interface IDiscussionVoteProps {
-  content: IDiscussionContentResponse;
+  content: IDiscussionContentResponse | IReply;
+  problemId?: ProblemId;
 }
-export default function Vote({ content }: IDiscussionVoteProps) {
+export default function Vote({ content, problemId }: IDiscussionVoteProps) {
   const [voteStatus, setVoteStatus] = useState<TVoteStatus>(content.voteStatus);
   const [voteCount, setVoteCount] = useState({
     upvoteCount: content.upvoteCount,
     downvoteCount: content.downvoteCount,
   });
-  const { problemId, discussionId } = content;
+  const { discussionId } = content;
   const { mutateAsync, data } = useVoteStatusMutation(String(problemId), discussionId);
 
   const changeVoteStatus = (iconType: TVoteStatus) => {

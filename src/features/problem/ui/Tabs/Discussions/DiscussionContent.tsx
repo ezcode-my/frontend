@@ -89,13 +89,7 @@ export default function DiscussionContent({ discussionContent }: IDiscussionCont
             </Button>
             <Button onClick={handleClickEditMode}>{isEdit ? '완료' : '수정'}</Button>
           </div>
-          {isRepliesOpen && (
-            <Replies
-              isOpen={isRepliesOpen}
-              problemId={String(problemId)}
-              discussionId={discussionId}
-            />
-          )}
+          {isRepliesOpen && <Replies problemId={String(problemId)} discussionId={discussionId} />}
         </div>
       )}
     </>
