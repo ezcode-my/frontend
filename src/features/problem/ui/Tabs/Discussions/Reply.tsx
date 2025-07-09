@@ -3,7 +3,11 @@ import Vote from './Vote';
 import { Button } from '@/components/ui/button';
 import { ProblemId } from '@/shared';
 import { ChangeEvent, useState } from 'react';
-import { useEditReplyMutation } from '@/query/discussions/replies/replies.mutation';
+import {
+  useDeleteReplyMutation,
+  useEditReplyMutation,
+} from '@/query/discussions/replies/replies.mutation';
+import { BouncingDots } from '@/shared/ui/loading-indicators';
 
 interface IReplyProps {
   reply: IReply;
@@ -13,11 +17,20 @@ export default function Reply({ reply, problemId }: IReplyProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [currentValue, setCurrentValue] = useState(reply.content);
 
-  const { mutateAsync } = useEditReplyMutation(problemId, reply.discussionId, reply.replyId);
+  const { mutateAsync: editReplyMutation } = useEditReplyMutation(
+    problemId,
+    reply.discussionId,
+    reply.replyId
+  );
+  const { mutateAsync: deleteReplyMutation, isPending: isDeletePending } = useDeleteReplyMutation(
+    problemId,
+    reply.discussionId,
+    reply.replyId
+  );
 
   const handleClickEditButton = () => {
     if (isEdit) {
-      mutateAsync({ content: currentValue });
+      editReplyMutation({ content: currentValue });
     }
     setIsEdit((prev) => !prev);
   };
@@ -43,7 +56,9 @@ export default function Reply({ reply, problemId }: IReplyProps) {
       <Button className="bg-gray-400" onClick={handleClickEditButton}>
         {isEdit ? '완료' : '수정'}
       </Button>
-      <Button className="bg-gray-400">삭제</Button>
+      <Button className="bg-gray-400" onClick={() => deleteReplyMutation()}>
+        {isDeletePending ? <BouncingDots /> : '삭제'}
+      </Button>
     </div>
   );
 }

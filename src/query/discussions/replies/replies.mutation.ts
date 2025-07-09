@@ -47,3 +47,23 @@ export const useEditReplyMutation = (
     },
   });
 };
+
+/** 댓글 삭제 뮤테이션 */
+export const useDeleteReplyMutation = (
+  problemId: ProblemId,
+  discussionId: number,
+  replyId: number
+) => {
+  const path = getProblemIdPath(problemId, 'discussions');
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      const response = await ApiHelper.delete(`${path}/${discussionId}/replies/${replyId}`);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['replies', problemId, discussionId] });
+    },
+  });
+};
