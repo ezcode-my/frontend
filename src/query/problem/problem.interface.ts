@@ -36,12 +36,3 @@ export interface ProblemList {
   first: boolean;
   empty: boolean;
 }
-
-export interface ProblemsListRequest {
-  page: number;
-  size: number;
-  sort: string;
-  categoryCode?: string;
-  difficulty?: string;
-  keyword?: string;
-}
