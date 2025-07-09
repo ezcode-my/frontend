@@ -18,23 +18,26 @@ const getLevelColorClass = (levelStr: string): string => {
 };
 
 export default function ProblemTable({
-  difficulty,
-  categoryCode,
+  data,
+  isLoading,
+  currentPage,
+  setCurrentPage,
+  totalPages,
 }: {
-  difficulty: string;
-  categoryCode: string;
+  data: ProblemList | undefined;
+  isLoading: boolean;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  totalPages: number;
 }) {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(1);
   const [pageGroupStart, setPageGroupStart] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const { data, isLoading } = useProblemListQuery(currentPage, 10, '', categoryCode, difficulty);
 
   useEffect(() => {
-    if (data?.data.result.totalPages) {
-      setTotalPages(data.data.result.totalPages - 1);
+    if (currentPage < pageGroupStart || currentPage >= pageGroupStart + PAGE_LIMIT) {
+      setPageGroupStart(Math.floor((currentPage - 1) / PAGE_LIMIT) * PAGE_LIMIT + 1);
     }
-  }, [data]);
+  }, [currentPage]);
 
   const pageNumbers = useMemo(() => {
     const end = Math.min(pageGroupStart + PAGE_LIMIT - 1, totalPages);
@@ -52,10 +55,11 @@ export default function ProblemTable({
     setPageGroupStart((prev) => prev + PAGE_LIMIT);
     setCurrentPage(pageGroupStart + PAGE_LIMIT);
   };
-
+  useEffect(() => {
+    console.log(isLoading, data);
+  }, [isLoading, data]);
   return (
     <div className="flex flex-col w-full text-white font-sans bg-black rounded-md p-4">
-      {/* 테이블 */}
       <table className="w-full border-collapse text-sm">
         <thead>
           <tr className="border-b border-gray-700">
@@ -69,7 +73,7 @@ export default function ProblemTable({
           </tr>
         </thead>
         <tbody>
-          {isLoading
+          {isLoading || !data?.content
             ? Array.from({ length: 10 }).map((_, idx) => (
                 <tr key={idx} className="border-b border-gray-800">
                   {Array.from({ length: 7 }).map((__, colIdx) => (
@@ -79,13 +83,11 @@ export default function ProblemTable({
                   ))}
                 </tr>
               ))
-            : data?.data.result.content.map((item) => (
+            : data.content.map((item: any) => (
                 <tr
                   key={item.id}
                   className="border-b border-gray-800 hover:bg-gray-900 cursor-pointer"
-                  onClick={() => {
-                    router.push(`/problems/${item.id}`);
-                  }}
+                  onClick={() => router.push(`/problems/${item.id}`)}
                 >
                   <td className="text-center py-3 px-2">{item.id}</td>
                   <td className="text-center py-3 px-2">{item.title}</td>
@@ -115,7 +117,6 @@ export default function ProblemTable({
           width={8}
           height={8}
           alt="page-arrow"
-          priority
           onClick={handlePrevGroup}
         />
 
@@ -137,7 +138,6 @@ export default function ProblemTable({
           width={8}
           height={8}
           alt="page-arrow"
-          priority
           onClick={handleNextGroup}
         />
       </div>
