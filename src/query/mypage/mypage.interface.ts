@@ -39,3 +39,19 @@ export interface ChangePasswordBody {
 export interface ChangePasswordRequest {
   message: string;
 }
+
+export interface SubmissionsResonse {
+  problemDescription: string;
+  problemId: number;
+  submissions: Submission[];
+}
+
+export interface Submission {
+  id: number;
+  sourceCode: string;
+  isCorrect: boolean;
+  message: string;
+  executionTime: number;
+  memoryUsage: number;
+  submittedAt: string;
+}

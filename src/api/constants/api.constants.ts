@@ -17,6 +17,7 @@ export const API_URL = {
   },
   MYPAGE: {
     CHANGE_PASSWORD: '/users/password',
+    SUBMISSION: '/submissions',
   },
 };
 
