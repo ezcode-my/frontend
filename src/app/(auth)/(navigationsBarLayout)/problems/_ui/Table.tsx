@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useMemo, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { SkeletonBox } from '@/components/Skeleton';
-import { ProblemList, ProblemsContent } from '@/query/problem/problem.interface';
+import { ProblemsContent } from '@/query/problem/problem.interface';
 
 const PAGE_LIMIT = 15;
 
@@ -80,7 +80,7 @@ export default function ProblemTable({
                   ))}
                 </tr>
               ))
-            : data.map((item: any) => (
+            : data.map((item) => (
                 <tr
                   key={item.id}
                   className="border-b border-gray-800 hover:bg-gray-900 cursor-pointer"
