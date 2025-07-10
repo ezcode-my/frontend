@@ -6,6 +6,7 @@ import {
   ChangePasswordRequest,
   DailySolved,
   IMyInfo,
+  SubmissionsResonse,
 } from './mypage.interface';
 import { TPeriod } from '@/shared/types/mypage.type';
 import { API_URL } from '@/api/constants/api.constants';
@@ -18,7 +19,7 @@ export const useMyInfoQuery = () => {
       return response;
     },
 
-    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -30,7 +31,7 @@ export const useMyRankingQuery = (period: TPeriod) => {
       return response;
     },
 
-    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -42,7 +43,7 @@ export const useMyAiReviewCheckQuery = () => {
       return response;
     },
 
-    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -54,7 +55,7 @@ export const useMyDailySolved = () => {
       return response;
     },
 
-    staleTime: 1000 * 60 * 5, // 5분간 캐시 유지
+    staleTime: 1000 * 60 * 5,
   });
 };
 
@@ -68,5 +69,16 @@ export const useChangePassword = () => {
 
       if (response) return response;
     },
+  });
+};
+
+export const useSubmissionList = () => {
+  return useQuery({
+    queryKey: ['submission'],
+    queryFn: async () => {
+      const response = await ApiHelper.get<SubmissionsResonse[]>(API_URL.MYPAGE.SUBMISSION);
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5,
   });
 };
