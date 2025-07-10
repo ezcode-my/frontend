@@ -1,8 +1,8 @@
 import { getProblemIdPath } from '@/api/constants/api.constants';
 import { ProblemId } from '@/shared';
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
-import { IVoteMutationRequest, IVoteMutationResponse } from './vote.type';
 import ApiHelper from '@/api/client/api';
+import { IVoteMutationRequest, IVoteMutationResponse } from './vote.type';
 
 /** 투표 뮤테이션 - 토론, 댓글 공통 */
 export const useVoteStatusMutation = (

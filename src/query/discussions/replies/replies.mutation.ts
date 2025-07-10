@@ -8,10 +8,19 @@ import {
   IReplyMutationResponse,
 } from './replies.mutation.types';
 
-/** 댓글 생성 뮤테이션  */
-export const useCreateReplyMutation = (problemId: ProblemId, discussionId: number) => {
+/** 댓글, 대댓글 생성 뮤테이션  */
+export const useCreateReplyMutation = (
+  problemId: ProblemId,
+  discussionId: number,
+  isNestedReply?: boolean,
+  parentReplyId?: number
+) => {
   const path = getProblemIdPath(problemId, 'discussions');
   const queryClient = useQueryClient();
+
+  const queryKey = isNestedReply
+    ? ['nestedReplies', problemId, discussionId, parentReplyId]
+    : ['replies', problemId, discussionId];
 
   return useMutation({
     mutationFn: async (params: ICreateReplyMutationRequest) => {
@@ -23,7 +32,7 @@ export const useCreateReplyMutation = (problemId: ProblemId, discussionId: numbe
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['replies', problemId, discussionId],
+        queryKey: queryKey,
       });
     },
   });

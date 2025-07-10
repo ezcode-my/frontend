@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
-import NestedReply from './nestedReply';
 import { ChangeEvent, useState } from 'react';
 import { useNestedRepliesQuery } from '@/query/discussions/replies/replies.query';
 import { Spinner } from '@/shared/ui/loading-indicators';
+import NestedReply from './NestedReply';
+import { useCreateReplyMutation } from '@/query/discussions/replies/replies.mutation';
 
 interface INestedReplies {
   problemId: string;
@@ -12,15 +13,18 @@ interface INestedReplies {
 export default function NestedReplies({ problemId, discussionId, parentReplyId }: INestedReplies) {
   const [value, setValue] = useState('');
   const { data, isPending } = useNestedRepliesQuery(problemId, discussionId, parentReplyId);
+  const { mutateAsync } = useCreateReplyMutation(problemId, discussionId, true, parentReplyId);
 
   const nestedReplies = data?.result.content;
 
   if (isPending) {
     return <Spinner />;
   }
+
   if (!nestedReplies) {
     return <div>불러오는데 실패! </div>;
   }
+
   return (
     <div>
       <div>
@@ -31,7 +35,7 @@ export default function NestedReplies({ problemId, discussionId, parentReplyId }
         />
         <Button
           onClick={() => {
-            // mutateAsync({ parentReplyId: null, content: value });
+            mutateAsync({ parentReplyId: parentReplyId, content: value });
             setValue('');
           }}
         >
