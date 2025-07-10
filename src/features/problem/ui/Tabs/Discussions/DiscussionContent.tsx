@@ -9,6 +9,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Replies from './Replies';
 import Vote from './Vote';
+import { QueryClient } from '@tanstack/react-query';
 
 interface IDiscussionContentProps {
   discussionContent: IDiscussionContentResponse;
@@ -46,6 +47,7 @@ export default function DiscussionContent({ discussionContent }: IDiscussionCont
     if (isEdit) return editMutate({ languageId: 4, content: currentContent });
     setIsEdit(true); // languageId를 받아올 방법이 없음, 백엔드측에 요청후 수정 예정
   };
+
   return (
     <>
       {!isDelete && (
@@ -65,7 +67,11 @@ export default function DiscussionContent({ discussionContent }: IDiscussionCont
                 <p>{currentContent}</p>
               )}
               <div className="flex items-center">
-                <Vote content={discussionContent} />
+                <Vote
+                  content={discussionContent}
+                  problemId={String(problemId)}
+                  onSuccess={() => {}}
+                />
                 <button
                   className="flex items-center"
                   onClick={() => setIsRepliesOpen((prev) => !prev)}

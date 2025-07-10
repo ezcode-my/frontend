@@ -8,6 +8,7 @@ import {
   useEditReplyMutation,
 } from '@/query/discussions/replies/replies.mutation';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
+import { QueryClient } from '@tanstack/react-query';
 
 interface IReplyProps {
   reply: IReply;
@@ -35,6 +36,10 @@ export default function Reply({ reply, problemId }: IReplyProps) {
     setIsEdit((prev) => !prev);
   };
 
+  const optimisticVote = (queryClient: QueryClient) => {
+    queryClient.invalidateQueries({ queryKey: ['replies', problemId, reply.discussionId] });
+  };
+
   return (
     <div className="flex">
       {!isEdit ? (
@@ -42,7 +47,12 @@ export default function Reply({ reply, problemId }: IReplyProps) {
           <h3>닉네임: {reply.userInfo.nickname}</h3>
           <p>{currentValue}</p>
           <div className="flex items-center">
-            <Vote problemId={problemId} content={reply} />
+            <Vote
+              problemId={problemId}
+              content={reply}
+              replyId={reply.replyId}
+              onSuccess={optimisticVote}
+            />
           </div>
         </div>
       ) : (
