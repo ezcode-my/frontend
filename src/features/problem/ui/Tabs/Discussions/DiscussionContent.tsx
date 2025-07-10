@@ -6,10 +6,9 @@ import {
   useEditDiscussionContent,
 } from '@/query/discussions/discussions.mutations';
 import { ChangeEvent, useEffect, useState } from 'react';
-import Image from 'next/image';
-import Replies from './Replies';
+import Replies from '../replies';
 import Vote from './Vote';
-import { QueryClient } from '@tanstack/react-query';
+import ShowChildReplies from './ShowChildReplies';
 
 interface IDiscussionContentProps {
   discussionContent: IDiscussionContentResponse;
@@ -72,18 +71,12 @@ export default function DiscussionContent({ discussionContent }: IDiscussionCont
                   problemId={String(problemId)}
                   onSuccess={() => {}}
                 />
-                <button
-                  className="flex items-center"
-                  onClick={() => setIsRepliesOpen((prev) => !prev)}
-                >
-                  <Image
-                    alt="댓글보기 아이콘"
-                    src="/icons/discussion/replies.icon.svg"
-                    width={17}
-                    height={17}
-                  />
-                  <p>답글 {replyCount}개</p>
-                </button>
+                <ShowChildReplies
+                  onClick={() => {
+                    setIsRepliesOpen((prev) => !prev);
+                  }}
+                  replyCount={replyCount}
+                />
               </div>
             </div>
             <Button

@@ -20,3 +20,27 @@ export const useRepliesQuery = (problemId: ProblemId, discussionId: number) => {
     staleTime: 1000 * 60 * 3,
   });
 };
+
+export const useNestedRepliesQuery = (
+  problemId: ProblemId,
+  discussionId: number,
+  parentReplyId: number
+) => {
+  const queryParams = {};
+  const path = getProblemIdPath(problemId, 'discussions');
+
+  return useQuery({
+    queryKey: ['nestedReplies', problemId, discussionId, parentReplyId],
+    queryFn: async () => {
+      const response = await ApiHelper.get<IGetRepliesResponse>(
+        `${path}/${discussionId}/replies/${parentReplyId}`,
+        {
+          params: queryParams,
+        }
+      );
+      return response.data;
+    },
+
+    staleTime: 1000 * 60 * 3,
+  });
+};

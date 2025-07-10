@@ -4,7 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { IVoteMutationRequest, IVoteMutationResponse } from './vote.type';
 import ApiHelper from '@/api/client/api';
 
-/** 투표 뮤테이션 */
+/** 투표 뮤테이션 - 토론, 댓글 공통 */
 export const useVoteStatusMutation = (
   problemId: ProblemId,
   discussionId: number,
