@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import ProblemTable from './ui/Table';
 import { useProblemListQuery } from '@/query/problem/problems';
