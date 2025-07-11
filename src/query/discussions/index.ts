@@ -5,6 +5,7 @@ export { useEditDiscussionContent } from './discussions.mutations';
 export { useDeleteDiscussionContent } from './discussions.mutations';
 
 export type { IDiscussionContentMutationRequest } from '@/query/discussions/discussions.types';
+export type { TDiscussionContentMutationResponse } from '@/query/discussions/discussions.types';
 
 /**vote */
 export { useVoteStatusMutation } from './vote/vote';
