@@ -1,6 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { ICreateDiscussionMutationRequest } from '@/query/discussions';
-import { useCreateDiscussionContent } from '@/query/discussions/discussions.mutations';
+import { IDiscussionContentMutationRequest, useCreateDiscussionContent } from '@/query/discussions';
 import { DISCUSSION_CREATE_VALUE } from '@/query/discussions/initial.value';
 import {
   ILanguageSelectOption,
@@ -17,14 +16,17 @@ interface ICreateDiscussionInputProps {
 export default function CreateDiscussionInput({ problemId }: ICreateDiscussionInputProps) {
   const [currentLanguage, setCurrentLanguage] = useState<ProblemLanguageType>(INITIAL_LANG);
   const [contentForm, setContentForm] =
-    useState<ICreateDiscussionMutationRequest>(DISCUSSION_CREATE_VALUE);
+    useState<IDiscussionContentMutationRequest>(DISCUSSION_CREATE_VALUE);
   const { mutateAsync } = useCreateDiscussionContent(problemId);
 
   return (
     <div className="relative">
       <LanguageSelector
         currentLanguage={currentLanguage}
-        onSelect={(option: ILanguageSelectOption) => setCurrentLanguage(option.value)}
+        onSelect={(option: ILanguageSelectOption) => {
+          setCurrentLanguage(option.value);
+          setContentForm((prev) => ({ ...prev, languageId: option.id }));
+        }}
       />
       <textarea
         className="border-1 w-full h-[100px]"
