@@ -3,15 +3,15 @@ import { Button } from '@/components/ui/button';
 import {
   IDiscussionContentResponse,
   IDiscussionResponse,
-} from '../../../types/discussion.response.data.type';
-import { IDetailProblemResponse } from '../../../types/problem.response.data.type';
-import DetailProblem from '../DetailProblem';
-import DiscussionContent from './DiscussionContent';
+} from '../../../problem/types/discussion.response.data.type';
+import { IDetailProblemResponse } from '../../../problem/types/problem.response.data.type';
 import { useCreateDiscussionContent } from '@/query/discussions/discussions.mutations';
 import { ProblemId } from '@/shared';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { DISCUSSION_CREATE_VALUE } from '@/query/discussions/initial.value';
 import { IDiscussionContentMutationRequest } from '@/query/discussions/discussions.types';
+import Discussion from './Discussion';
+import { DetailProblem } from '@/features/problem';
 
 interface IDiscussionProps {
   detailProblem: IDetailProblemResponse;
@@ -61,7 +61,7 @@ export default function Discussions({ detailProblem, discussions, problemId }: I
           <div>아직 토론이 없습니다.</div>
         ) : (
           currentContents.map((content) => {
-            return <DiscussionContent discussionContent={content} key={content.discussionId} />;
+            return <Discussion discussionContent={content} key={content.discussionId} />;
           })
         )}
       </div>

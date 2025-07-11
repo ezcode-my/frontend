@@ -7,7 +7,7 @@ import { IReply } from '@/query/discussions/replies/replies.query.types';
 import { ProblemId } from '@/shared';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
 import { ChangeEvent, useState } from 'react';
-import Vote from '../Discussions/Vote';
+import Vote from '../../../../discussions/ui/vote/Vote';
 import { QueryClient } from '@tanstack/react-query';
 
 interface INestedReplyProps {

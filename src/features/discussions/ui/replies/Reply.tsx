@@ -1,5 +1,5 @@
 import { IReply } from '@/query/discussions/replies/replies.query.types';
-import Vote from '../Discussions/Vote';
+import Vote from '../vote/Vote';
 import { Button } from '@/components/ui/button';
 import { ProblemId } from '@/shared';
 import { ChangeEvent, useState } from 'react';
@@ -9,7 +9,7 @@ import {
 } from '@/query/discussions/replies/replies.mutation';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
 import { QueryClient } from '@tanstack/react-query';
-import ShowChildReplies from '../Discussions/ShowChildReplies';
+import ShowChildReplies from '../ShowChildReplies';
 import NestedReplies from '../nestedReplies';
 
 interface IReplyProps {

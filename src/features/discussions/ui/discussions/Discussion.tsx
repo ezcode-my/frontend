@@ -7,8 +7,8 @@ import {
 } from '@/query/discussions/discussions.mutations';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Replies from '../replies';
-import Vote from './Vote';
-import ShowChildReplies from './ShowChildReplies';
+import Vote from '../vote/Vote';
+import ShowChildReplies from '../ShowChildReplies';
 
 interface IDiscussionContentProps {
   discussionContent: IDiscussionContentResponse;
@@ -16,7 +16,7 @@ interface IDiscussionContentProps {
 
 /**@todo : 백엔드에 languageId 값 요청  */
 
-export default function DiscussionContent({ discussionContent }: IDiscussionContentProps) {
+export default function Discussion({ discussionContent }: IDiscussionContentProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isRepliesOpen, setIsRepliesOpen] = useState(false);
