@@ -1,68 +1,38 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import {
-  IDiscussionContentResponse,
-  IDiscussionResponse,
-} from '../../../problem/types/discussion.response.data.type';
-import { IDetailProblemResponse } from '../../../problem/types/problem.response.data.type';
-import { useCreateDiscussionContent } from '@/query/discussions/discussions.mutations';
 import { ProblemId } from '@/shared';
-import { ChangeEvent, useEffect, useState } from 'react';
-import { DISCUSSION_CREATE_VALUE } from '@/query/discussions/initial.value';
-import { IDiscussionContentMutationRequest } from '@/query/discussions/discussions.types';
 import Discussion from './Discussion';
-import { DetailProblem } from '@/features/problem';
+import { useDiscussionsQuery } from '@/query/discussions';
+import { Spinner } from '@/shared/ui/loading-indicators';
+import CreateDiscussionInput from './CreateDiscussionInput';
 
 interface IDiscussionProps {
-  detailProblem: IDetailProblemResponse;
-  discussions: IDiscussionResponse | undefined;
   problemId: ProblemId;
 }
 
-export default function Discussions({ detailProblem, discussions, problemId }: IDiscussionProps) {
-  const [contentForm, setContentForm] =
-    useState<IDiscussionContentMutationRequest>(DISCUSSION_CREATE_VALUE);
-  const [currentContents, setCurrentContents] = useState<IDiscussionContentResponse[]>(
-    Array.isArray(discussions?.content) ? discussions.content : []
-  );
+export default function Discussions({ problemId }: IDiscussionProps) {
+  const { data, isPending } = useDiscussionsQuery(problemId);
+  const discussions = data?.result.content;
 
-  const { mutateAsync, data } = useCreateDiscussionContent(problemId);
-
-  useEffect(() => {
-    if (data?.data.success) {
-      setCurrentContents((prev) => [...prev, data.data.result]);
-      setContentForm((prev) => ({ ...prev, content: '' }));
-    }
-  }, [data?.data.success]);
-
-  if (!currentContents) {
-    return <div>토론 목록을 불러오는데 실패했습니다.</div>;
+  if (isPending) {
+    return <Spinner />;
   }
 
   return (
-    <div className=" flex flex-col gap-[10px]">
-      <div className=" top-0 bg-gray-400 h-[200px] overflow-scroll">
-        <DetailProblem detailProblem={detailProblem} />
-      </div>
-      <div className="relative">
-        <textarea
-          className="border-1 w-full h-[100px]"
-          value={contentForm.content}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            setContentForm((prev) => ({ ...prev, content: e.target.value }))
-          }
-        />
-        <Button className="absolute right-4 top-5" onClick={() => mutateAsync(contentForm)}>
-          토론 생성
-        </Button>
-      </div>
+    <div className="flex flex-col gap-[10px]">
+      <CreateDiscussionInput problemId={problemId} />
       <div>
-        {currentContents.length < 1 ? (
-          <div>아직 토론이 없습니다.</div>
+        {!discussions ? (
+          <div>토론 목록을 불러오는데 실패했습니다.</div>
         ) : (
-          currentContents.map((content) => {
-            return <Discussion discussionContent={content} key={content.discussionId} />;
-          })
+          <>
+            {discussions.length < 1 ? (
+              <div>아직 토론이 없습니다.</div>
+            ) : (
+              discussions.map((content) => {
+                return <Discussion discussionContent={content} key={content.discussionId} />;
+              })
+            )}
+          </>
         )}
       </div>
     </div>

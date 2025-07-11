@@ -1,6 +1,6 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { IDiscussionContentResponse } from '@/features/problem/types/discussion.response.data.type';
+import { IDiscussionContentResponse } from '@/features/discussions/types/discussion.response.data.type';
 import {
   useDeleteDiscussionContent,
   useEditDiscussionContent,
@@ -28,6 +28,7 @@ export default function Discussion({ discussionContent }: IDiscussionContentProp
     String(discussionContent.problemId),
     discussionContent.discussionId
   );
+
   const { mutateAsync: deleteMutate, data: deleteResponse } = useDeleteDiscussionContent(
     String(discussionContent.problemId),
     discussionContent.discussionId

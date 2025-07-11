@@ -1,6 +1,6 @@
-import { IDiscussionContentResponse } from '@/features/problem/types/discussion.response.data.type';
+import { IDiscussionContentResponse } from '@/features/discussions/types/discussion.response.data.type';
 
-export interface IDiscussionContentMutationRequest {
+export interface ICreateDiscussionMutationRequest {
   languageId: number;
   content: string;
 }

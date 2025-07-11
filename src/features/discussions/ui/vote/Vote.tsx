@@ -3,7 +3,7 @@
 import {
   IDiscussionContentResponse,
   TVoteStatus,
-} from '@/features/problem/types/discussion.response.data.type';
+} from '@/features/discussions/types/discussion.response.data.type';
 import { useVoteStatusMutation } from '@/query/discussions';
 import { IReply } from '@/query/discussions/replies/replies.query.types';
 import { ProblemId } from '@/shared';
