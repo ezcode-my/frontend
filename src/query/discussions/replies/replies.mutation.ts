@@ -38,14 +38,13 @@ export const useCreateReplyMutation = (
   });
 };
 
-/** 댓글 수정 뮤테이션 수정시에는 invalidation 필요 없음 */
+/** 댓글, 대댓글 수정 뮤테이션 수정시에는 invalidation 필요 없음 */
 export const useEditReplyMutation = (
   problemId: ProblemId,
   discussionId: number,
   replyId: number
 ) => {
   const path = getProblemIdPath(problemId, 'discussions');
-
   return useMutation({
     mutationFn: async (params: IEditReplyMutationRequest) => {
       const response = await ApiHelper.put<IReplyMutationResponse>(
@@ -57,11 +56,12 @@ export const useEditReplyMutation = (
   });
 };
 
-/** 댓글 삭제 뮤테이션 */
+/** 대댓글, 댓글 삭제 뮤테이션 */
 export const useDeleteReplyMutation = (
   problemId: ProblemId,
   discussionId: number,
-  replyId: number
+  replyId: number,
+  queryKey: [string, string, number]
 ) => {
   const path = getProblemIdPath(problemId, 'discussions');
   const queryClient = useQueryClient();
@@ -72,7 +72,7 @@ export const useDeleteReplyMutation = (
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['replies', problemId, discussionId] });
+      queryClient.invalidateQueries({ queryKey: queryKey });
     },
   });
 };

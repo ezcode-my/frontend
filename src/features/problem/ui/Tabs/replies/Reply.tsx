@@ -29,7 +29,8 @@ export default function Reply({ reply, problemId }: IReplyProps) {
   const { mutateAsync: deleteReplyMutation, isPending: isDeletePending } = useDeleteReplyMutation(
     problemId,
     reply.discussionId,
-    reply.replyId
+    reply.replyId,
+    ['replies', problemId, reply.discussionId]
   );
 
   const handleClickEditButton = () => {

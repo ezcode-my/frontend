@@ -47,7 +47,7 @@ export default function NestedReplies({ problemId, discussionId, parentReplyId }
       ) : (
         <>
           {nestedReplies.map((reply) => {
-            <NestedReply key={reply.replyId} />;
+            return <NestedReply key={reply.replyId} nestedReply={reply} problemId={problemId} />;
           })}
         </>
       )}
