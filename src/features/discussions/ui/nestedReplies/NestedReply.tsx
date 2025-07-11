@@ -7,7 +7,6 @@ import { IReply } from '@/query/discussions/replies/replies.query.types';
 import { ProblemId } from '@/shared';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
 import { ChangeEvent, useState } from 'react';
-import { QueryClient } from '@tanstack/react-query';
 import Vote from '../vote/Vote';
 
 interface INestedReplyProps {
@@ -38,12 +37,6 @@ export default function NestedReply({ nestedReply, problemId }: INestedReplyProp
     setIsEdit((prev) => !prev);
   };
 
-  const optimisticVote = (queryClient: QueryClient) => {
-    queryClient.invalidateQueries({
-      queryKey: ['nestedReplies', problemId, nestedReply.discussionId, nestedReply.replyId],
-    });
-  };
-
   return (
     <div className="flex flex-col">
       <div>
@@ -52,12 +45,7 @@ export default function NestedReply({ nestedReply, problemId }: INestedReplyProp
             <h3>닉네임: {nestedReply.userInfo.nickname}</h3>
             <p>{currentValue}</p>
             <div className="flex items-center">
-              <Vote
-                problemId={problemId}
-                content={nestedReply}
-                replyId={nestedReply.replyId}
-                onSuccess={optimisticVote}
-              />
+              <Vote problemId={problemId} content={nestedReply} replyId={nestedReply.replyId} />
             </div>
           </div>
         ) : (

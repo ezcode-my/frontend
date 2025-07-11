@@ -8,7 +8,6 @@ import {
   useEditReplyMutation,
 } from '@/query/discussions/replies/replies.mutation';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
-import { QueryClient } from '@tanstack/react-query';
 import ShowChildReplies from '../ShowChildReplies';
 import NestedReplies from '../nestedReplies';
 
@@ -40,10 +39,6 @@ export default function Reply({ reply, problemId }: IReplyProps) {
     setIsEdit((prev) => !prev);
   };
 
-  const optimisticVote = (queryClient: QueryClient) => {
-    queryClient.invalidateQueries({ queryKey: ['replies', problemId, reply.discussionId] });
-  };
-
   return (
     <div className="flex flex-col">
       <div>
@@ -52,12 +47,7 @@ export default function Reply({ reply, problemId }: IReplyProps) {
             <h3>닉네임: {reply.userInfo.nickname}</h3>
             <p>{currentValue}</p>
             <div className="flex items-center">
-              <Vote
-                problemId={problemId}
-                content={reply}
-                replyId={reply.replyId}
-                onSuccess={optimisticVote}
-              />
+              <Vote problemId={problemId} content={reply} replyId={reply.replyId} />
               <ShowChildReplies
                 onClick={() => {
                   setIsNestedRepliesOpen((prev) => !prev);

@@ -41,7 +41,7 @@ export default function Discussion({ discussion }: IDiscussionContentProps) {
               <h3>닉네임: {userInfo.nickname}</h3>
               <p>{content}</p>
               <div className="flex items-center">
-                <Vote content={discussion} problemId={String(problemId)} onSuccess={() => {}} />
+                <Vote content={discussion} problemId={String(problemId)} />
                 <ShowChildReplies
                   onClick={() => {
                     setIsRepliesOpen((prev) => !prev);

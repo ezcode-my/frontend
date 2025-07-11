@@ -9,17 +9,15 @@ import { IReply } from '@/query/discussions/replies/replies.query.types';
 import { ProblemId } from '@/shared';
 import DownVoteIcon from '@/shared/ui/icons/vote-icons/DownVoteIcon';
 import UpVoteIcon from '@/shared/ui/icons/vote-icons/UpVoteIcon';
-import { QueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 interface IVoteProps {
   content: IDiscussionContentResponse | IReply;
-  onSuccess: (queryClient: QueryClient) => void;
   problemId?: ProblemId;
   replyId?: number;
 }
 
-export default function Vote({ content, problemId, onSuccess, replyId }: IVoteProps) {
+export default function Vote({ content, problemId, replyId }: IVoteProps) {
   const [voteStatus, setVoteStatus] = useState<TVoteStatus>(content.voteStatus);
   const [voteCount, setVoteCount] = useState({
     upvoteCount: content.upvoteCount,
@@ -27,12 +25,7 @@ export default function Vote({ content, problemId, onSuccess, replyId }: IVotePr
   });
 
   const { discussionId } = content;
-  const { mutateAsync, data } = useVoteStatusMutation(
-    String(problemId),
-    discussionId,
-    onSuccess,
-    replyId
-  );
+  const { mutateAsync, data } = useVoteStatusMutation(String(problemId), discussionId, replyId);
 
   const changeVoteStatus = (iconType: TVoteStatus) => {
     if (iconType === voteStatus) {
