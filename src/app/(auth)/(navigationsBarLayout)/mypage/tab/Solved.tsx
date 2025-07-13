@@ -1,9 +1,11 @@
 import { useSubmissionList } from '@/query/mypage/mypage';
+import { useModalStore } from '@/shared/modal/model/modalStore';
 
 export const Solved = () => {
   const { data } = useSubmissionList();
   console.log(data?.result);
   console.log(data?.result.length);
+  const { open } = useModalStore();
   return (
     <div className="w-full flex flex-col">
       <table>
@@ -17,17 +19,20 @@ export const Solved = () => {
         </thead>
         {(data?.result.length || 0) > 0 && (
           <tbody>
-            {data?.result.map((item) => {
+            {data?.result.map((item, index) => {
               return (
                 <tr
+                  onClick={() => {
+                    open('solved', data.result[index]);
+                  }}
                   key={item.problemId}
                   className="border-b border-gray-800 hover:bg-gray-900 cursor-pointer"
                 >
                   <td className="text-center py-3 px-2">{item.problemId}</td>
-                  <td className="text-center py-3 px-2">{item.problemDescription}</td>
+                  <td className="text-center py-3 px-2">{item.problemTitle}</td>
                   <td className="text-center py-3 px-2">
                     {item.submissions.filter((submission) => submission.isCorrect).length}
-                  </td>{' '}
+                  </td>
                   <td className="text-center py-3 px-2">{item.submissions.length}</td>
                 </tr>
               );
