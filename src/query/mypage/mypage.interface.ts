@@ -41,9 +41,10 @@ export interface ChangePasswordRequest {
 }
 
 export interface SubmissionsResonse {
-  problemDescription: string;
   problemId: number;
-  submissions: Submission[];
+    problemTitle: string;
+    problemDescription: string;
+    submissions: Submission[];
 }
 
 export interface Submission {

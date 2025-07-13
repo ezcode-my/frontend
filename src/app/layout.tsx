@@ -1,5 +1,6 @@
 import './globals.css';
 import QueryProvider from '@/query/QueryProvider';
+import { ModalProvider } from './providers/ModalProvider';
 
 export default function RootLayout({
   children,
@@ -10,7 +11,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className="flex justify-center w-full h-full">
         <QueryProvider>
-          {children}
+          <ModalProvider>{children}</ModalProvider>
         </QueryProvider>
       </body>
     </html>

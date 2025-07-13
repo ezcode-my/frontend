@@ -11,7 +11,7 @@ import {
 
 import { useState } from 'react';
 import Image from 'next/image';
-import ProblemTable from './_ui/Table';
+import ProblemTable from './ui/Table';
 import { useProblemListQuery } from '@/query/problem/problems';
 
 const ProblemsList = () => {

@@ -10,7 +10,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import { IHeatmapItem } from '@/query/mypage/mypage.interface';
-import { Heatmap } from '../_ui/Heatmap';
+import { Heatmap } from '../ui/Heatmap';
 
 const SummaryStatItem = ({ title, value }: { title: string; value: string | number }) => (
   <div className="flex flex-col gap-2">
