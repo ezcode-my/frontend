@@ -1,9 +1,9 @@
 'use client';
 import ApiHelper from '@/api/client/api';
 import { getProblemIdPath } from '@/api/constants/api.constants';
-import { IDiscussionResponse } from '@/features/discussions/types/discussion.response.data.type';
 import { ProblemId } from '@/shared';
 import { useQuery } from '@tanstack/react-query';
+import { IDiscussionResponse } from './discussion.query.type';
 
 //토론 불러오기
 export const useDiscussionsQuery = (problemId: ProblemId) => {

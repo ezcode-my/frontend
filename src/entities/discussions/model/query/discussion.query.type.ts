@@ -1,3 +1,4 @@
+import { TVoteStatus } from '@/entities/vote/model/vote.mutation.type';
 import { IUserInfo } from '@/shared/types/auth';
 
 /**토론글 get 요청시, 리스폰스(res.data.result) 로 받는 인터페이스  */
@@ -44,5 +45,3 @@ export interface IDiscussionContentResponse {
   isAuthor: boolean;
   languageId: number;
 }
-
-export type TVoteStatus = 'UP' | 'DOWN' | 'NONE';

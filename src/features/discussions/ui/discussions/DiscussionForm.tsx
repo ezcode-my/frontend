@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import {
+  DISCUSSION_CREATE_VALUE,
   IDiscussionContentMutationRequest,
   TDiscussionContentMutationResponse,
   useCreateDiscussionContent,
   useEditDiscussionContent,
-} from '@/query/discussions';
-import { DISCUSSION_CREATE_VALUE } from '@/query/discussions/initial.value';
+} from '@/entities/discussions';
+
 import {
   ILanguageSelectOption,
   INITIAL_LANG,

@@ -1,11 +1,10 @@
 'use client';
 import { Button } from '@/components/ui/button';
-import { useCreateReplyMutation } from '@/query/discussions/replies/replies.mutation';
-import { useRepliesQuery } from '@/query/discussions/replies/replies.query';
 import { ProblemId } from '@/shared';
 import { Spinner } from '@/shared/ui/loading-indicators';
 import { ChangeEvent, useState } from 'react';
 import Reply from './Reply';
+import { useCreateReplyMutation, useRepliesQuery } from '@/entities/discussionReplies';
 
 interface RepliesProps {
   problemId: ProblemId;

@@ -1,9 +1,9 @@
 'use client';
 import { ProblemId } from '@/shared';
 import Discussion from './Discussion';
-import { useDiscussionsQuery } from '@/query/discussions';
 import { Spinner } from '@/shared/ui/loading-indicators';
 import DiscussionForm from './DiscussionForm';
+import { useDiscussionsQuery } from '@/entities/discussions';
 
 interface IDiscussionProps {
   problemId: ProblemId;
@@ -19,7 +19,7 @@ export default function Discussions({ problemId }: IDiscussionProps) {
 
   return (
     <div className="flex flex-col gap-[10px]">
-      <DiscussionForm problemId={problemId} />
+      <DiscussionForm problemId={problemId} mode="create" />
       <div>
         {!discussions ? (
           <div>토론 목록을 불러오는데 실패했습니다.</div>

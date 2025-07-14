@@ -1,14 +1,12 @@
 'use client';
 
-import {
-  IDiscussionContentResponse,
-  TVoteStatus,
-} from '@/features/discussions/types/discussion.response.data.type';
-import { useVoteStatusMutation } from '@/query/discussions';
-import { IReply } from '@/query/discussions/replies/replies.query.types';
+import { IReply } from '@/entities/discussionReplies';
+import { IDiscussionContentResponse } from '@/entities/discussions';
+import { TVoteStatus, useVoteStatusMutation } from '@/entities/vote';
 import { ProblemId } from '@/shared';
 import DownVoteIcon from '@/shared/ui/icons/vote-icons/DownVoteIcon';
 import UpVoteIcon from '@/shared/ui/icons/vote-icons/UpVoteIcon';
+
 import { useEffect, useState } from 'react';
 
 interface IVoteProps {

@@ -4,11 +4,11 @@ import { useState } from 'react';
 import Replies from '../replies';
 import Vote from '../vote/Vote';
 import ShowChildReplies from '../ShowChildReplies';
+import DiscussionForm from './DiscussionForm';
 import {
   TDiscussionContentMutationResponse,
   useDeleteDiscussionContent,
-} from '@/query/discussions';
-import DiscussionForm from './DiscussionForm';
+} from '@/entities/discussions';
 
 interface IDiscussionContentProps {
   discussion: TDiscussionContentMutationResponse;

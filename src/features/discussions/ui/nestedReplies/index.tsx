@@ -1,9 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { ChangeEvent, useState } from 'react';
-import { useNestedRepliesQuery } from '@/query/discussions/replies/replies.query';
 import { Spinner } from '@/shared/ui/loading-indicators';
 import NestedReply from './NestedReply';
-import { useCreateReplyMutation } from '@/query/discussions/replies/replies.mutation';
+import { useCreateReplyMutation, useNestedRepliesQuery } from '@/entities/discussionReplies';
 
 interface INestedReplies {
   problemId: string;

@@ -1,4 +1,4 @@
-import { TVoteStatus } from '@/features/discussions/types/discussion.response.data.type';
+import { TVoteStatus } from '@/entities/discussions/model/query/discussion.query.type';
 
 export interface IVoteIconProps {
   status: TVoteStatus;

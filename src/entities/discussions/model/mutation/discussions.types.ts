@@ -1,4 +1,4 @@
-import { IDiscussionContentResponse } from '@/features/discussions/types/discussion.response.data.type';
+import { IDiscussionContentResponse } from '@/entities/discussions/model/query/discussion.query.type';
 
 export interface IDiscussionContentMutationRequest {
   languageId: number;

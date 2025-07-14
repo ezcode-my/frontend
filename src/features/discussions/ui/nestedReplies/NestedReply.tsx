@@ -1,13 +1,10 @@
 import { Button } from '@/components/ui/button';
-import {
-  useDeleteReplyMutation,
-  useEditReplyMutation,
-} from '@/query/discussions/replies/replies.mutation';
-import { IReply } from '@/query/discussions/replies/replies.query.types';
+
 import { ProblemId } from '@/shared';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
 import { ChangeEvent, useState } from 'react';
 import Vote from '../vote/Vote';
+import { IReply, useDeleteReplyMutation, useEditReplyMutation } from '@/entities/discussionReplies';
 
 interface INestedReplyProps {
   nestedReply: IReply;
