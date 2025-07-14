@@ -1,4 +1,4 @@
-import { IReply } from './replies.query.types';
+import { IReply } from '../query/replies.query.types';
 
 /**생성 뮤테이션시 */
 export interface ICreateReplyMutationRequest {

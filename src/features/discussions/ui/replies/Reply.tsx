@@ -1,12 +1,12 @@
 import Vote from '../vote/Vote';
 import { Button } from '@/components/ui/button';
 import { ProblemId } from '@/shared';
-import { ChangeEvent, useState } from 'react';
-
+import { useState } from 'react';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
 import ShowChildReplies from '../ShowChildReplies';
 import NestedReplies from '../nestedReplies';
-import { IReply, useDeleteReplyMutation, useEditReplyMutation } from '@/entities/discussionReplies';
+import { IReply, useDeleteReplyMutation } from '@/entities/discussionReplies';
+import ReplyForm from '../replyForm';
 
 interface IReplyProps {
   reply: IReply;
@@ -14,66 +14,57 @@ interface IReplyProps {
 }
 export default function Reply({ reply, problemId }: IReplyProps) {
   const [isEdit, setIsEdit] = useState(false);
-  const [currentValue, setCurrentValue] = useState(reply.content);
   const [isNestedRepliesOpen, setIsNestedRepliesOpen] = useState(false);
 
-  const { mutateAsync: editReplyMutation } = useEditReplyMutation(
-    problemId,
-    reply.discussionId,
-    reply.replyId
-  );
-  const { mutateAsync: deleteReplyMutation, isPending: isDeletePending } = useDeleteReplyMutation(
-    problemId,
-    reply.discussionId,
-    reply.replyId,
-    ['replies', problemId, reply.discussionId]
-  );
+  const { content, discussionId, replyId, userInfo, childReplyCount } = reply;
 
-  const handleClickEditButton = () => {
-    if (isEdit) {
-      editReplyMutation({ content: currentValue });
-    }
-    setIsEdit((prev) => !prev);
-  };
+  const { mutateAsync: remove, isPending } = useDeleteReplyMutation(
+    problemId,
+    discussionId,
+    replyId,
+    ['replies', problemId, discussionId]
+  );
 
   return (
     <div className="flex flex-col">
       <div>
         {!isEdit ? (
           <div>
-            <h3>닉네임: {reply.userInfo.nickname}</h3>
-            <p>{currentValue}</p>
+            <h3>닉네임: {userInfo.nickname}</h3>
+            <p>{content}</p>
             <div className="flex items-center">
-              <Vote problemId={problemId} content={reply} replyId={reply.replyId} />
+              <Vote problemId={problemId} content={reply} replyId={replyId} />
               <ShowChildReplies
                 onClick={() => {
                   setIsNestedRepliesOpen((prev) => !prev);
                 }}
-                replyCount={reply.childReplyCount}
+                replyCount={childReplyCount}
               />
+            </div>
+            <Button className="bg-gray-400" onClick={() => setIsEdit(true)}>
+              수정
+            </Button>
+            <Button className="bg-gray-400" onClick={() => remove()}>
+              {isPending ? <BouncingDots /> : '삭제'}
+            </Button>
+            <div className="pl-8">
+              {isNestedRepliesOpen && (
+                <NestedReplies
+                  problemId={problemId}
+                  discussionId={discussionId}
+                  parentReplyId={replyId}
+                />
+              )}
             </div>
           </div>
         ) : (
-          <input
-            value={currentValue}
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setCurrentValue(e.target.value);
-            }}
-          />
-        )}
-        <Button className="bg-gray-400" onClick={handleClickEditButton}>
-          {isEdit ? '완료' : '수정'}
-        </Button>
-        <Button className="bg-gray-400" onClick={() => deleteReplyMutation()}>
-          {isDeletePending ? <BouncingDots /> : '삭제'}
-        </Button>
-      </div>
-      <div className="pl-8">
-        {isNestedRepliesOpen && (
-          <NestedReplies
+          <ReplyForm
             problemId={problemId}
-            discussionId={reply.discussionId}
-            parentReplyId={reply.replyId}
+            discussionId={discussionId}
+            parentReplyId={null}
+            mode="create"
+            initialValue=""
+            onClick={() => setIsEdit(false)}
           />
         )}
       </div>

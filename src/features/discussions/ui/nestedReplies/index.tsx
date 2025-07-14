@@ -1,8 +1,7 @@
-import { Button } from '@/components/ui/button';
-import { ChangeEvent, useState } from 'react';
 import { Spinner } from '@/shared/ui/loading-indicators';
 import NestedReply from './NestedReply';
-import { useCreateReplyMutation, useNestedRepliesQuery } from '@/entities/discussionReplies';
+import { useNestedRepliesQuery } from '@/entities/discussionReplies';
+import ReplyForm from '../replyForm';
 
 interface INestedReplies {
   problemId: string;
@@ -10,9 +9,7 @@ interface INestedReplies {
   parentReplyId: number;
 }
 export default function NestedReplies({ problemId, discussionId, parentReplyId }: INestedReplies) {
-  const [value, setValue] = useState('');
   const { data, isPending } = useNestedRepliesQuery(problemId, discussionId, parentReplyId);
-  const { mutateAsync } = useCreateReplyMutation(problemId, discussionId, true, parentReplyId);
 
   const nestedReplies = data?.result.content;
 
@@ -27,19 +24,13 @@ export default function NestedReplies({ problemId, discussionId, parentReplyId }
   return (
     <div>
       <div>
-        <input
-          placeholder="댓글 다는 임시 인풋"
-          value={value}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+        <ReplyForm
+          problemId={problemId}
+          discussionId={discussionId}
+          mode="create"
+          initialValue=""
+          parentReplyId={parentReplyId}
         />
-        <Button
-          onClick={() => {
-            mutateAsync({ parentReplyId: parentReplyId, content: value });
-            setValue('');
-          }}
-        >
-          생성
-        </Button>
       </div>
       {nestedReplies?.length < 1 ? (
         <div>아직 댓글 없음</div>

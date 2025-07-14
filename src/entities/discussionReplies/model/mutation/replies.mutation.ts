@@ -12,13 +12,12 @@ import {
 export const useCreateReplyMutation = (
   problemId: ProblemId,
   discussionId: number,
-  isNestedReply?: boolean,
-  parentReplyId?: number
+  parentReplyId?: number | null
 ) => {
   const path = getProblemIdPath(problemId, 'discussions');
   const queryClient = useQueryClient();
 
-  const queryKey = isNestedReply
+  const queryKey = parentReplyId
     ? ['nestedReplies', problemId, discussionId, parentReplyId]
     : ['replies', problemId, discussionId];
 
