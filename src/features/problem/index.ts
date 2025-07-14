@@ -4,4 +4,4 @@ export { default as ProblemWorksSection } from './ui/ProblemWorksSection';
 export { default as DetailProblem } from './ui/DetailProblem';
 
 //actions
-export { getDetailProblem } from './actions/problem.actions';
+export { getDetailProblem } from './api/server/getProblem';

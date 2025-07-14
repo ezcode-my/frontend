@@ -5,10 +5,6 @@ import ResultStatusIcon from '@/shared/ui/icons/terminal-icons/ResultStatusIcon'
 export default function CodeResultSummary() {
   const { results, totalResult } = useProblemWebSocketStore();
 
-  // if (!isSubmitted) return null;
-  console.log('initCase', results);
-  console.log('finalResult', totalResult);
-
   const accuracy = totalResult
     ? ((totalResult.passedCount / totalResult.totalCount) * 100).toFixed(2)
     : '00.00';
