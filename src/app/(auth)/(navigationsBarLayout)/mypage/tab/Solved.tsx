@@ -1,13 +1,23 @@
 import { useSubmissionList } from '@/query/mypage/mypage';
-import { useModalStore } from '@/shared/modal/model/modalStore';
+
+import { useState } from 'react';
+import { SolvedModal } from '../ui/SolvedModal';
 
 export const Solved = () => {
   const { data } = useSubmissionList();
-  console.log(data?.result);
-  console.log(data?.result.length);
-  const { open } = useModalStore();
+  const [onModal, setOnModal] = useState(false);
+  const [selected, setSelected] = useState(0);
   return (
     <div className="w-full flex flex-col">
+      {data && onModal && (
+        <SolvedModal
+          open={onModal}
+          data={data?.result[selected]}
+          onClose={() => {
+            setOnModal(false);
+          }}
+        />
+      )}
       <table>
         <thead>
           <tr className="border-b border-gray-700">
@@ -23,7 +33,9 @@ export const Solved = () => {
               return (
                 <tr
                   onClick={() => {
-                    open('solved', data.result[index]);
+                    // open('solved', data.result[index]);
+                    setSelected(index);
+                    setOnModal(true);
                   }}
                   key={item.problemId}
                   className="border-b border-gray-800 hover:bg-gray-900 cursor-pointer"
