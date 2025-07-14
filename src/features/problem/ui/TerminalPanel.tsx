@@ -1,32 +1,24 @@
 'use client';
 import useConnectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
 import { TerminalResultIcon, TerminalReviewIcon, TerminalRunIcon } from '@/shared/ui/icons';
-import useSubmissions from '../hooks/useSubmissions';
-import { IProblemRequestData } from '@/query/problemSubmission/problems.submission.interface';
 import useSubscribeProblem from '../hooks/useSubscribeProblem';
 import { ProblemId } from '@/shared';
 import clsx from 'clsx';
 import { Mode } from './ProblemWorksSection';
 import TerminalGitHubIcon from '@/shared/ui/icons/terminal-icons/TerminalGitHubIcon';
+import useSetSessionKey from '@/entities/problemSubmit/lib/useSetSessionKey';
 
 interface TerminalPanelProps {
   problemId: ProblemId;
-  sourceCodeData: IProblemRequestData;
   setMode: (mode: Mode) => void;
   mode: Mode;
   githubUrl: string | null;
 }
 
-export default function TerminalPanel({
-  problemId,
-  sourceCodeData,
-  setMode,
-  mode,
-  githubUrl,
-}: TerminalPanelProps) {
-  const { submitCodeForResult } = useSubmissions(problemId);
+export default function TerminalPanel({ problemId, setMode, mode, githubUrl }: TerminalPanelProps) {
   const stompRef = useConnectProblemWebSocket();
   useSubscribeProblem(stompRef);
+  useSetSessionKey(problemId);
 
   return (
     <div className="flex flex-col w-[68px] px-[10px] pt-[19px]">
@@ -34,7 +26,6 @@ export default function TerminalPanel({
         <button
           className="flex flex-col gap-[3px] items-center"
           onClick={() => {
-            submitCodeForResult(sourceCodeData);
             setMode('result');
           }}
         >
