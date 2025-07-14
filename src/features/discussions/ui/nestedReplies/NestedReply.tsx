@@ -4,7 +4,7 @@ import { BouncingDots } from '@/shared/ui/loading-indicators';
 import { useState } from 'react';
 import Vote from '../vote/Vote';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussionReplies';
-import ReplyForm from '../replyForm';
+import ReplyForm from '../../ReplyForm';
 
 interface INestedReplyProps {
   nestedReply: IReply;

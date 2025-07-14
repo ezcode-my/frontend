@@ -6,7 +6,7 @@ import { BouncingDots } from '@/shared/ui/loading-indicators';
 import ShowChildReplies from '../ShowChildReplies';
 import NestedReplies from '../nestedReplies';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussionReplies';
-import ReplyForm from '../replyForm';
+import ReplyForm from '../../ReplyForm';
 
 interface IReplyProps {
   reply: IReply;

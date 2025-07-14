@@ -1,7 +1,7 @@
 import { Spinner } from '@/shared/ui/loading-indicators';
 import NestedReply from './NestedReply';
 import { useNestedRepliesQuery } from '@/entities/discussionReplies';
-import ReplyForm from '../replyForm';
+import ReplyForm from '../../ReplyForm';
 
 interface INestedReplies {
   problemId: string;
