@@ -11,14 +11,13 @@ export default function useAccessToken() {
     const fetchToken = async () => {
       const session = await getSession();
       if (session?.accessToken) {
-        setToken(session.accessToken as string);
+        setToken(session.accessToken.split(' ')[1] as string);
       }
     };
     fetchToken();
   }, []);
   if (token) {
-    const formattedToken = token?.split(' ');
-    return formattedToken[1];
+    return token;
   }
   return null;
 }

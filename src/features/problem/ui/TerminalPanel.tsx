@@ -1,24 +1,36 @@
 'use client';
-import useConnectProblemWebSocket from '../hooks/useConnectProblemWebSocket';
 import { TerminalResultIcon, TerminalReviewIcon, TerminalRunIcon } from '@/shared/ui/icons';
 import useSubscribeProblem from '../hooks/useSubscribeProblem';
 import { ProblemId } from '@/shared';
 import clsx from 'clsx';
 import { Mode } from './ProblemWorksSection';
 import TerminalGitHubIcon from '@/shared/ui/icons/terminal-icons/TerminalGitHubIcon';
-import useSetSessionKey from '@/entities/problemSubmit/lib/useSetSessionKey';
+import { IProblemRequestData } from '@/query/problemSubmission/problems.submission.interface';
+import { useSubmissionForResultMutationT } from '@/entities/problemSubmit/model/mutations/submitCode.mutation';
+import useProblemWebSocketStore, {
+  useProblemWebSocketStoreActions,
+} from '../model/useProblemWebSocketStore';
 
 interface TerminalPanelProps {
   problemId: ProblemId;
   setMode: (mode: Mode) => void;
   mode: Mode;
   githubUrl: string | null;
+  sourceCodeData: IProblemRequestData;
 }
 
-export default function TerminalPanel({ problemId, setMode, mode, githubUrl }: TerminalPanelProps) {
-  const stompRef = useConnectProblemWebSocket();
-  useSubscribeProblem(stompRef);
-  useSetSessionKey(problemId);
+export default function TerminalPanel({
+  problemId,
+  setMode,
+  mode,
+  githubUrl,
+  sourceCodeData,
+}: TerminalPanelProps) {
+  const { sessionKey } = useProblemWebSocketStore();
+
+  useSubscribeProblem(sessionKey);
+  const { mutateAsync } = useSubmissionForResultMutationT(problemId);
+  const { clearResults } = useProblemWebSocketStoreActions();
 
   return (
     <div className="flex flex-col w-[68px] px-[10px] pt-[19px]">
@@ -26,6 +38,8 @@ export default function TerminalPanel({ problemId, setMode, mode, githubUrl }: T
         <button
           className="flex flex-col gap-[3px] items-center"
           onClick={() => {
+            clearResults();
+            mutateAsync({ ...sourceCodeData, sessionKey: sessionKey || '' });
             setMode('result');
           }}
         >
