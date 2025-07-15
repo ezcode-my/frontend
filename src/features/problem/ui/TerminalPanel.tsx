@@ -33,7 +33,6 @@ export default function TerminalPanel({
 
   const { mutateAsync } = useSubmissionForResultMutationT(problemId);
   const { clearResults } = useProblemWebSocketStoreActions();
-  const { mutateAsync: pushAutoToggle } = useGitPushAutoToggleMutation();
 
   return (
     <div className="flex flex-col w-[68px] px-[10px] pt-[19px]">
@@ -60,7 +59,7 @@ export default function TerminalPanel({
           <TerminalReviewIcon className={clsx(mode !== 'review' && 'text-[#6B6B6B]')} />
           <h3 className={clsx(mode !== 'review' && 'text-[#6B6B6B]')}>REVIEW</h3>
         </button>
-        <GitPushDialog githubUrl={githubUrl} onClick={pushAutoToggle} />
+        <GitPushDialog githubUrl={githubUrl} />
       </div>
     </div>
   );

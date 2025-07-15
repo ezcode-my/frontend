@@ -9,7 +9,7 @@ export const useGetGitHubRepo = () => {
     queryKey: ['get-git-repos'],
     queryFn: async () => {
       const response = await ApiHelper.get<TGetReposResponse>(`${API_URL.Git}`);
-      return response;
+      return response.data.result;
     },
   });
 };
