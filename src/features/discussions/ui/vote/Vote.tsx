@@ -43,7 +43,7 @@ export default function Vote({ content, problemId, replyId }: IVoteProps) {
         upvoteCount: data.result.upvoteCount,
       });
     }
-  }, [data?.success]);
+  }, [data]);
 
   return (
     <div className="flex items-center">

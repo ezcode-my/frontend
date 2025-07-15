@@ -43,7 +43,7 @@ export default function useConnectProblemWebSocket() {
       setStatus(false);
       clearMessages();
     };
-  }, [accessToken]);
+  }, [accessToken, clearMessages]);
 
   return { problemStompRef };
 }

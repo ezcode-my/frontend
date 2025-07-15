@@ -1,4 +1,4 @@
-import { TVoteStatus } from '@/entities/discussions/model/query/discussion.query.type';
+import { TVoteStatus } from '@/entities/vote';
 import { IUserInfo } from '@/shared/types/auth';
 
 export interface IGetRepliesResponse {

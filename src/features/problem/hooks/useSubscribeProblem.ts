@@ -41,5 +41,5 @@ export default function useSubscribeProblem(sessionKey: string) {
         clearMessages();
       };
     }
-  }, [isConnected, setMessage, clearMessages, sessionKey]);
+  }, [isConnected, setMessage, clearMessages, sessionKey, problemStompRef]);
 }

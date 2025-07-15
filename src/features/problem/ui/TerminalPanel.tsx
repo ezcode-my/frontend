@@ -10,7 +10,6 @@ import useProblemWebSocketStore, {
   useProblemWebSocketStoreActions,
 } from '../model/useProblemWebSocketStore';
 import GitPushDialog from '@/features/submitProblem/gitPush/ui/GitPushDialog';
-import { useGitPushAutoToggleMutation } from '@/entities/submitProblem/gitpush/model/mutation/gitpush.mutation';
 
 interface TerminalPanelProps {
   problemId: ProblemId;
