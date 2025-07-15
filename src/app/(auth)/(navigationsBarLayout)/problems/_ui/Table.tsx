@@ -3,9 +3,10 @@
 import Image from 'next/image';
 import React, { useState, useEffect, useMemo } from 'react';
 
-import { useProblemListQuery } from '@/query/problem/problems';
 import { useRouter } from 'next/navigation';
 import { SkeletonBox } from '@/shared/ui/loading-indicators';
+
+import { ProblemList } from '@/query/problem/problem.interface';
 
 const PAGE_LIMIT = 15;
 
