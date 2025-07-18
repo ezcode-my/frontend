@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import TerminalGitHubIcon from '@/shared/ui/icons/terminal-icons/TerminalGitHubIcon';
-import useGitPush from '../lib/useGitPush';
+import useGitPush from '../hooks/useGitPush';
 import {
   Select,
   SelectContent,
