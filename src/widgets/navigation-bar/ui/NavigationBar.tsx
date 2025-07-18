@@ -1,6 +1,7 @@
 import { PATHS } from '@/constants/paths';
 import Image from 'next/image';
 import Link from 'next/link';
+import Notifications from './Notifications';
 
 export default function NavigationBar() {
   return (
@@ -17,13 +18,7 @@ export default function NavigationBar() {
         </Link>
         <Link href={PATHS.PROBLEMS}>문제풀이</Link>
         <Link href={PATHS.RANK}>랭킹보기</Link>
-        <Image
-          src="/icons/notification-icon.svg"
-          width={48}
-          height={48}
-          alt="notification-icon"
-          priority
-        />
+        <Notifications />
         <Link href={PATHS.SIGNIN}>로그인</Link>
       </div>
     </header>
