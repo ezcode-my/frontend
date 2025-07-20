@@ -34,6 +34,7 @@ export const API_URL = {
   CHAT: {
     ROOMS: '/rooms',
   },
+  NOTIFICATIONS : '/notifications'
 };
 
 /** API 요청 주소 */
