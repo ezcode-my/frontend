@@ -10,8 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import TerminalGitHubIcon from '@/shared/ui/icons/terminal-icons/TerminalGitHubIcon';
-import useGitPush from '../hooks/useGitPush';
 import {
   Select,
   SelectContent,
@@ -20,6 +18,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Icon } from '@/shared';
+import useGitPush from '../hooks/useGitPush';
 
 interface GitPushDialogProps {
   githubUrl: string | null;
@@ -30,7 +30,7 @@ export default function GitPushDialog({ githubUrl }: GitPushDialogProps) {
   return (
     <Dialog>
       <DialogTrigger>
-        <TerminalGitHubIcon disabled={!!githubUrl} />
+        <Icon.TerminalGitHubIcon disabled={!!githubUrl} />
       </DialogTrigger>
       <DialogContent className="w-[425px]">
         <DialogHeader>

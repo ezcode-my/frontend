@@ -1,8 +1,8 @@
 import {
+  useGetGitHubRepo,
   useGitPushAutoToggleMutation,
   useGitRepoChoice,
-} from '@/entities/submitCode/gitpush/model/mutation/gitpush.mutation';
-import { useGetGitHubRepo } from '@/entities/submitCode/gitpush/model/query/gitpush.query';
+} from '@/entities/submitCode';
 import { useEffect, useState } from 'react';
 
 export default function useGitPush() {
