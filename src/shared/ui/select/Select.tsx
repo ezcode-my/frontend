@@ -4,7 +4,7 @@ import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface PropsType extends HTMLAttributes<HTMLDivElement> {
-  option: { label: string; value: string | number }[];
+  option: { label: string; value: string }[];
   title: string;
   className?: string;
   setValue: (value: string) => void;
