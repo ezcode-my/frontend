@@ -13,7 +13,7 @@ export default function Notifications() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { notifications } = useNotificationsStore();
-  console.log(notifications);
+
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
