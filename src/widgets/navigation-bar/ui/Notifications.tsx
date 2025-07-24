@@ -13,11 +13,7 @@ export default function Notifications() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { notifications } = useNotificationsStore();
-<<<<<<< HEAD
-  console.log(notifications);
-=======
 
->>>>>>> 4489adc (feat : 알림 api 수정 및 간단 퍼블)
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
@@ -36,15 +32,11 @@ export default function Notifications() {
         <div className="absolute top-full right-0 mt-2 min-w-[300px] max-w-xs bg-white shadow-xl rounded-xl p-4 z-50 w-fit">
           <div className="mt-2 text-sm text-[#000] space-y-2">
             {notifications.content.map((item) => (
-<<<<<<< HEAD
               <Link
                 key={item.id}
                 href={`/problems/${item.payload.problemId}/discussions/${item.payload.discussionId}`}
                 className="block"
               >
-=======
-              <Link key={item.id} href="" className="block">
->>>>>>> 4489adc (feat : 알림 api 수정 및 간단 퍼블)
                 <div className="flex justify-between w-full">
                   <span className="text-[#000] mr-2 break-words min-w-0 max-w-[80%]">
                     • {item.message}
