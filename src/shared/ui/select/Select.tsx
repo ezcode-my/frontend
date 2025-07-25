@@ -73,7 +73,7 @@ export const Select = ({
 
       <div
         className={twMerge(
-          'max-h-[300px] w-full overflow-y-auto absolute top-11 flex flex-col bg-gray-800 border border-gray-700 rounded  z-10 transition-all duration-200 origin-top ',
+          'max-h-[300px] w-full overflow-y-auto absolute top-14 flex flex-col bg-gray-800 border border-gray-700 rounded  z-10 transition-all duration-200 origin-top ',
           dropdown ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
