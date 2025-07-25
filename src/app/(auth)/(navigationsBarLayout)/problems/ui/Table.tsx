@@ -73,7 +73,7 @@ export default function ProblemTable({
   //   setCurrentPage(pageGroupStart + PAGE_LIMIT);
   // };
 
-  const handelNextPage = () => {
+  const handleNextPage = () => {
     if (currentPage + 1 < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -214,7 +214,7 @@ export default function ProblemTable({
         <Button
           className="w-10 h-10"
           variant="outline"
-          onClick={handelNextPage}
+          onClick={handleNextPage}
           label={
             <Image
               className="cursor-pointer"
