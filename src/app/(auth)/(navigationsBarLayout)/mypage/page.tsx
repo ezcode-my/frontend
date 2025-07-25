@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SideNavigation } from './SideNavigation';
 import { Mine } from './tab/Mine';
 import { Solved } from './tab/Solved';
@@ -16,13 +16,12 @@ const Mypage = () => {
     inquiry: <Inquiry />,
     changePassword: <ChangePassword />,
   } as const;
-  return (
-    <div className="w-full h-full pt-[114px] px-10 py-[34px] flex">
-      <div className="flex-[1]">
-        <SideNavigation tab={tab} setTab={setTab} />
-      </div>
 
-      <div className="flex-[4] px-10">{tabComponents[tab as 'mine']}</div>
+  return (
+    <div className="w-full h-full flex">
+      <SideNavigation tab={tab} setTab={setTab} />
+
+      <div className="p-10 flex-1">{tabComponents[tab as 'mine']}</div>
     </div>
   );
 };
