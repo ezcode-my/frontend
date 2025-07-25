@@ -7,7 +7,7 @@ import { useProblemListQuery } from '@/entities/problems/model/query';
 import { Select } from '@/shared/ui/select/Select';
 import { Button } from '@/shared/ui/button/Button';
 
-export const FilterSelect = ({ children }: { children: ReactNode }) => {
+const FilterSelect = ({ children }: { children: ReactNode }) => {
   return <div className="flex flex-col gap-1 w-1/3">{children}</div>;
 };
 
@@ -92,6 +92,10 @@ const ProblemsList = () => {
                   />
 
                   <Button
+                    onClick={() => {
+                      setSearch(keyword);
+                      setCurrentPage(1);
+                    }}
                     label={
                       <svg
                         width="20"
@@ -99,10 +103,6 @@ const ProblemsList = () => {
                         viewBox="0 0 36 37"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        onClick={() => {
-                          setSearch(keyword);
-                          setCurrentPage(1);
-                        }}
                         className="cursor-pointer"
                       >
                         <path

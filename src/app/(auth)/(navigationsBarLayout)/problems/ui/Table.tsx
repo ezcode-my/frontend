@@ -57,7 +57,7 @@ export default function ProblemTable({
   }, [currentPage]);
 
   const pageNumbers = useMemo(() => {
-    const end = Math.min(pageGroupStart + PAGE_LIMIT - 1, totalPages - 1);
+    const end = Math.min(pageGroupStart + PAGE_LIMIT - 1, totalPages - 1); //-1한 이유는 현재 백에서 주는 totalPages가 +1되서 들어옴 예를들어 23페이지까지 데이터가 있으면 totalPages는 24로 들어옴
     return Array.from({ length: end - pageGroupStart + 1 }, (_, i) => pageGroupStart + i);
   }, [pageGroupStart, totalPages]);
 
@@ -185,18 +185,32 @@ export default function ProblemTable({
         />
 
         {pageNumbers.map((num) => (
-          <button
+          // <button
+          //   type="button"
+          //   key={num}
+          //   className={`w-10 h-10 rounded-md flex items-center justify-center text-sm transition bg-[#6B6B6B] ${
+          //     currentPage === num
+          //       ? 'bg-[#214d35] hover:bg-[#276e48] text-white border-[#214d35]'
+          //       : 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700'
+          //   }`}
+          //   onClick={() => !isLoading && setCurrentPage(num)}
+          // >
+          //   {num}
+          // </button>
+          <Button
+            onClick={() => {
+              if (!isLoading) setCurrentPage(num);
+            }}
             key={num}
+            label={num}
             className={`w-10 h-10 rounded-md flex items-center justify-center text-sm transition bg-[#6B6B6B] ${
               currentPage === num
                 ? 'bg-[#214d35] hover:bg-[#276e48] text-white border-[#214d35]'
                 : 'bg-gray-800 border-gray-700 text-white hover:bg-gray-700'
             }`}
-            onClick={() => !isLoading && setCurrentPage(num)}
-          >
-            {num}
-          </button>
+          />
         ))}
+
         <Button
           className="w-10 h-10"
           variant="outline"
