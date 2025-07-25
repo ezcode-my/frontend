@@ -49,6 +49,7 @@ interface PropsType extends HTMLAttributes<HTMLDivElement> {
   value: string;
   size?: 'sm' | 'md' | 'lg';
   type?: 'setValue' | 'router' | 'api';
+  entireOption?: boolean;
 }
 
 export const Select = ({
@@ -59,6 +60,7 @@ export const Select = ({
   value,
   size = 'md',
   type = 'setValue',
+  entireOption = false,
   ...rest
 }: PropsType) => {
   const router = useRouter();
@@ -137,16 +139,18 @@ export const Select = ({
           dropdown ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         )}
       >
-        <div
-          className="flex flex-row gap-2 items-center px-1 hover:bg-white hover:text-black cursor-pointer py-1 rounded "
-          onClick={() => {
-            if (setValue) setValue('');
-            setDropdown(false);
-          }}
-        >
-          <span className="ml-5 w-3">{'' === value && '✔'}</span>
-          <span className=" ">전체</span>
-        </div>
+        {entireOption && (
+          <div
+            className="flex flex-row gap-2 items-center px-1 hover:bg-white hover:text-black cursor-pointer py-1 rounded "
+            onClick={() => {
+              if (setValue) setValue('');
+              setDropdown(false);
+            }}
+          >
+            <span className="ml-5 w-3">{'' === value && '✔'}</span>
+            <span className=" ">전체</span>
+          </div>
+        )}
         {option.map((item, index) => (
           <div
             key={typeof item.value === 'string' ? item.value : `option-${index}`}
