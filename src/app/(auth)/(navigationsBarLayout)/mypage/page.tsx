@@ -14,14 +14,13 @@ const Mypage = () => {
     solved: <Solved />,
     report: <Report />,
     inquiry: <Inquiry />,
-    changePassword: <ChangePassword />,
+    password: <ChangePassword />,
   } as const;
 
   return (
-    <div className="w-full h-full flex">
+    <div className="w-full  flex h-full">
       <SideNavigation tab={tab} setTab={setTab} />
-
-      <div className="p-10 flex-1">{tabComponents[tab as 'mine']}</div>
+      <div className="p-10 flex-1 h-full overflow-y-auto">{tabComponents[tab as 'mine']}</div>
     </div>
   );
 };

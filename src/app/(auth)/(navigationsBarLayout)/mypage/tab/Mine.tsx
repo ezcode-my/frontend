@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { Heatmap } from '../ui/Heatmap';
 import {
+  useEmailVerify,
   useMyAiReviewCheckQuery,
   useMyDailySolved,
   useMyInfoQuery,
@@ -14,6 +15,7 @@ import { User } from 'lucide-react';
 import Mail from './../../../../../../public/icons/mypage/mail.svg';
 import Bookopen from './../../../../../../public/icons/mypage/bookopen.svg';
 import { Button } from '@/shared/ui/button/Button';
+import { BASE_URL } from '@/constants/env';
 const SummaryStatItem = ({ title, value }: { title: string; value: string | number }) => (
   <div className="flex flex-col gap-2">
     <span className="text-center font-bold text-[#EBEBEBAB] text-xs">{title}</span>
@@ -44,6 +46,7 @@ export const Mine = () => {
   const { data: ranking } = useMyRankingQuery('all-time');
   const { data: aiReview } = useMyAiReviewCheckQuery();
   const { data: heatmap } = useMyDailySolved();
+  const { mutateAsync: emailVerfiy } = useEmailVerify(BASE_URL || '');
   const myInfo = data?.data.result;
   const myRanking = ranking?.data.result;
 
@@ -115,7 +118,14 @@ export const Mine = () => {
               <span className="font-medium">✓ 인증 완료</span>
             </div>
           ) : (
-            <Button variant="primary" label="이메일 인증" onClick={() => {}} />
+            <Button
+              variant="primary"
+              label="이메일 인증"
+              onClick={async () => {
+                const response = await emailVerfiy();
+                alert(response);
+              }}
+            />
           )}
         </div>
       </section>
