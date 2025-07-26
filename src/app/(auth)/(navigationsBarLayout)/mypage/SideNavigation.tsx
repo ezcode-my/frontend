@@ -1,6 +1,5 @@
 'use client';
-import Report from './../../../../../public/icons/mypage/report.svg';
-import Mine from './../../../../../public/icons/mypage/mine.svg';
+
 import Password from './../../../../../public/icons/mypage/password.svg';
 import Image from 'next/image';
 import { User, MessageSquare, Flag, History } from 'lucide-react';
@@ -52,6 +51,7 @@ export const SideNavigation = ({ tab, setTab }: IProps) => {
           {bottomMenuItem.map((item) => {
             return (
               <button
+                key={item.id}
                 onClick={() => setTab(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${
                   tab === item.id
@@ -69,22 +69,6 @@ export const SideNavigation = ({ tab, setTab }: IProps) => {
           })}
         </nav>
       </div>
-      {/* <div className="flex flex-col justify-center items-center">
-        <ul className="text-xl font-semibold">
-          <li
-            className={`cursor-pointer py-2 px-3 text-center rounded-md ${
-              tab === 'changePassword'
-                ? 'text-green-400 font-extrabold text-lg'
-                : 'text-white text-base font-light'
-            }`}
-            onClick={() => {
-              setTab('changePassword');
-            }}
-          >
-            비밀번호 변경
-          </li>
-        </ul>
-      </div> */}
     </div>
   );
 };

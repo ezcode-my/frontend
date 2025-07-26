@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { SolvedModal } from '../ui/SolvedModal';
 import { useSubmissionList } from '@/entities/mypage/model/query';
 import { History } from 'lucide-react';
 import { SubmissionsResonse } from '@/entities/mypage/model/types';
@@ -65,10 +63,7 @@ const Card = ({ submissions }: { submissions: SubmissionsResonse }) => {
     return '#888'; // Default color
   };
   return (
-    <div
-      key={submissions.problemId}
-      className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 "
-    >
+    <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-700/50 ">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
           <span className="text-gray-400 text-sm">#{submissions.problemId}</span>
@@ -129,7 +124,7 @@ export const Solved = () => {
       <div className="flex flex-col gap-2">
         {data?.result?.length || 0 > 0 ? (
           data?.result.map((item) => {
-            return <Card submissions={item} />;
+            return <Card key={item.problemId} submissions={item} />;
           })
         ) : (
           <span>푼 문제가 없습니다.</span>

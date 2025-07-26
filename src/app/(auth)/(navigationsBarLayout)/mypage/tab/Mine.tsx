@@ -16,22 +16,8 @@ import Mail from './../../../../../../public/icons/mypage/mail.svg';
 import Bookopen from './../../../../../../public/icons/mypage/bookopen.svg';
 import { Button } from '@/shared/ui/button/Button';
 import { BASE_URL } from '@/constants/env';
-const SummaryStatItem = ({ title, value }: { title: string; value: string | number }) => (
-  <div className="flex flex-col gap-2">
-    <span className="text-center font-bold text-[#EBEBEBAB] text-xs">{title}</span>
-    <span className="text-center font-bold text-white text-2xl">{value}</span>
-  </div>
-);
 
-const DetailInfoRow = ({
-  title,
-  value,
-  verify = false,
-}: {
-  title: string;
-  value: string | number;
-  verify?: boolean;
-}) => (
+const DetailInfoRow = ({ title, value }: { title: string; value: string | number }) => (
   <div className="bg-gray-800/50 p-3 rounded-lg flex flex-col">
     <div className="text-sm text-gray-400">{title}</div>
     <div className="text-lg font-bold" style={{ color: '#FFF' }}>
