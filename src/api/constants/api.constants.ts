@@ -34,6 +34,7 @@ export const API_URL = {
   MYPAGE: {
     CHANGE_PASSWORD: '/users/password',
     SUBMISSION: '/submissions',
+    VERIFY_EMAIL : '/email/send'
   },
   USER: {
     TOKEN_COUNT: '/users/review-token',
@@ -43,7 +44,9 @@ export const API_URL = {
   },
   RANK: {
     WEEKLY: '/rankings/weekly',
+    ALL_TIME: '/rankings/all-time',
   },
+  NOTIFICATIONS: '/notifications',
 };
 
 /** API 요청 주소 */

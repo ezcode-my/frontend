@@ -11,9 +11,10 @@ export default function useJoinChatRoom(chatroomId: ChatRoomId) {
   const { isConnected } = useChatWebSocketStore();
 
   useEffect(() => {
+    if (chatroomId === 0) return;
+
     if (!chatStompRef?.current) return;
     if (!isConnected) return;
-
     const joinChatRoomReceiptId = 'sub-chatRoom';
     const chatMessageReceiptId = `sub-message-${chatroomId}-${Date.now()}	`;
 
@@ -24,6 +25,7 @@ export default function useJoinChatRoom(chatroomId: ChatRoomId) {
         (msg: IMessage) => {
           try {
             const chats = JSON.parse(msg.body);
+
             setInitMessages(chats);
           } catch (e) {
             console.error('채팅 내역 파싱 오류', e);
@@ -39,12 +41,12 @@ export default function useJoinChatRoom(chatroomId: ChatRoomId) {
           try {
             const parsedBody = JSON.parse(msg.body);
             setMessage({ ...parsedBody });
-          } catch (e) {
+          } catch {
             setMessage({
               message: msg.body,
               tier: 'LV1',
               name: '시스템',
-              time: Number(new Date()),
+              time: String(new Date()),
             });
           }
         },
@@ -57,5 +59,6 @@ export default function useJoinChatRoom(chatroomId: ChatRoomId) {
         body: String(chatroomId),
       });
     }
-  }, [isConnected, chatStompRef]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConnected, chatStompRef, chatroomId]);
 }
