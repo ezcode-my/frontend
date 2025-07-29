@@ -5,7 +5,7 @@ interface IUserImageProps {
   className?: string;
 }
 
-export default function UserImage({ profileImageUrl, className }: IUserImageProps) {
+export default function UserImage({ profileImageUrl, className = 'size-8' }: IUserImageProps) {
   return (
     <div className={clsx('relative', className)}>
       <img

@@ -37,7 +37,7 @@ export default function Discussion({ discussion }: IDiscussionContentProps) {
           changeEditMode={(status) => setIsEdit(status)}
         />
       ) : (
-        <div className="w-full">
+        <div className="w-full mb-4">
           <div className="flex items-center gap-3">
             <UserImage className="size-8" profileImageUrl={userInfo.profileImageUrl} />
             <>

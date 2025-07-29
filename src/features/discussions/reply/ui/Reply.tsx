@@ -7,6 +7,8 @@ import NestedReplies from './NestedReplies';
 import ReplyForm from './ReplyForm';
 import ShowChildReplies from './ShowChildReplies';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussions';
+import UserImage from '@/shared/ui/user/UserImage';
+import KebabIcons from '@/shared/ui/icons/kebab-icons';
 
 interface IReplyProps {
   reply: IReply;
@@ -30,9 +32,12 @@ export default function Reply({ reply, problemId }: IReplyProps) {
       <div>
         {!isEdit ? (
           <div>
-            <h3>닉네임: {userInfo.nickname}</h3>
-            <p>{content}</p>
-            <div className="flex items-center">
+            <div className="flex items-center gap-2 mb-2">
+              <UserImage profileImageUrl={userInfo.profileImageUrl} />
+              <span className="font-medium text-secondary text-sm">{userInfo.nickname}</span>
+            </div>
+            <p className="text-[#ccc] text-sm mb-2 ml-8">{content}</p>
+            <div className="flex items-center gap-2 ">
               <Vote problemId={problemId} content={reply} replyId={replyId} />
               <ShowChildReplies
                 onClick={() => {
@@ -40,6 +45,7 @@ export default function Reply({ reply, problemId }: IReplyProps) {
                 }}
                 replyCount={childReplyCount}
               />
+              <KebabIcons className="text-white" />
             </div>
             <Button className="bg-gray-400" onClick={() => setIsEdit(true)}>
               수정
@@ -63,7 +69,7 @@ export default function Reply({ reply, problemId }: IReplyProps) {
             discussionId={discussionId}
             parentReplyId={null}
             mode="create"
-            initialValue=""
+            initialValue={content}
             onClick={() => setIsEdit(false)}
           />
         )}

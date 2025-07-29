@@ -5,6 +5,8 @@ import { useState } from 'react';
 import Vote from '../../vote/ui/Vote';
 import ReplyForm from './ReplyForm';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussions';
+import UserImage from '@/shared/ui/user/UserImage';
+import KebabIcons from '@/shared/ui/icons/kebab-icons';
 
 interface INestedReplyProps {
   nestedReply: IReply;
@@ -25,11 +27,15 @@ export default function NestedReply({ nestedReply, problemId }: INestedReplyProp
     <div className="flex flex-col">
       <div>
         {!isEdit ? (
-          <div>
-            <h3>닉네임: {nestedReply.userInfo.nickname}</h3>
-            <p>{nestedReply.content}</p>
-            <div className="flex items-center">
+          <div className="bg-background rounded-[14px] p-3">
+            <UserImage profileImageUrl={nestedReply.userInfo.profileImageUrl} />
+            <span className="font-medium text-secondary text-xs">
+              {nestedReply.userInfo.nickname}
+            </span>
+            <p className="text-[#ccc] text-xs mb-2">{nestedReply.content}</p>
+            <div className="flex items-center gap-2 ">
               <Vote problemId={problemId} content={nestedReply} replyId={nestedReply.replyId} />
+              <KebabIcons className="text-white" />
             </div>
             <Button className="bg-gray-400" onClick={() => setIsEdit(true)}>
               수정
