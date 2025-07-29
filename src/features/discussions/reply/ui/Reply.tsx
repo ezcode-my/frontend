@@ -9,6 +9,7 @@ import ShowChildReplies from './ShowChildReplies';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussions';
 import UserImage from '@/shared/ui/user/UserImage';
 import KebabIcons from '@/shared/ui/icons/kebab-icons';
+import DiscussionFooter from '../../DiscussionFooter';
 
 interface IReplyProps {
   reply: IReply;
@@ -37,16 +38,16 @@ export default function Reply({ reply, problemId }: IReplyProps) {
               <span className="font-medium text-secondary text-sm">{userInfo.nickname}</span>
             </div>
             <p className="text-[#ccc] text-sm mb-2 ml-8">{content}</p>
-            <div className="flex items-center gap-2 ">
-              <Vote problemId={problemId} content={reply} replyId={replyId} />
-              <ShowChildReplies
-                onClick={() => {
-                  setIsNestedRepliesOpen((prev) => !prev);
-                }}
-                replyCount={childReplyCount}
-              />
-              <KebabIcons className="text-white" />
-            </div>
+            <DiscussionFooter
+              type="reply"
+              content={reply}
+              problemId={problemId}
+              replyId={replyId}
+              setChildRepliesOpen={() => {
+                setIsNestedRepliesOpen((prev) => !prev);
+              }}
+              replyCount={childReplyCount}
+            />
             <Button className="bg-gray-400" onClick={() => setIsEdit(true)}>
               수정
             </Button>

@@ -11,6 +11,7 @@ import { LANGUAGE } from '@/shared/types/problem.type';
 import Image from 'next/image';
 import UserImage from '@/shared/ui/user/UserImage';
 import KebabIcons from '@/shared/ui/icons/kebab-icons';
+import DiscussionFooter from '../../DiscussionFooter';
 
 interface IDiscussionContentProps {
   discussion: TDiscussionContentMutationResponse;
@@ -46,16 +47,14 @@ export default function Discussion({ discussion }: IDiscussionContentProps) {
             </>
           </div>
           <p className="text-[#ccc] mb-4 leading-relaxed">{content}</p>
-          <div className="flex items-center gap-2 ">
-            <Vote content={discussion} problemId={String(problemId)} />
-            <ShowChildReplies
-              onClick={() => {
-                setIsRepliesOpen((prev) => !prev);
-              }}
-              replyCount={replyCount}
-            />
-            <KebabIcons className="text-white" />
-          </div>
+          <DiscussionFooter
+            content={discussion}
+            problemId={String(problemId)}
+            setChildRepliesOpen={() => {
+              setIsRepliesOpen((prev) => !prev);
+            }}
+            replyCount={replyCount}
+          />
           {discussion.isAuthor && (
             <>
               <Button

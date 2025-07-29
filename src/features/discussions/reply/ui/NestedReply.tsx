@@ -7,6 +7,7 @@ import ReplyForm from './ReplyForm';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussions';
 import UserImage from '@/shared/ui/user/UserImage';
 import KebabIcons from '@/shared/ui/icons/kebab-icons';
+import DiscussionFooter from '../../DiscussionFooter';
 
 interface INestedReplyProps {
   nestedReply: IReply;
@@ -28,15 +29,19 @@ export default function NestedReply({ nestedReply, problemId }: INestedReplyProp
       <div>
         {!isEdit ? (
           <div className="bg-background rounded-[14px] p-3">
-            <UserImage profileImageUrl={nestedReply.userInfo.profileImageUrl} />
-            <span className="font-medium text-secondary text-xs">
-              {nestedReply.userInfo.nickname}
-            </span>
-            <p className="text-[#ccc] text-xs mb-2">{nestedReply.content}</p>
-            <div className="flex items-center gap-2 ">
-              <Vote problemId={problemId} content={nestedReply} replyId={nestedReply.replyId} />
-              <KebabIcons className="text-white" />
+            <div className="flex items-center gap-2 mb-2">
+              <UserImage profileImageUrl={nestedReply.userInfo.profileImageUrl} />
+              <span className="font-medium text-secondary text-xs">
+                {nestedReply.userInfo.nickname}
+              </span>
             </div>
+
+            <p className="text-[#ccc] text-xs mb-2">{nestedReply.content}</p>
+            <DiscussionFooter
+              content={nestedReply}
+              problemId={problemId}
+              replyId={nestedReply.replyId}
+            />
             <Button className="bg-gray-400" onClick={() => setIsEdit(true)}>
               수정
             </Button>
