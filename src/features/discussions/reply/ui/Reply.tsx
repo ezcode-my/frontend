@@ -1,14 +1,9 @@
-import Vote from '../../vote/ui/Vote';
-import { Button } from '@/components/ui/button';
 import { ProblemId } from '@/shared';
 import { useState } from 'react';
-import { BouncingDots } from '@/shared/ui/loading-indicators';
 import NestedReplies from './NestedReplies';
 import ReplyForm from './ReplyForm';
-import ShowChildReplies from './ShowChildReplies';
 import { IReply, useDeleteReplyMutation } from '@/entities/discussions';
 import UserImage from '@/shared/ui/user/UserImage';
-import KebabIcons from '@/shared/ui/icons/kebab-icons';
 import DiscussionFooter from '../../DiscussionFooter';
 
 interface IReplyProps {
@@ -21,12 +16,11 @@ export default function Reply({ reply, problemId }: IReplyProps) {
 
   const { content, discussionId, replyId, userInfo, childReplyCount } = reply;
 
-  const { mutateAsync: remove, isPending } = useDeleteReplyMutation(
+  const { mutateAsync: remove } = useDeleteReplyMutation(problemId, discussionId, replyId, [
+    'replies',
     problemId,
     discussionId,
-    replyId,
-    ['replies', problemId, discussionId]
-  );
+  ]);
 
   return (
     <div className="flex flex-col">
@@ -39,7 +33,6 @@ export default function Reply({ reply, problemId }: IReplyProps) {
             </div>
             <p className="text-[#ccc] text-sm mb-2 ml-8">{content}</p>
             <DiscussionFooter
-              type="reply"
               content={reply}
               problemId={problemId}
               replyId={replyId}
@@ -47,13 +40,10 @@ export default function Reply({ reply, problemId }: IReplyProps) {
                 setIsNestedRepliesOpen((prev) => !prev);
               }}
               replyCount={childReplyCount}
+              onDelete={() => remove()}
+              onEdit={() => setIsEdit(true)}
             />
-            <Button className="bg-gray-400" onClick={() => setIsEdit(true)}>
-              수정
-            </Button>
-            <Button className="bg-gray-400" onClick={() => remove()}>
-              {isPending ? <BouncingDots /> : '삭제'}
-            </Button>
+
             <div className="pl-8">
               {isNestedRepliesOpen && (
                 <NestedReplies

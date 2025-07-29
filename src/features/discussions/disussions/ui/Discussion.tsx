@@ -1,16 +1,11 @@
 'use client';
-import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import ShowChildReplies from '../../reply/ui/ShowChildReplies';
 import DiscussionForm from './DiscussionForm';
 import { useDeleteDiscussionContent } from '@/entities/discussions';
-import { Vote } from '../../vote';
 import Replies from '../../reply/ui/Replies';
 import { TDiscussionContentMutationResponse } from '@/entities/discussions/discussions/model/mutation/discussions.types';
 import { LANGUAGE } from '@/shared/types/problem.type';
-import Image from 'next/image';
 import UserImage from '@/shared/ui/user/UserImage';
-import KebabIcons from '@/shared/ui/icons/kebab-icons';
 import DiscussionFooter from '../../DiscussionFooter';
 
 interface IDiscussionContentProps {
@@ -54,19 +49,9 @@ export default function Discussion({ discussion }: IDiscussionContentProps) {
               setIsRepliesOpen((prev) => !prev);
             }}
             replyCount={replyCount}
+            onDelete={() => deleteMutate()}
+            onEdit={() => setIsEdit(true)}
           />
-          {discussion.isAuthor && (
-            <>
-              <Button
-                onClick={() => {
-                  deleteMutate();
-                }}
-              >
-                삭제
-              </Button>
-              <Button onClick={() => setIsEdit(true)}>{isEdit ? '완료' : '수정'}</Button>
-            </>
-          )}
         </div>
       )}
       {isRepliesOpen && <Replies problemId={String(problemId)} discussionId={discussionId} />}

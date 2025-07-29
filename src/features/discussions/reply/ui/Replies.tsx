@@ -23,7 +23,7 @@ export default function Replies({ problemId, discussionId }: RepliesProps) {
   return (
     <div className="w-full h-full relative border-t border-primary pt-4 space-y-4">
       {!token && <ProtectedBlurBox />}
-      <div className="ml-4 w-full">
+      <div className="ml-4 flex flex-col gap-4">
         <ReplyForm
           problemId={problemId}
           discussionId={discussionId}
