@@ -12,11 +12,12 @@ export default async function ProblemPageLayout({
   const problemId = (await params).problemId;
 
   return (
-    <main className="flex pt-20 h-full">
-      <menu className="flex-1 flex flex-col gap-[29px] pl-[81px] pr-[78px]">
+    <main className="flex pt-20 h-full gap-5">
+      <menu className="flex-1 flex flex-col gap-[29px]">
         <TabsToggle problemId={problemId} />
         {tabs}
       </menu>
+      <div className="w-[1px] h-full bg-border_primary" />
       <div className="flex-1 w-full h-full">{children}</div>
     </main>
   );

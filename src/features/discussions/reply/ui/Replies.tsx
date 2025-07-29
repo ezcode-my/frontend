@@ -18,7 +18,11 @@ export default function Replies({ problemId, discussionId }: RepliesProps) {
   const isPending = queryResult?.isPending;
 
   if (isPending) {
-    return <Spinner />;
+    return (
+      <div className="w-full h-full flex justify-center mt-10">
+        <Spinner />
+      </div>
+    );
   }
   return (
     <div className="w-full h-full relative border-t border-primary pt-4 space-y-4">

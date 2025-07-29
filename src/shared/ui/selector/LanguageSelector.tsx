@@ -26,7 +26,7 @@ export default function LanguageSelector({ currentLanguage, onSelect }: ILanguag
       <SelectContent>
         <SelectGroup>
           {LANGUAGE_SELECTOR_OPTIONS.map((option) => (
-            <SelectItem key={option.id} value={option.value} onClick={() => onSelect(option)}>
+            <SelectItem key={option.value} value={option.value} onClick={() => onSelect(option)}>
               {option.label}
             </SelectItem>
           ))}
