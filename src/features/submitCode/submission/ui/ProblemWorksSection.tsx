@@ -40,20 +40,17 @@ export default function ProblemWorksSection({
   }, [sessionKey, accessToken]);
 
   return (
-    <section className="flex flex-col">
+    <section className="flex flex-col gap-10">
       <CodeEditor onChangeSourceCodeData={handleChangeSourceCodeData} />
-      <div className="h-[1px] w-full bg-white" />
-      <div className="flex flex-1">
-        <>
-          <TerminalOutput mode={mode} sourceCodeData={sourceCodeData} />
-          <TerminalPanel
-            problemId={problemId}
-            sourceCodeData={sourceCodeData}
-            setMode={(mode) => setMode(mode)}
-            mode={mode}
-            githubUrl={githubUrl}
-          />
-        </>
+      <div className="flex flex-1 flex-col bg-secondary-background rounded-[10px] shadow-lg ">
+        <TerminalPanel
+          problemId={problemId}
+          sourceCodeData={sourceCodeData}
+          setMode={(mode) => setMode(mode)}
+          mode={mode}
+          githubUrl={githubUrl}
+        />
+        <TerminalOutput mode={mode} sourceCodeData={sourceCodeData} />
       </div>
     </section>
   );

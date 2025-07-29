@@ -10,6 +10,7 @@ import GitPushDialog from '../../gitPush/ui/GitPushDialog';
 import { useRouter } from 'next/navigation';
 import { API_URL } from '@/api/constants/api.constants';
 import { ISourceCode, useSubmissionForResultMutation } from '@/entities/submitCode';
+import PanelButton from './PanelButton';
 
 interface TerminalPanelProps {
   problemId: ProblemId;
@@ -43,25 +44,33 @@ export default function TerminalPanel({
   };
 
   return (
-    <div className="flex flex-col w-[68px] px-[10px] pt-[19px]">
-      <div className="flex flex-col gap-6 items-center w-full text-[10px] text-[#ffffff]">
-        <button className="flex flex-col gap-[3px] items-center" onClick={submitForResult}>
-          <Icon.TerminalRunIcon className={clsx('text-[#6B6B6B]')} />
-          <h3 className={clsx('text-[#6B6B6B]')}>RUN</h3>
-        </button>
-        <button
-          className="flex flex-col gap-2 items-center w-[30px]"
+    <div className="flex items-center justify-between p-4 border-b border-[#333]">
+      <div className="flex items-center space-x-2">
+        <PanelButton onClick={submitForResult} currentMode={mode} targetMode="init" text="Run">
+          <Icon.TerminalRunIcon
+            className={clsx(mode === 'init' ? 'text-white' : 'text-[#ccc] hover:text-secondary')}
+          />
+        </PanelButton>
+        <PanelButton
           onClick={() => setMode('result')}
+          currentMode={mode}
+          targetMode="result"
+          text="Result"
         >
-          <Icon.TerminalResultIcon className="text-[#00E35B]" />
-          <h3 className="text-[#00E35B]">RESULT</h3>
-        </button>
-        <button className="flex flex-col gap-[3px] items-center" onClick={() => setMode('review')}>
-          <Icon.TerminalReviewIcon className={clsx(mode !== 'review' && 'text-[#6B6B6B]')} />
-          <h3 className={clsx(mode !== 'review' && 'text-[#6B6B6B]')}>REVIEW</h3>
-        </button>
-        <GitPushDialog githubUrl={githubUrl} />
+          <Icon.TerminalResultIcon
+            className={clsx(mode === 'result' ? 'text-white' : 'text-[#ccc] hover:text-secondary')}
+          />
+        </PanelButton>
+        <PanelButton
+          onClick={() => setMode('review')}
+          currentMode={mode}
+          targetMode="review"
+          text="CODE REVIEW"
+        >
+          <Icon.TerminalReviewIcon />
+        </PanelButton>
       </div>
+      <GitPushDialog githubUrl={githubUrl} />
     </div>
   );
 }
