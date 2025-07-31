@@ -35,6 +35,7 @@ export const API_URL = {
     CHANGE_PASSWORD: '/users/password',
     SUBMISSION: '/submissions',
     VERIFY_EMAIL: '/email/send',
+    REPORT: '/reports/my',
   },
   USER: {
     TOKEN_COUNT: '/users/review-token',
