@@ -4,8 +4,8 @@ export default function TerminalResultIcon({ className }: { className: string })
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 640 640"
       className={className}
-      width="32"
-      height="32"
+      width="28"
+      height="28"
     >
       <path
         fill="currentColor"

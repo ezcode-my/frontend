@@ -13,7 +13,7 @@ export default function PanelButton({ ...props }: IPanelButtonProps) {
     <button
       onClick={onClick}
       className={clsx(
-        'transition-all flex space-x-2 items-center px-2 py-1 rounded-md',
+        'transition-all flex space-x-2 items-center px-3 py-1.5 rounded-md',
         currentMode === targetMode
           ? 'bg-primary text-white'
           : 'text-[#ccc] hover:bg-[rgba(255,255,255,0.08)] hover:text-secondary'
