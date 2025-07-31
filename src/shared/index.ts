@@ -1,5 +1,4 @@
 //ui
-export { default as LanguageSelector } from './ui/selector/LanguageSelector';
 export * as Icon from './ui/icons';
 
 //constant
