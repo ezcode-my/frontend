@@ -32,7 +32,7 @@ export default function CodeEditor({ onChangeSourceCodeData }: ICodeEditorProps)
   return (
     <section className="flex-1 flex flex-col h-full gap-4">
       <Select
-        title="title"
+        title="언어 선택"
         value={currentLanguage}
         option={typedOptions}
         setValue={(value) => changeSourceCodeData(value)}

@@ -28,8 +28,8 @@ export default function GitPushDialog({ githubUrl }: GitPushDialogProps) {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Icon.TerminalGitHubIcon disabled={!!githubUrl} />
+      <DialogTrigger disabled={!githubUrl}>
+        <Icon.TerminalGitHubIcon hasGitHubUrl={!!githubUrl} />
       </DialogTrigger>
       <DialogContent className="w-[425px] bg-secondary-background border-[#333]">
         <DialogHeader>
