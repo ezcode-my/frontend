@@ -44,7 +44,7 @@ export default function TerminalPanel({
   };
 
   return (
-    <div className="flex items-center justify-between p-4 border-b border-[#333]">
+    <div className="flex items-center justify-between p-2 border-b border-[#333]">
       <div className="flex items-center space-x-2">
         <PanelButton onClick={submitForResult} currentMode={mode} targetMode="init" text="Run">
           <Icon.TerminalRunIcon
