@@ -4,7 +4,6 @@ import Discussion from './Discussion';
 import { Spinner } from '@/shared/ui/loading-indicators';
 import DiscussionForm from './DiscussionForm';
 import { useDiscussionsQuery } from '@/entities/discussions';
-import clsx from 'clsx';
 
 interface IDiscussionProps {
   problemId: ProblemId;
