@@ -30,11 +30,11 @@ export const API_URL = {
     GET_GAME_CHARACTERS_ADVENTURE: '/games/characters/encounters/matching',
     GET_GAME_CHARACTERS_ADVENTURE_CHOICE: '/games/characters/encounters/choice',
   },
-  Git: '/users/github',
+  GIT: '/users/github',
   MYPAGE: {
     CHANGE_PASSWORD: '/users/password',
     SUBMISSION: '/submissions',
-    VERIFY_EMAIL : '/email/send'
+    VERIFY_EMAIL: '/email/send',
   },
   USER: {
     TOKEN_COUNT: '/users/review-token',

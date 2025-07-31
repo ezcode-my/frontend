@@ -23,8 +23,9 @@ interface GitPushDialogProps {
   githubUrl: string | null;
 }
 export default function GitPushDialog({ githubUrl }: GitPushDialogProps) {
-  const { pushAutoToggle, choiceRepo, userRepos, currentRepo, setCurrentRepo } = useGitPush();
-  const autoCommit = true;
+  const { pushAutoToggle, choiceRepo, userRepos, currentRepo, setCurrentRepo, autoPushStatus } =
+    useGitPush();
+
   return (
     <Dialog>
       <DialogTrigger>
@@ -73,16 +74,16 @@ export default function GitPushDialog({ githubUrl }: GitPushDialogProps) {
           <div className="flex items-center justify-between">
             <label className="text-sm font-medium text-[#ccc]">자동 푸시</label>
             <Switch
-              checked={autoCommit}
+              checked={autoPushStatus}
               onCheckedChange={() => pushAutoToggle()}
-              className="data-[state=checked]:bg-[#00d084]"
+              className="data-[state=checked]:bg-[#00d084] text-white data-[state=unchecked]:bg-gray-500"
             />
           </div>
           <div className="flex gap-2">
             <Button
               onClick={() => choiceRepo({ repositoryName: currentRepo })}
               className="bg-[#214d35] hover:bg-[#276e48] text-white flex-1"
-              disabled={!!currentRepo}
+              disabled={!!currentRepo && !autoPushStatus}
             >
               연동하기
             </Button>
