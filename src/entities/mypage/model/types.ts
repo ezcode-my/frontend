@@ -1,4 +1,4 @@
-import { ReportStatusEnum } from './enum';
+import { ReportReasonEnum, ReportStatusEnum } from './enum';
 
 export interface IMyInfo {
   username: string;
@@ -75,7 +75,7 @@ export interface Report {
   imageUrl: string;
   message: string;
   reportStatus: ReportStatusEnum;
-  reportType: string;
+  reportType: keyof typeof ReportReasonEnum;
   resultMessage: string;
   targetId: number;
   targetType: string;

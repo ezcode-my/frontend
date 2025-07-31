@@ -1,4 +1,4 @@
-import { ReportStatusEnum } from '@/entities/mypage/model/enum';
+import { ReportReasonEnum, ReportStatusEnum } from '@/entities/mypage/model/enum';
 import { useReportList } from '@/entities/mypage/model/query';
 
 import { Badge } from '@/shared/ui/badge/Badge';
@@ -11,13 +11,23 @@ const STATUS_CONFIG: Record<ReportStatusEnum, { label: string; color: string; bg
     color: '#f59e0b',
     bgColor: '#fef3c7',
   },
-  [ReportStatusEnum.Approved]: {
+  [ReportStatusEnum.InProgress]: {
     label: '진행중',
     color: '#3b82f6',
     bgColor: '#dbeafe',
   },
   [ReportStatusEnum.Rejected]: {
-    label: '해결됨',
+    label: '기각됨',
+    color: '#10b981',
+    bgColor: '#d1fae5',
+  },
+  [ReportStatusEnum.Canceled]: {
+    label: '사용자 철회',
+    color: '#10b981',
+    bgColor: '#d1fae5',
+  },
+  [ReportStatusEnum.Resolved]: {
+    label: '조치 완료',
     color: '#10b981',
     bgColor: '#d1fae5',
   },
@@ -56,7 +66,11 @@ export const Report = () => {
                     <p className="text-white font-medium mb-1">{report.message}</p>
 
                     <div className="flex items-center gap-4 text-xs text-gray-500">
-                      <span>카테고리: {report.reportType}</span>
+                      <span>
+                        카테고리:{' '}
+                        {ReportReasonEnum[report.reportType as keyof typeof ReportReasonEnum] ??
+                          '알 수 없음'}
+                      </span>
                       <span>신고일: {report.createdAt.split('T')[0]}</span>
                     </div>
                   </div>
