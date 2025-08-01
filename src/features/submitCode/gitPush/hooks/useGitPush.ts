@@ -19,6 +19,7 @@ export default function useGitPush() {
 
   useEffect(() => {
     if (userRepos) {
+      setCurrentRepo(userRepos[0].repoName);
       for (const repo of userRepos) {
         reposSelectOptions.push({ label: repo.repoName, value: repo.repoName });
       }
