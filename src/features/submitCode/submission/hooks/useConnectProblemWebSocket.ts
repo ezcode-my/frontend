@@ -31,7 +31,7 @@ export default function useConnectProblemWebSocket() {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: () => {
-        setStatus(true);
+        setStatus('isConnected', true);
       },
     });
 
@@ -42,7 +42,7 @@ export default function useConnectProblemWebSocket() {
       console.log('Cleaning up STOMP client');
       client.deactivate();
       problemStompRef.current = null;
-      setStatus(false);
+      setStatus('isConnected', false);
       clearMessages();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

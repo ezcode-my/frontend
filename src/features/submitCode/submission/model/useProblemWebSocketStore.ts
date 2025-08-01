@@ -7,6 +7,7 @@ import {
   IProblemStompResult,
   IProblemWebSocketStore,
   IWebSocketAuth,
+  IWebSocketStatus,
 } from './useProblemWebSocketStore.types';
 
 /** 인증 스토어 */
@@ -22,9 +23,9 @@ const useProblemWebSocketStore = create<IProblemWebSocketStore>()(
           };
         });
       },
-      setStatus: (status) => {
-        set({
-          isConnected: status,
+      setStatus: (key, status) => {
+        set((state: IWebSocketStatus) => {
+          return { ...state, [key]: status };
         });
       },
       setMessage: (key, message) => {
