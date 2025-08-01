@@ -1,10 +1,10 @@
 import ApiHelper from '@/api/client/api';
 import { API_URL } from '@/api/constants/api.constants';
 import { useQuery } from '@tanstack/react-query';
-import { IRanking, TRankings } from '../rankings/actions/getRankings.actions.types';
+import { TRankings } from '../rankings/actions/getRankings.actions.types';
 import { TAroundRanking } from './types';
 
-export const getRankAlltime = () => {
+export const useGetRankAlltime = () => {
   return useQuery({
     queryKey: ['rank'],
     queryFn: async () => {
@@ -15,7 +15,7 @@ export const getRankAlltime = () => {
   });
 };
 
-export const getRankThisWeek = () => {
+export const useGetRankThisWeek = () => {
   return useQuery({
     queryKey: ['rank-thisWeek'],
     queryFn: async () => {
@@ -26,7 +26,7 @@ export const getRankThisWeek = () => {
   });
 };
 
-export const getRankLastWeek = () => {
+export const useGetRankLastWeek = () => {
   return useQuery({
     queryKey: ['rank-lastWeek'],
     queryFn: async () => {
@@ -37,7 +37,7 @@ export const getRankLastWeek = () => {
   });
 };
 
-export const getRankAroundMe = (period: 'all-time' | 'weekly' | 'last-week') => {
+export const useGetRankAroundMe = (period: 'all-time' | 'weekly' | 'last-week') => {
   return useQuery({
     queryKey: ['rank-me-around', period],
     queryFn: async () => {

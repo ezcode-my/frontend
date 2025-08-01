@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import { Trophy, Medal, Award, Crown } from 'lucide-react';
 
 import {
-  getRankAlltime,
-  getRankAroundMe,
-  getRankLastWeek,
-  getRankThisWeek,
+  useGetRankAlltime,
+  useGetRankAroundMe,
+  useGetRankLastWeek,
+  useGetRankThisWeek,
 } from '@/entities/rank/query';
 import { Button } from '@/shared/ui/button/Button';
 
@@ -42,10 +42,10 @@ const getRankIcon = (rank: number) => {
 export default function RankingPage() {
   const [activeTab, setActiveTab] = useState<'weekly' | 'last-week' | 'all-time'>('weekly');
   const [myRanking, setMyRanking] = useState<TAroundRanking>(Object);
-  const { data: allTimeRanking } = getRankAlltime();
-  const { data: lastWeekRanking } = getRankLastWeek();
-  const { data: thisWeekRanking } = getRankThisWeek();
-  const { data: aroundMeRanking } = getRankAroundMe(activeTab || 'weekly');
+  const { data: allTimeRanking } = useGetRankAlltime();
+  const { data: lastWeekRanking } = useGetRankLastWeek();
+  const { data: thisWeekRanking } = useGetRankThisWeek();
+  const { data: aroundMeRanking } = useGetRankAroundMe(activeTab || 'weekly');
   useEffect(() => {
     if (!aroundMeRanking) return;
     const found = aroundMeRanking?.find((item) => item.isMe);
