@@ -1,7 +1,8 @@
 import ApiHelper from '@/api/client/api';
 import { API_URL } from '@/api/constants/api.constants';
 import { useQuery } from '@tanstack/react-query';
-import { TRankings } from '../rankings/actions/getRankings.actions.types';
+import { IRanking, TRankings } from '../rankings/actions/getRankings.actions.types';
+import { TAroundRanking } from './types';
 
 export const getRankAlltime = () => {
   return useQuery({
@@ -40,7 +41,7 @@ export const getRankAroundMe = (period: 'all-time' | 'weekly' | 'last-week') => 
   return useQuery({
     queryKey: ['rank-me-around', period],
     queryFn: async () => {
-      const response = await ApiHelper.get<TRankings>(API_URL.RANK.AROUNDEME, {
+      const response = await ApiHelper.get<TAroundRanking[]>(API_URL.RANK.AROUNDEME, {
         params: {
           period: period,
         },

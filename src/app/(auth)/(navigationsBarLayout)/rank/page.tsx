@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Bell, Trophy, Code, Users, ChevronDown, Medal, Award, Crown } from 'lucide-react';
+import { Trophy, Medal, Award, Crown } from 'lucide-react';
 
 import {
   getRankAlltime,
@@ -10,6 +10,8 @@ import {
   getRankThisWeek,
 } from '@/entities/rank/query';
 import { Button } from '@/shared/ui/button/Button';
+
+import { TAroundRanking } from '@/entities/rank/types';
 
 // 이번주 랭킹 데이터
 
@@ -22,29 +24,34 @@ const getRankIcon = (rank: number) => {
   return <span className="text-lg font-bold text-[#00d084]">#{rank}</span>;
 };
 
-const getTierColor = (tier: string) => {
-  switch (tier) {
-    case '다이아몬드':
-      return 'text-cyan-400';
-    case '플래티넘':
-      return 'text-emerald-400';
-    case '골드':
-      return 'text-yellow-400';
-    case '실버':
-      return 'text-gray-300';
-    default:
-      return 'text-[#ccc]';
-  }
-};
+// const getTierColor = (tier: string) => {
+//   switch (tier) {
+//     case '다이아몬드':
+//       return 'text-cyan-400';
+//     case '플래티넘':
+//       return 'text-emerald-400';
+//     case '골드':
+//       return 'text-yellow-400';
+//     case '실버':
+//       return 'text-gray-300';
+//     default:
+//       return 'text-[#ccc]';
+//   }
+// };
 
 export default function RankingPage() {
   const [activeTab, setActiveTab] = useState<'weekly' | 'last-week' | 'all-time'>('weekly');
+  const [myRanking, setMyRanking] = useState<TAroundRanking>(Object);
   const { data: allTimeRanking } = getRankAlltime();
   const { data: lastWeekRanking } = getRankLastWeek();
   const { data: thisWeekRanking } = getRankThisWeek();
   const { data: aroundMeRanking } = getRankAroundMe(activeTab || 'weekly');
   useEffect(() => {
-    console.log('around', aroundMeRanking);
+    if (!aroundMeRanking) return;
+    const found = aroundMeRanking?.find((item) => item.isMe);
+    if (found) {
+      setMyRanking(found);
+    }
   }, [aroundMeRanking]);
 
   // 현재 활성 탭에 따른 데이터 선택
@@ -74,14 +81,6 @@ export default function RankingPage() {
         return '이번주 랭킹';
     }
   };
-  const currentRanking = getCurrentRankingData() ?? [];
-
-  // const myRanking = [
-  //   ...(allTimeRanking ?? []),
-  //   ...(lastWeekRanking ?? []),
-  //   ...(thisWeekRanking ?? []),
-  // ].find((user) => user.nickname === myNickname);
-  // const isMyRankingInTop10 = currentRanking.some((user) => user.nickname === myNickname);
 
   return (
     <div className="min-h-screen bg-[#0c151c] text-white">
@@ -160,52 +159,74 @@ export default function RankingPage() {
                   </th>
                 </tr>
               </thead>
+
               <tbody className="divide-y divide-gray-800">
-                {getCurrentRankingData()?.map((user, index) => (
+                {getCurrentRankingData()?.map((user, index) => {
+                  const isMe = user.nickname === myRanking?.nickname;
+
+                  return (
+                    <tr
+                      key={user.ranks}
+                      className={`hover:bg-white/5 transition-all duration-200 ${
+                        index < 3 ? 'bg-gradient-to-r from-[#214d35]/20 to-transparent' : ''
+                      } ${isMe ? 'bg-[#264d35]/50' : ''}`} // 👈 내가 있으면 배경 강조
+                    >
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center space-x-2">
+                          {getRankIcon(user.ranks)}
+                          {isMe && (
+                            <span className="text-xs text-[#00d084] font-semibold">(나)</span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-[#214d35] rounded-full flex items-center justify-center">
+                            <span className="text-sm font-medium text-white">
+                              {user.nickname.charAt(0)}
+                            </span>
+                          </div>
+                          <span className="text-white font-medium">
+                            {user.nickname}{' '}
+                            {isMe && (
+                              <span className="text-sm text-[#00d084] font-semibold">(나)</span>
+                            )}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-[#00d084] font-bold text-lg">
+                          {user.score.toLocaleString()}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+
+                {myRanking.ranks > 5 && (
                   <tr
-                    key={user.ranks}
-                    className={`hover:bg-white/5 transition-all duration-200 ${
-                      index < 3 ? 'bg-gradient-to-r from-[#214d35]/20 to-transparent' : ''
-                    }`}
+                    className={`hover:bg-white/5 transition-all duration-200 bg-gradient-to-r from-[#214d35]/20 to-transparent`} // 👈 내가 있으면 배경 강조
                   >
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center space-x-2">{getRankIcon(user.ranks)}</div>
+                      <div className="flex items-center space-x-2">
+                        {getRankIcon(myRanking.ranks)}
+                      </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center space-x-3 ">
                         <div className="w-10 h-10 bg-[#214d35] rounded-full flex items-center justify-center">
                           <span className="text-sm font-medium text-white">
-                            {user.nickname.charAt(0)}
+                            {myRanking.nickname.charAt(0)}
                           </span>
                         </div>
-                        <span className="text-white font-medium">{user.nickname}</span>
+                        <span className="text-white font-medium">{myRanking.nickname}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-[#00d084] font-bold text-lg">
-                        {user.score.toLocaleString()}
-                      </span>
+                      <span className="text-[#00d084] font-bold text-lg">{myRanking.score}</span>
                     </td>
                   </tr>
-                ))}
-                <tr className={`hover:bg-white/5 transition-all duration-200 `}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center space-x-2">내 랭킹</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex items-center space-x-3 ">
-                      <div className="w-10 h-10 bg-[#214d35] rounded-full flex items-center justify-center">
-                        <span className="text-sm font-medium text-white">
-                          {/* {user.nickname.charAt(0)} */}
-                        </span>
-                      </div>
-                      <span className="text-white font-medium">내 닉네임</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="text-[#00d084] font-bold text-lg">내 점수</span>
-                  </td>
-                </tr>
+                )}
               </tbody>
             </table>
           </div>
