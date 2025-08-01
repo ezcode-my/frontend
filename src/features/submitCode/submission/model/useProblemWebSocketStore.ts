@@ -45,14 +45,10 @@ const useProblemWebSocketStore = create<IProblemWebSocketStore>()(
         });
       },
 
-      clearMessages: () => {
+      clearStore: () => {
         //초기화
         set({
-          isConnected: false,
-          results: [],
-          totalResult: null,
-          error: null,
-          gitStatus: null,
+          ...INITIAL_STATE,
         });
       },
       clearResults: () => {
@@ -71,7 +67,7 @@ export function useProblemWebSocketStoreActions() {
       setAuth: state.actions.setAuth,
       setStatus: state.actions.setStatus,
       setMessage: state.actions.setMessage,
-      clearMessages: state.actions.clearMessages,
+      clearStore: state.actions.clearStore,
       clearResults: state.actions.clearResults,
     }))
   );

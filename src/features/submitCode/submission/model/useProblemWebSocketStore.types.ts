@@ -47,7 +47,7 @@ interface IMessageInitialAction {
     setAuth: (key: AuthKey, value: string) => void;
     setStatus: (key: StatusKey, status: boolean) => void;
     setMessage: (key: MessageKey, message: unknown) => void;
-    clearMessages: () => void;
+    clearStore: () => void;
     clearResults: () => void;
   };
 }
@@ -56,6 +56,7 @@ export const INITIAL_STATE = {
   token: '',
   sessionKey: '',
   isConnected: false,
+  isSubmitted: false,
   results: [],
   totalResult: null,
   error: null,

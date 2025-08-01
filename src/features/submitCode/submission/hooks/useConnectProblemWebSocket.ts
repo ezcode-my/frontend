@@ -12,7 +12,7 @@ import useProblemWebSocketStore, {
 export default function useConnectProblemWebSocket() {
   const problemStompRef = sharedStompRef;
 
-  const { clearMessages, setStatus } = useProblemWebSocketStoreActions();
+  const { clearStore, setStatus } = useProblemWebSocketStoreActions();
   const { token: accessToken } = useProblemWebSocketStore();
 
   useEffect(() => {
@@ -42,11 +42,10 @@ export default function useConnectProblemWebSocket() {
       console.log('Cleaning up STOMP client');
       client.deactivate();
       problemStompRef.current = null;
-      setStatus('isConnected', false);
-      clearMessages();
+      clearStore();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [accessToken, clearMessages]);
+  }, [accessToken, clearStore]);
 
   return { problemStompRef };
 }
