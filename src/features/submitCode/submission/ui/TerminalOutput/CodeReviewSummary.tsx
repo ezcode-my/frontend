@@ -2,6 +2,7 @@ import { ProblemId } from '@/shared';
 import { ISourceCode } from '@/entities/submitCode/submission/model/mutation/submitCode.mutation.type';
 import useSubmitForReview from '../../hooks/useSubmitForReview';
 import { BouncingDots } from '@/shared/ui/loading-indicators';
+import useProblemWebSocketStore from '../../model/useProblemWebSocketStore';
 
 interface ICodeReviewSummaryProps {
   problemId: ProblemId;
@@ -10,7 +11,11 @@ interface ICodeReviewSummaryProps {
 export default function CodeReviewSummary({ problemId, sourceCodeData }: ICodeReviewSummaryProps) {
   const { tokenCount, submitForReview, codeReview, isSubmittedReview } =
     useSubmitForReview(problemId);
+  const { isSubmitted } = useProblemWebSocketStore();
 
+  if (!isSubmitted) {
+    return <div className="text-[#ccc] text-sm">코드를 먼저 실행해주세요</div>;
+  }
   return (
     <div className="flex flex-col h-full">
       {isSubmittedReview ? (
