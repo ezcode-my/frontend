@@ -6,6 +6,7 @@ module.exports = {
   moduleNameMapper: {
     // 경로 별칭을 매핑 (필요 시)
     '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|scss|png|jpg|svg)$': '<rootDir>/__mocks__/fileMock.js',
   },
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
