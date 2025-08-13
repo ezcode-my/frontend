@@ -26,8 +26,22 @@ describe('ProblemsList', () => {
   it('필터와 검색 버튼을 눌렀을 때 목록이 업데이트되는지 확인', async () => {
     mockUseProblemListQuery.mockReturnValue({
       data: {
-        content: [{ id: 1, title: '문제 1' }],
-        totalPages: 1,
+        result: {
+          content: [
+            {
+              id: 236,
+              creator: 'EZCODE',
+              categories: [],
+              title: '점프 점프',
+              score: 40,
+              difficulty: 'LV3',
+              reference: 'ORIGINAL',
+              totalSubmissions: 3,
+              correctSubmissions: 2,
+            },
+          ],
+          totalPages: 236,
+        },
       },
       isLoading: false,
     });
@@ -59,8 +73,22 @@ describe('ProblemsList', () => {
   it('엔터 입력 시에도 검색이 실행되는지 확인', async () => {
     mockUseProblemListQuery.mockReturnValue({
       data: {
-        content: [{ id: 1, title: '문제 1' }],
-        totalPages: 1,
+        result: {
+          content: [
+            {
+              id: 236,
+              creator: 'EZCODE',
+              categories: [],
+              title: '점프 점프',
+              score: 40,
+              difficulty: 'LV3',
+              reference: 'ORIGINAL',
+              totalSubmissions: 3,
+              correctSubmissions: 2,
+            },
+          ],
+          totalPages: 236,
+        },
       },
       isLoading: false,
     });
@@ -80,8 +108,22 @@ describe('ProblemsList', () => {
   it('선택된 필터 태그가 표시되는지 확인', () => {
     mockUseProblemListQuery.mockReturnValue({
       data: {
-        content: [],
-        totalPages: 0,
+        result: {
+          content: [
+            {
+              id: 236,
+              creator: 'EZCODE',
+              categories: [],
+              title: '점프 점프',
+              score: 40,
+              difficulty: 'LV3',
+              reference: 'ORIGINAL',
+              totalSubmissions: 3,
+              correctSubmissions: 2,
+            },
+          ],
+          totalPages: 236,
+        },
       },
       isLoading: false,
     });
