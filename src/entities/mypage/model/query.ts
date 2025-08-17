@@ -11,7 +11,7 @@ import {
   SubmissionsResonse,
 } from './types';
 import { TPeriod } from '@/shared/types/mypage.type';
-import { API_CONSTANTS, API_URL } from '@/api/constants/api.constants';
+import { API_URL } from '@/api/constants/api.constants';
 
 export const useMyInfoQuery = () => {
   return useQuery({

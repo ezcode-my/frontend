@@ -13,23 +13,14 @@ import {
 } from '@/entities/mypage/model/query';
 import { IHeatmapItem, IMyInfo } from '@/entities/mypage/model/types';
 import { Check, User } from 'lucide-react';
-import Mail from './../../../../../../public/icons/mypage/mail.svg';
+
 import Bookopen from './../../../../../../public/icons/mypage/bookopen.svg';
 import { Button } from '@/shared/ui/button/Button';
 import { BASE_URL } from '@/constants/env';
 import { ModifyForm } from '../ui/ModifyForm';
-import { useRouter } from 'next/navigation';
+
 import { useQueryClient } from '@tanstack/react-query';
 import { Badge } from '@/shared/ui/badge/Badge';
-
-const DetailInfoRow = ({ title, value }: { title: string; value: string | number }) => (
-  <div className="bg-gray-800/50 p-3 rounded-lg flex flex-col">
-    <div className="text-sm text-gray-400">{title}</div>
-    <div className="text-lg font-bold" style={{ color: '#FFF' }}>
-      {value}
-    </div>
-  </div>
-);
 
 export const Mine = () => {
   const queryClient = useQueryClient();

@@ -1,10 +1,8 @@
-import { useModifyInfo, useUploadImage } from '@/entities/mypage/model/query';
+import { useUploadImage } from '@/entities/mypage/model/query';
 import { IMyInfo } from '@/entities/mypage/model/types';
 import { Badge } from '@/shared/ui/badge/Badge';
-import { Github } from 'lucide-react';
-import { UNSTABLE_REVALIDATE_RENAME_ERROR } from 'next/dist/lib/constants';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
 
 export const ModifyForm = ({
   myInfo,
@@ -17,7 +15,6 @@ export const ModifyForm = ({
   setEditForm: Dispatch<SetStateAction<IMyInfo>>;
   changeProfileImg: (img: string) => void;
 }) => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const { mutateAsync: uploadImg } = useUploadImage();
   const fileInputRef = useRef<HTMLInputElement | null>(null); // 타입 지정
   const handleImageClick = () => {
@@ -28,7 +25,6 @@ export const ModifyForm = ({
     if (!event.target.files?.length) return;
 
     const file = event.target.files[0];
-    setSelectedFile(file);
 
     const imageUrl = URL.createObjectURL(file);
     changeProfileImg(imageUrl);
@@ -45,11 +41,6 @@ export const ModifyForm = ({
       } else {
         alert(result.message);
       }
-      // 업로드 성공 시 상태 업데이트
-      // setEditForm((prev) => ({
-      //   ...prev,
-      //   profileImageUrl: uploadedUrl,
-      // }));
     } catch (error) {
       console.error('이미지 업로드 실패:', error);
     }
