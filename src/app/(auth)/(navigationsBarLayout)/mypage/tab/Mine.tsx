@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 import { Heatmap } from '../ui/Heatmap';
 import {
-  useChangeProfileImg,
   useEmailVerify,
   useModifyInfo,
   useMyAiReviewCheckQuery,
