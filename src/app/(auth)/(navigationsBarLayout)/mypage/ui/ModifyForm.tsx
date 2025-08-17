@@ -46,7 +46,6 @@ export const ModifyForm = ({
 
   return (
     <div className="flex gap-8">
-      {/* 왼쪽: 미리보기 */}
       <div className="w-96 flex-shrink-0">
         <div className="bg-gray-800/30 p-6 rounded-lg">
           <div className="flex flex-col items-center space-y-3">
@@ -83,8 +82,11 @@ export const ModifyForm = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* 닉네임 */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">닉네임</label>
+            <label htmlFor="nickname" className="block text-sm font-medium text-gray-300 mb-2">
+              닉네임
+            </label>
             <input
+              id="nickname"
               type="text"
               value={editForm.nickname}
               onChange={(e) =>
@@ -139,8 +141,11 @@ export const ModifyForm = ({
           </div>
           {/* 자기소개 */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-300 mb-2">자기소개</label>
+            <label htmlFor="introduction" className="block text-sm font-medium text-gray-300 mb-2">
+              자기소개
+            </label>
             <textarea
+              id="introduction"
               value={editForm.introduction || ''}
               onChange={(e) => setEditForm((prev) => ({ ...prev, introduction: e.target.value }))}
               rows={4}
