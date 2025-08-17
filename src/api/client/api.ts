@@ -169,23 +169,21 @@ const ApiHelper = {
     ...config,
   };
 
-  // headers 합치기
-  const headers = {
-    ...(mergedConfig.headers || {}),
-  };
+ // headers 합치기 (HeadersInit 안전 처리)
+const headers = new Headers(mergedConfig.headers as HeadersInit);
 
-  // FormData이면 Content-Type 제거
-  if (isFormData && "Content-Type" in headers) {
-    delete headers["Content-Type"];
-  }
+// FormData이면 Content-Type 제거 (대소문자 무시)
+if (isFormData) {
+  headers.delete('Content-Type');
+}
 
-  return request<T>(endpoint, {
-    ...mergedConfig,
-    method: "PUT",
-    body: isFormData ? data : JSON.stringify(data),
-    headers,
-    reqType: mergedConfig.reqType || "client",
-  });
+return request<T>(endpoint, {
+  ...mergedConfig,
+  method: 'PUT',
+  body: isFormData ? (data as FormData) : JSON.stringify(data),
+  headers,
+  reqType: mergedConfig.reqType || 'client',
+});
 },
 
   /**

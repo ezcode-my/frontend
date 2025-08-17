@@ -115,9 +115,9 @@ export const useReportList = () => {
   });
 };
 
-export const useModifyInfo = (data : IMyInfo) => {
+export const useModifyInfo = () => {
   return useMutation({
-    mutationFn : async ()=> {
+    mutationFn : async (data : IMyInfo)=> {
       const response =await ApiHelper.put(API_URL.MYPAGE.MODIFY_INFO , data)
        return response.data
     }
@@ -127,7 +127,7 @@ export const useModifyInfo = (data : IMyInfo) => {
 export const useChangeProfileImg = (image : string) => {
   return useMutation({
     mutationFn : async () => {
-      const response = await ApiHelper.put(API_URL.MYPAGE.CHANGE_PROFILE_IMG,image)
+      const response = await ApiHelper.put(API_URL.MYPAGE.UPLOAD_IMG,image)
       return response.data
     }
   })
@@ -139,10 +139,8 @@ export const useUploadImage = () => {
       const formData = new FormData();
       formData.append('image', file);
 
-console.log("file", file); // ✅ File 객체
-console.log("formData", [...formData]); // ✅ [['image', File]]
       const response = await ApiHelper.put<{message : string}>(API_URL.MYPAGE.UPLOAD_IMG, formData);
-      console.log('response',response)
+  
       return response.data;
     },
   });

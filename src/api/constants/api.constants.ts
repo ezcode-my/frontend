@@ -39,7 +39,6 @@ export const API_URL = {
     VERIFY_EMAIL: '/email/send',
     REPORT: '/reports/my',
     MODIFY_INFO : '/users',
-    CHANGE_PROFILE_IMG : '/users/profile',
     UPLOAD_IMG : '/users/profile'
   },
   USER: {

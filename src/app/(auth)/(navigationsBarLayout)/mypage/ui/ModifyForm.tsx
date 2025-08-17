@@ -8,12 +8,10 @@ export const ModifyForm = ({
   myInfo,
   editForm,
   setEditForm,
-  changeProfileImg,
 }: {
   myInfo: IMyInfo;
   editForm: IMyInfo;
   setEditForm: Dispatch<SetStateAction<IMyInfo>>;
-  changeProfileImg: (img: string) => void;
 }) => {
   const { mutateAsync: uploadImg } = useUploadImage();
   const fileInputRef = useRef<HTMLInputElement | null>(null); // 타입 지정
@@ -26,13 +24,9 @@ export const ModifyForm = ({
 
     const file = event.target.files[0];
 
-    const imageUrl = URL.createObjectURL(file);
-    changeProfileImg(imageUrl);
-
     try {
-      console.log('123123123', file);
       const result = await uploadImg(file); // 서버에 업로드
-      console.log('서버 응답 URL:', result);
+
       if (result.status === 200) {
         setEditForm((prev) => ({
           ...prev,
@@ -106,8 +100,11 @@ export const ModifyForm = ({
 
           {/* GitHub 주소 */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">GitHub 주소</label>
+            <label htmlFor="githubUrl" className="block text-sm font-medium text-gray-300 mb-2">
+              GitHub 주소
+            </label>
             <input
+              id="githubUrl"
               type="url"
               value={editForm.githubUrl || ''}
               onChange={(e) =>
@@ -123,8 +120,11 @@ export const ModifyForm = ({
 
           {/* 블로그 주소 */}
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">블로그 주소</label>
+            <label htmlFor="blogUrl" className="block text-sm font-medium text-gray-300 mb-2">
+              블로그 주소
+            </label>
             <input
+              id="blogUrl"
               type="url"
               value={editForm.blogUrl || ''}
               onChange={(e) =>

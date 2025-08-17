@@ -46,8 +46,8 @@ export const Mine = () => {
   const { data: aiReview } = useMyAiReviewCheckQuery();
   const { data: heatmap } = useMyDailySolved();
   const { mutateAsync: emailVerfiy } = useEmailVerify(BASE_URL || '');
-  const { mutateAsync: modify } = useModifyInfo(editForm);
-  const { mutateAsync: changeProfileImg } = useChangeProfileImg(editForm.profileImageUrl || '');
+  const { mutateAsync: modify } = useModifyInfo();
+
   const myInfo = data?.data.result;
   const myRanking = ranking?.data.result;
 
@@ -98,7 +98,7 @@ export const Mine = () => {
                   if (editForm.nickname.length < 1) {
                     alert('닉네임을 확인해주세요.');
                   } else {
-                    const response = await modify();
+                    const response = await modify(editForm);
                     alert(response.message);
                     if (response.status === 200) {
                       queryClient.invalidateQueries({ queryKey: ['my-info'] });
@@ -112,6 +112,7 @@ export const Mine = () => {
                 label="취소"
                 onClick={() => {
                   setTab('info');
+                  setEditForm(info);
                 }}
               />
             )}
@@ -229,14 +230,7 @@ export const Mine = () => {
             </div>
           </>
         ) : (
-          <ModifyForm
-            myInfo={info}
-            editForm={editForm}
-            setEditForm={setEditForm}
-            changeProfileImg={() => {
-              changeProfileImg();
-            }}
-          />
+          <ModifyForm myInfo={info} editForm={editForm} setEditForm={setEditForm} />
         )}
       </section>
       <section className="rounded-lg flex flex-col gap-8 border bg-gray-900/50 border-gray-700/50 p-10">
