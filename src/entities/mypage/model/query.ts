@@ -141,7 +141,7 @@ export const useUploadImage = () => {
 
 console.log("file", file); // ✅ File 객체
 console.log("formData", [...formData]); // ✅ [['image', File]]
-      const response = await ApiHelper.put<any>(API_URL.MYPAGE.UPLOAD_IMG, formData);
+      const response = await ApiHelper.put<{message : string}>(API_URL.MYPAGE.UPLOAD_IMG, formData);
       console.log('response',response)
       return response.data;
     },
