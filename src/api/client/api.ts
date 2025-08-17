@@ -161,14 +161,32 @@ const ApiHelper = {
    * @returns {Promise<ApiResponse<T>>} API 응답
    */
   put: <T>(endpoint: string, data?: unknown, config?: RequestConfig): Promise<ApiResponse<T>> => {
-    return request<T>(endpoint, {
-      method: 'PUT',
-      body: JSON.stringify(data),
-      ...defaultConfig,
-      ...config,
-      reqType: config?.reqType || 'client',
-    });
-  },
+  const isFormData = data instanceof FormData;
+
+  // defaultConfig + config 합치기
+  const mergedConfig = {
+    ...defaultConfig,
+    ...config,
+  };
+
+  // headers 합치기
+  const headers = {
+    ...(mergedConfig.headers || {}),
+  };
+
+  // FormData이면 Content-Type 제거
+  if (isFormData && "Content-Type" in headers) {
+    delete headers["Content-Type"];
+  }
+
+  return request<T>(endpoint, {
+    ...mergedConfig,
+    method: "PUT",
+    body: isFormData ? data : JSON.stringify(data),
+    headers,
+    reqType: mergedConfig.reqType || "client",
+  });
+},
 
   /**
    * PATCH 요청

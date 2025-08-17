@@ -6,12 +6,12 @@ import {
   ChangePasswordRequest,
   DailySolved,
   IMyInfo,
-  Ranking,
+    Ranking,
   Report,
   SubmissionsResonse,
 } from './types';
 import { TPeriod } from '@/shared/types/mypage.type';
-import { API_URL } from '@/api/constants/api.constants';
+import { API_CONSTANTS, API_URL } from '@/api/constants/api.constants';
 
 export const useMyInfoQuery = () => {
   return useQuery({
@@ -112,5 +112,38 @@ export const useReportList = () => {
       return response.data;
     },
     staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useModifyInfo = (data : IMyInfo) => {
+  return useMutation({
+    mutationFn : async ()=> {
+      const response =await ApiHelper.put(API_URL.MYPAGE.MODIFY_INFO , data)
+       return response.data
+    }
+  })
+}
+
+export const useChangeProfileImg = (image : string) => {
+  return useMutation({
+    mutationFn : async () => {
+      const response = await ApiHelper.put(API_URL.MYPAGE.CHANGE_PROFILE_IMG,image)
+      return response.data
+    }
+  })
+}
+
+export const useUploadImage = () => {
+  return useMutation({
+    mutationFn: async (file: File) => {
+      const formData = new FormData();
+      formData.append('image', file);
+
+console.log("file", file); // ✅ File 객체
+console.log("formData", [...formData]); // ✅ [['image', File]]
+      const response = await ApiHelper.put<any>(API_URL.MYPAGE.UPLOAD_IMG, formData);
+      console.log('response',response)
+      return response.data;
+    },
   });
 };
