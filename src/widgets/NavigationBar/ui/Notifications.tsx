@@ -1,5 +1,6 @@
 'use client';
 
+import { useReadNotification } from '@/entities/notifications/query';
 import useConnectAlarmWebSocket from '@/features/alarm/hooks/socket/useNotificationWebSocket';
 import { useNotificationsStore } from '@/features/alarm/model/store';
 
@@ -13,6 +14,7 @@ export default function Notifications() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { notifications } = useNotificationsStore();
+  const { mutateAsync: readNotification } = useReadNotification();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const handleViewAll = () => {
     router.push('/notifications');
@@ -52,22 +54,40 @@ export default function Notifications() {
           <div className="max-h-80 overflow-y-auto">
             {notifications.content.map((notification) => (
               <div
+                onClick={() => {
+                  readNotification(notification.id);
+                  router.push(notification.redirectUrl);
+                }}
                 key={notification.id}
-                className={`p-4 border-b border-border last:border-b-0 hover:bg-hover-bg transition-colors cursor-pointer ${
-                  !notification.isRead ? 'bg-primary/5' : 'bg-transparent'
-                }`}
+                className={`flex flex-row justify-between w-full border-b border-border last:border-b-0 
+      transition-colors cursor-pointer 
+      ${notification.isRead ? 'bg-transparent' : 'bg-primary/10'} 
+      hover:bg-muted/20
+    `}
               >
-                <div className="flex items-start gap-3">
-                  <div
-                    className={`w-2 h-2 rounded-full mt-2 ${!notification.isRead ? 'bg-accent' : 'bg-transparent'}`}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-muted-foreground text-sm mt-1 line-clamp-2">
-                      {notification.message}
-                    </p>
-                    <span className="text-muted text-xs mt-2 block">
-                      {notification.createdAt.split('T')[0]}
-                    </span>
+                <div className="w-full flex p-4 gap-4 items-center">
+                  <div className="justify-center items-center flex-shrink-0 flex">
+                    <div
+                      className={`w-2 h-2 rounded-full mt-2 ${
+                        notification.isRead ? 'bg-gray-500' : 'bg-primary'
+                      }`}
+                    />
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p
+                        className={`text-sm mt-1 line-clamp-2 ${
+                          notification.isRead
+                            ? 'text-muted-foreground'
+                            : 'text-foreground font-medium'
+                        }`}
+                      >
+                        {notification.message}
+                      </p>
+                      <span className="text-muted text-xs mt-2 block">
+                        {notification.createdAt.split('T')[0]}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
