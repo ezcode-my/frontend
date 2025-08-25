@@ -23,10 +23,6 @@ const Mypage = () => {
     ? { ...baseTabs, password: <ChangePassword /> }
     : baseTabs;
 
-  const tabComponents = data?.data.result.userAuthTypes.includes('EMAIL')
-    ? { ...baseTabs, password: <ChangePassword /> }
-    : baseTabs;
-
   return (
     <div className="w-full  flex h-full">
       <SideNavigation tab={tab} setTab={setTab} />
