@@ -156,7 +156,7 @@ export const ModifyForm = ({
               entireOption={false}
               option={languageList}
               title="언어선택"
-              value={editForm.language}
+              value={languageList}
               setValue={(value) => {
                 setEditForm((prev) => ({ ...prev, language: Number(value) }));
               }}
