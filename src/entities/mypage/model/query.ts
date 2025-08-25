@@ -5,6 +5,7 @@ import {
   ChangePasswordBody,
   ChangePasswordRequest,
   DailySolved,
+  ILanguages,
   IMyInfo,
   Ranking,
   Report,
@@ -147,6 +148,16 @@ export const useUploadImage = () => {
       );
 
       return response.data;
+    },
+  });
+};
+
+export const useGetLanguageList = () => {
+  return useQuery({
+    queryKey: ['languages'],
+    queryFn: async () => {
+      const response = await ApiHelper.get<ILanguages[]>(API_URL.LANGUAGES);
+      return response;
     },
   });
 };

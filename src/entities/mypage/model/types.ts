@@ -12,8 +12,9 @@ export interface IMyInfo {
   profileImageUrl: string | null;
   introduction: string | null;
   verified: boolean;
+  language: number | null;
   totalSolvedCount: number;
-  userAuthTypes : string[]
+  userAuthTypes: string[];
 }
 
 export interface AiReview {
@@ -82,3 +83,9 @@ export interface Report {
   targetType: string;
 }
 
+export interface ILanguages {
+  id: number;
+  name: string;
+  version: string;
+  judge0Id: number;
+}

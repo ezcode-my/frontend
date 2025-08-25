@@ -1,17 +1,25 @@
 import { useUploadImage } from '@/entities/mypage/model/query';
 import { IMyInfo } from '@/entities/mypage/model/types';
 import { Badge } from '@/shared/ui/badge/Badge';
+import { Select } from '@/shared/ui/select/Select';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
+
+type LanguageList = {
+  label: string;
+  value: string;
+}[];
 
 export const ModifyForm = ({
   myInfo,
   editForm,
   setEditForm,
+  languageList,
 }: {
   myInfo: IMyInfo;
   editForm: IMyInfo;
   setEditForm: Dispatch<SetStateAction<IMyInfo>>;
+  languageList: LanguageList;
 }) => {
   const { mutateAsync: uploadImg } = useUploadImage();
   const fileInputRef = useRef<HTMLInputElement | null>(null); // 타입 지정
@@ -137,6 +145,21 @@ export const ModifyForm = ({
               }
               className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-green-500 transition-colors"
               placeholder="블로그 url을 입력해주세요."
+            />
+          </div>
+          <div>
+            <label htmlFor="blogUrl" className="block text-sm font-medium text-gray-300 mb-2">
+              언어
+            </label>
+            <Select
+              className="h-[50px] w-full"
+              entireOption={false}
+              option={languageList}
+              title="언어선택"
+              value={editForm.language}
+              setValue={(value) => {
+                setEditForm((prev) => ({ ...prev, language: Number(value) }));
+              }}
             />
           </div>
           {/* 자기소개 */}
