@@ -3,10 +3,7 @@
 import Password from './../../../../../public/icons/mypage/password.svg';
 import Image from 'next/image';
 import { User, MessageSquare, Flag, History } from 'lucide-react';
-import { useMyInfoQuery } from '@/entities/mypage/model/query';
-import { Mine } from './tab/Mine';
-import { Solved } from './tab/Solved';
-import { Report } from './tab/Report';
+
 interface IProps {
   tab: string;
   setTab: (tab: string) => void;
