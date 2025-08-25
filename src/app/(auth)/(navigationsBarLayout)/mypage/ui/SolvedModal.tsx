@@ -35,6 +35,7 @@ export const SolvedModal = ({
           className="w-[20%] "
           label="문제 바로가기"
           onClick={() => {
+            onClose();
             router.push(`/problems/${data.problemId}`);
           }}
         />
