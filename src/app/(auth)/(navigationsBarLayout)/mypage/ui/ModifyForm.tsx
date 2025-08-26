@@ -33,16 +33,10 @@ export const ModifyForm = ({
     const file = event.target.files[0];
 
     try {
-      const result = await uploadImg(file); // 서버에 업로드
-
-      if (result.status === 200) {
-        setEditForm((prev) => ({
-          ...prev,
-          profileImageUrl: result.result.message,
-        }));
-      } else {
-        alert(result.message);
-      }
+      setEditForm((prev) => ({
+        ...prev,
+        profileImage: file,
+      }));
     } catch (error) {
       console.error('이미지 업로드 실패:', error);
     }
@@ -96,7 +90,7 @@ export const ModifyForm = ({
             <input
               id="nickname"
               type="text"
-              value={editForm.nickname}
+              value={editForm.nickname || ''}
               onChange={(e) =>
                 setEditForm((prev) => ({
                   ...prev,

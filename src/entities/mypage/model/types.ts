@@ -10,6 +10,7 @@ export interface IMyInfo {
   githubUrl: string | null;
   blogUrl: string | null;
   profileImageUrl: string | null;
+  profileImage?: File;
   introduction: string | null;
   verified: boolean;
   language: number | null;
@@ -89,3 +90,12 @@ export interface ILanguages {
   version: string;
   judge0Id: number;
 }
+
+export type IModifyBody = {
+  nickname: string | null;
+  githubUrl: string | null;
+  blogUrl: string | null;
+  introduction: string | null;
+  age: number;
+  languageId: number | null;
+};

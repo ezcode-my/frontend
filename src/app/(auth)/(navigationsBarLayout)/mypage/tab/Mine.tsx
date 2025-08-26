@@ -109,7 +109,21 @@ export const Mine = () => {
                   if (editForm.nickname.length < 1) {
                     alert('닉네임을 확인해주세요.');
                   } else {
-                    const response = await modify(editForm);
+                    console.log('waef');
+                    const response = await modify({
+                      request: {
+                        age: editForm.age,
+                        blogUrl: editForm.blogUrl || null,
+                        githubUrl: editForm.githubUrl || null,
+                        introduction: editForm.introduction || null,
+                        languageId: editForm.language || null,
+                        nickname: editForm.nickname,
+                      },
+                      // 새 파일이 있으면 File 객체 넘기고,
+                      // 기존 URL만 유지하는 경우는 undefined
+                      image: editForm.profileImage ?? undefined,
+                    });
+
                     alert(response.message);
                     if (response.status === 200) {
                       queryClient.invalidateQueries({ queryKey: ['my-info'] });
