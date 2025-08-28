@@ -23,15 +23,6 @@ export interface IMyInfo {
   userAuthTypes: string[];
 }
 
-export interface IMyInfoRequestBody {
-  nickname: string;
-  githubUrl: string;
-  blogUrl: string;
-  introduction: string;
-  age: number;
-  languageId: number;
-}
-
 export interface AiReview {
   reviewToken: number;
 }
