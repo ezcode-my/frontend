@@ -1,5 +1,4 @@
-import { useUploadImage } from '@/entities/mypage/model/query';
-import { ILanguages, IModifyBody, IMyInfo } from '@/entities/mypage/model/types';
+import { ILanguages, IMyInfo } from '@/entities/mypage/model/types';
 import { Badge } from '@/shared/ui/badge/Badge';
 import { Select } from '@/shared/ui/select/Select';
 import Image from 'next/image';
@@ -23,7 +22,7 @@ export const ModifyForm = ({
   languageList: LanguageList;
   languages?: ILanguages[];
 }) => {
-  const { mutateAsync: uploadImg } = useUploadImage();
+  // const { mutateAsync: uploadImg } = useUploadImage();
   const fileInputRef = useRef<HTMLInputElement | null>(null); // 타입 지정
   const handleImageClick = () => {
     fileInputRef.current?.click();

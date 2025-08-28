@@ -41,8 +41,7 @@ export const Mine = () => {
     userAuthTypes: [],
     language: null,
   });
-  2;
-  const [editBody, setEditBody] = useState<IModifyBody>(Object);
+
   const [info, setInfo] = useState<IMyInfo>(Object);
   const [heatmapData, setHeatmapData] = useState<IHeatmapItem[]>([]);
   const { data } = useMyInfoQuery();
