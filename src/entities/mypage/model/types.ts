@@ -13,9 +13,23 @@ export interface IMyInfo {
   profileImage?: File;
   introduction: string | null;
   verified: boolean;
-  language: number | null;
+  language: {
+    id: number;
+    judge0Id: number;
+    name: string;
+    version: string;
+  } | null;
   totalSolvedCount: number;
   userAuthTypes: string[];
+}
+
+export interface IMyInfoRequestBody {
+  nickname: string;
+  githubUrl: string;
+  blogUrl: string;
+  introduction: string;
+  age: number;
+  languageId: number;
 }
 
 export interface AiReview {

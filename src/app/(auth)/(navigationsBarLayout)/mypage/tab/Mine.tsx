@@ -11,7 +11,7 @@ import {
   useMyInfoQuery,
   useMyRankingQuery,
 } from '@/entities/mypage/model/query';
-import { IHeatmapItem, IMyInfo } from '@/entities/mypage/model/types';
+import { IHeatmapItem, IModifyBody, IMyInfo } from '@/entities/mypage/model/types';
 import { Check, User } from 'lucide-react';
 
 import Bookopen from './../../../../../../public/icons/mypage/bookopen.svg';
@@ -41,6 +41,8 @@ export const Mine = () => {
     userAuthTypes: [],
     language: null,
   });
+  2;
+  const [editBody, setEditBody] = useState<IModifyBody>(Object);
   const [info, setInfo] = useState<IMyInfo>(Object);
   const [heatmapData, setHeatmapData] = useState<IHeatmapItem[]>([]);
   const { data } = useMyInfoQuery();
@@ -108,26 +110,28 @@ export const Mine = () => {
                 } else {
                   if (editForm.nickname.length < 1) {
                     alert('닉네임을 확인해주세요.');
-                  } else {
-                    console.log('waef');
-                    const response = await modify({
-                      request: {
-                        age: editForm.age,
-                        blogUrl: editForm.blogUrl || null,
-                        githubUrl: editForm.githubUrl || null,
-                        introduction: editForm.introduction || null,
-                        languageId: editForm.language || null,
-                        nickname: editForm.nickname,
-                      },
-                      // 새 파일이 있으면 File 객체 넘기고,
-                      // 기존 URL만 유지하는 경우는 undefined
-                      image: editForm.profileImage ?? undefined,
-                    });
+                    return;
+                  }
 
-                    alert(response.message);
-                    if (response.status === 200) {
-                      queryClient.invalidateQueries({ queryKey: ['my-info'] });
-                    }
+                  // API 요청용 body 생성
+                  const body: IModifyBody = {
+                    age: editForm.age,
+                    blogUrl: editForm.blogUrl || null,
+                    githubUrl: editForm.githubUrl || null,
+                    introduction: editForm.introduction || null,
+                    languageId: editForm.language?.id || null, // 여기서 id만 보냄
+                    nickname: editForm.nickname,
+                  };
+
+                  const response = await modify({
+                    request: body,
+                    image: editForm.profileImage ?? undefined,
+                  });
+
+                  alert(response.message);
+                  if (response.status === 200) {
+                    queryClient.invalidateQueries({ queryKey: ['my-info'] });
+                    setTab('info');
                   }
                 }
               }}
@@ -225,7 +229,9 @@ export const Mine = () => {
                   </div>
                   <div className="bg-gray-800/50 p-4 rounded-lg">
                     <div className="text-sm text-gray-400">언어</div>
-                    <div className="text-xl font-bold text-white">{myInfo?.language || '-'}</div>
+                    <div className="text-xl font-bold text-white">
+                      {myInfo?.language?.name || '-'}
+                    </div>
                   </div>
                 </div>
 
@@ -264,6 +270,7 @@ export const Mine = () => {
             myInfo={info}
             editForm={editForm}
             setEditForm={setEditForm}
+            languages={languages?.data.result}
           />
         )}
       </section>

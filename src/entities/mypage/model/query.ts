@@ -129,6 +129,7 @@ export const useModifyInfo = () => {
       image?: File; // 프로필 이미지 (선택)
     }) => {
       console.log('image', image);
+      console.log('request', request);
       const formData = new FormData();
 
       // request(JSON) 추가

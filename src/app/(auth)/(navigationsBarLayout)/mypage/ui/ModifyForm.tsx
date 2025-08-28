@@ -1,5 +1,5 @@
 import { useUploadImage } from '@/entities/mypage/model/query';
-import { IMyInfo } from '@/entities/mypage/model/types';
+import { ILanguages, IModifyBody, IMyInfo } from '@/entities/mypage/model/types';
 import { Badge } from '@/shared/ui/badge/Badge';
 import { Select } from '@/shared/ui/select/Select';
 import Image from 'next/image';
@@ -15,11 +15,13 @@ export const ModifyForm = ({
   editForm,
   setEditForm,
   languageList,
+  languages,
 }: {
   myInfo: IMyInfo;
   editForm: IMyInfo;
   setEditForm: Dispatch<SetStateAction<IMyInfo>>;
   languageList: LanguageList;
+  languages?: ILanguages[];
 }) => {
   const { mutateAsync: uploadImg } = useUploadImage();
   const fileInputRef = useRef<HTMLInputElement | null>(null); // 타입 지정
@@ -31,7 +33,7 @@ export const ModifyForm = ({
     if (!event.target.files?.length) return;
 
     const file = event.target.files[0];
-
+    console.log(file);
     try {
       setEditForm((prev) => ({
         ...prev,
@@ -46,6 +48,10 @@ export const ModifyForm = ({
     setEditForm(myInfo);
   }, [myInfo]);
 
+  useEffect(() => {
+    console.log(languages?.find((item) => item.id === editForm.language?.id)?.name);
+  }, [editForm.language]);
+
   return (
     <div className="flex gap-8">
       <div className="w-96 flex-shrink-0">
@@ -56,7 +62,9 @@ export const ModifyForm = ({
               width={150}
               height={150}
               src={
-                editForm.profileImageUrl ? editForm.profileImageUrl : '/icons/mypage/defaultImg.svg'
+                editForm.profileImage
+                  ? URL.createObjectURL(editForm.profileImage)
+                  : editForm.profileImageUrl || '/icons/mypage/defaultImg.svg'
               }
               onClick={() => {
                 handleImageClick();
@@ -150,9 +158,14 @@ export const ModifyForm = ({
               entireOption={false}
               option={languageList}
               title="언어선택"
-              value={String(editForm.language)}
+              // 선택된 value는 id로
+              value={editForm.language?.id ? String(editForm.language.id) : ''}
               setValue={(value) => {
-                setEditForm((prev) => ({ ...prev, language: Number(value) }));
+                const selectedLanguage = languages?.find((lang) => String(lang.id) === value);
+                setEditForm((prev) => ({
+                  ...prev,
+                  language: selectedLanguage || null,
+                }));
               }}
             />
           </div>
