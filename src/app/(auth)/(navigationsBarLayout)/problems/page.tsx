@@ -73,7 +73,7 @@ const FilterSelect = ({ children }: { children: ReactNode }) => {
 };
 
 const ProblemsList = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const difficultyOptions = [
     { label: 'LV1', value: 'LV1' },

@@ -51,7 +51,7 @@ export default function ProblemTable({
   totalPages: number;
 }) {
   const router = useRouter();
-  const [pageGroupStart, setPageGroupStart] = useState(1);
+  const [pageGroupStart, setPageGroupStart] = useState(0);
   const [myProblemsList, setMyProblemsList] = useState<number[]>([]);
   const { data: myProblems } = useSubmissionList();
   const { data: session } = useSession();
@@ -71,7 +71,8 @@ export default function ProblemTable({
   }, [currentPage]);
 
   const pageNumbers = useMemo(() => {
-    const end = Math.min(pageGroupStart + PAGE_LIMIT - 1, totalPages - 1); //-1한 이유는 현재 백에서 주는 totalPages가 +1되서 들어옴 예를들어 23페이지까지 데이터가 있으면 totalPages는 24로 들어옴
+    // API에서 totalPages를 "실제 페이지 수"로 맞춰온다고 가정
+    const end = Math.min(pageGroupStart + PAGE_LIMIT - 1, totalPages);
     return Array.from({ length: end - pageGroupStart + 1 }, (_, i) => pageGroupStart + i);
   }, [pageGroupStart, totalPages]);
 
@@ -86,24 +87,21 @@ export default function ProblemTable({
   //   setPageGroupStart((prev) => prev + PAGE_LIMIT);
   //   setCurrentPage(pageGroupStart + PAGE_LIMIT);
   // };
-
   const handleNextPage = () => {
-    console.log(totalPages);
-    if (currentPage + 1 < totalPages) {
+    if (currentPage < totalPages) {
       if (currentPage + PAGE_LIMIT > totalPages) {
-        setCurrentPage(totalPages - 1);
+        setCurrentPage(totalPages); // 마지막 페이지로 이동
       } else {
         setCurrentPage(currentPage + PAGE_LIMIT);
       }
     }
   };
+
   const handlePrevPage = () => {
     if (currentPage > 1) {
       if (currentPage - PAGE_LIMIT < 1) {
-        // 맨 앞 범위보다 작아지면 1로
         setCurrentPage(1);
       } else {
-        // 이전 구간의 "끝"으로 이동
         setCurrentPage(currentPage - (currentPage % PAGE_LIMIT || PAGE_LIMIT));
       }
     }
@@ -233,7 +231,7 @@ export default function ProblemTable({
               if (!isLoading) setCurrentPage(num);
             }}
             key={num}
-            label={num}
+            label={num + 1}
             className={`w-10 h-10 rounded-md flex items-center justify-center text-sm transition bg-[#6B6B6B] ${
               currentPage === num
                 ? 'bg-[#214d35] hover:bg-[#276e48] text-white border-[#214d35]'
