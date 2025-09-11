@@ -125,6 +125,7 @@ const ApiHelper = {
    * @returns {Promise<ApiResponse<T>>} API 응답
    */
   get: <T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> => {
+    console.log('twconfig', config);
     return request<T>(endpoint, {
       method: 'GET',
       ...defaultConfig,
