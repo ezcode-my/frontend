@@ -1,7 +1,5 @@
-import { getServerSession } from 'next-auth';
 import { IRequestConfig } from './interceptor.interface';
-import { getSession } from 'next-auth/react';
-import { authOptions } from '@/lib/authOptions';
+
 import Cookies from 'js-cookie';
 
 /**

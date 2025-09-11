@@ -2,7 +2,7 @@
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+
 import ApiHelper from '@/api/client/api';
 import { API_URL } from '@/api/constants/api.constants';
 import { useUserStore } from '@/entities/user/model/store';
@@ -25,7 +25,7 @@ const useLogin = (onLoginSuccess?: () => void) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   /** 로그인 에러 정보*/
-  const [errorMessage, setErrorMessage] = useState('');
+  // const [errorMessage, setErrorMessage] = useState('');
 
   /** 로그인 정보 변경 함수 */
   const handleChangeLoginInfo = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,9 +39,9 @@ const useLogin = (onLoginSuccess?: () => void) => {
   };
 
   /** 로그인 에러 함수 */
-  const handleSignInError = (pError: string) => {
-    setErrorMessage(pError);
-  };
+  // const handleSignInError = (pError: string) => {
+  //   setErrorMessage(pError);
+  // };
 
   /** 로그인 클릭 함수 */
   const handleSignInClick = async () => {
@@ -98,7 +98,7 @@ const useLogin = (onLoginSuccess?: () => void) => {
     handleSignInClick,
     handlePasswordVisible,
     isPasswordVisible,
-    errorMessage,
+    // errorMessage,
   };
 };
 

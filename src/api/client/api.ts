@@ -1,14 +1,13 @@
 import { BASE_URL } from '@/constants/env';
 import { IApiResponseFormat } from '../interceptor/interceptor.interface';
-import { getSession } from 'next-auth/react';
+
 import { responseInterceptor } from '../interceptor/response.interceptor';
 import { API_URL } from '../constants/api.constants';
 import {
   requestClientInterceptor,
   requestServerInterceptor,
 } from '../interceptor/request.interceptor';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/authOptions';
+
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';
 export type ReqType = 'client' | 'server';

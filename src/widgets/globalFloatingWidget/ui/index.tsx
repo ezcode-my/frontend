@@ -1,5 +1,5 @@
 'use client';
-import { useSession } from 'next-auth/react';
+
 import ChatDialogOpenButton from './ChatDialogOpenButton';
 import GameModalButton from '@/features/game/ui/GameButton';
 import { useCheckCharacterQuery } from '@/entities/game/model/query/game.query';
