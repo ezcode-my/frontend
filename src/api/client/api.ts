@@ -10,7 +10,7 @@ import {
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { redirect } from 'next/navigation';
-
+import Cookies from 'js-cookie';
 export type ReqType = 'client' | 'server';
 interface RequestConfig extends RequestInit {
   params?: Record<string, string>;
@@ -79,16 +79,15 @@ const request = async <T>(
     const response = await fetch(url, interceptedConfig);
 
     if (response.status === 401) {
-      const session =
-        config.reqType === 'server' ? await getServerSession(authOptions) : await getSession();
-      console.log('response  status', response.status);
-      console.log('session', session);
-      if (!session?.refreshToken) {
+      // const session =
+      //   config.reqType === 'server' ? await getServerSession(authOptions) : await getSession();
+
+      if (Cookies.get('refreshToken')) {
         redirect('/signin');
       }
 
       try {
-        const newAccessToken = await refreshToken(session?.refreshToken as string);
+        const newAccessToken = await refreshToken(Cookies.get('refreshToken') || '');
         const retryConfig = await (config.reqType === 'server'
           ? requestServerInterceptor({
               ...config,
@@ -127,6 +126,7 @@ const ApiHelper = {
    * @returns {Promise<ApiResponse<T>>} API 응답
    */
   get: <T>(endpoint: string, config?: RequestConfig): Promise<ApiResponse<T>> => {
+    console.log('twconfig', config);
     return request<T>(endpoint, {
       method: 'GET',
       ...defaultConfig,

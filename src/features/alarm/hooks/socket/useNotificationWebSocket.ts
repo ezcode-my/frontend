@@ -16,7 +16,8 @@ export default function useConnectAlarmWebSocket() {
   useEffect(() => {
     const fetchSession = async () => {
       const data = await getSession();
-      const rawToken = data?.accessToken || '';
+      // const rawToken = data?.accessToken || '';
+      const rawToken = localStorage.getItem('accessToken') || '';
       // "Bearer " 접두어 제거 (있을 때만)
       const cleanedToken = rawToken.startsWith('Bearer ') ? rawToken.slice(7) : rawToken;
       setAccessToken(cleanedToken);
