@@ -11,8 +11,6 @@ import { useLogoutMutation } from '@/entities/auth/model/mutation/auth.mutation'
 import Notifications from './Notifications';
 import { useUserStore } from '@/entities/user/model/store';
 
-import Cookies from 'js-cookie';
-import { useEffect, useState } from 'react';
 export default function AuthActions() {
   const router = useRouter();
   const { mutateAsync } = useLogoutMutation();
