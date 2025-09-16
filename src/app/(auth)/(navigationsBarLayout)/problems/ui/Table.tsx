@@ -7,7 +7,7 @@ import { SkeletonBox } from '@/shared/ui/loading-indicators';
 import { ProblemsContent } from '@/entities/problems/model/types';
 import { Button } from '@/shared/ui/button/Button';
 import { useSubmissionList } from '@/entities/mypage/model/query';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import { CheckCircle } from 'lucide-react';
 import Cookies from 'js-cookie'
 const PAGE_LIMIT = 15;
