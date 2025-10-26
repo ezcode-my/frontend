@@ -2,8 +2,7 @@
 import { API_CONSTANTS, API_URL } from '@/api/constants/api.constants';
 import { useSignUpMutation } from '@/entities/auth/model/mutation/auth.mutation';
 import { useState } from 'react';
-import { useAuthStore } from '../store/authSlice';
-import { useShallow } from 'zustand/shallow';
+
 import { toast } from 'sonner';
 import Cookies from 'js-cookie';
 import ApiHelper from "@/api/client/api";
@@ -17,11 +16,11 @@ import { useRouter } from "next/navigation";
 const useSignUp = () => {
     const { setUser } = useUserStore((state) => state);
     const router = useRouter()
-  const { setActiveTab } = useAuthStore(
-    useShallow((state) => ({
-      setActiveTab: state.setActiveTab,
-    }))
-  );
+  // const { setActiveTab } = useAuthStore(
+  //   useShallow((state) => ({
+  //     setActiveTab: state.setActiveTab,
+  //   }))
+  // );
   /** 로그인 Api 요청 mutation */
   const { mutateAsync } = useSignUpMutation();
 
