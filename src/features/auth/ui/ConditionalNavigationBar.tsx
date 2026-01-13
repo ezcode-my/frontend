@@ -5,7 +5,9 @@ import { usePathname } from 'next/navigation';
 export default function ConditionalNavigationBar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith('/admin') || false;
-  if (isAdminRoute) {
+  const isEmailVerifyRoute = pathname?.startsWith('/email-verify') || false;
+
+  if (isAdminRoute || isEmailVerifyRoute) {
     return children;
   }
   return (
