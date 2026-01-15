@@ -79,7 +79,7 @@ const useSocialLogin = (onLoginSuccess?: () => void) => {
 
   const handleSocialLogin = async (provider: 'github' | 'google') => {
     try {
-      window.location.href = `https://api.ezcode.my/oauth2/authorize/${provider}?redirect_uri=${process.env.NEXT_PUBLIC_BASE_URL}/signin`;
+      window.location.href = `https://api.ezcode.my/api/oauth2/authorize/${provider}?redirect_uri=${process.env.NEXT_PUBLIC_BASE_URL}/signin`;
     } catch (error) {
       console.error(error);
     }
