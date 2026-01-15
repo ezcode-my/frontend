@@ -16,16 +16,22 @@ export default function AdminLayout({
 
   useEffect(() => {
     if (isLoading) return;
+
     if (isError || error || !userInfo) {
-      router.back();
+      router.replace('/');
       return;
     }
+
     if (userInfo?.data?.result?.userRole !== 'ADMIN') {
-      router.back();
+      router.replace('/');
     }
   }, [userInfo, isError, error, isLoading, router]);
 
-  if (isLoading || isError || error || !userInfo || userInfo?.data?.result?.userRole !== 'ADMIN') {
+  if (isLoading) {
+    return null;
+  }
+
+  if (isError || error || !userInfo || userInfo?.data?.result?.userRole !== 'ADMIN') {
     return null;
   }
   return (
