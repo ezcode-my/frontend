@@ -10,7 +10,9 @@ export default function handleUnsavedSourceCode() {
     let unsavedSourceCode: UnsavedSourceCode | null = null;
     const stringifySourceCode = localStorage.getItem('unsavedSourceCode');
 
-    unsavedSourceCode = JSON.parse(stringifySourceCode || '');
+    if (stringifySourceCode) {
+      unsavedSourceCode = JSON.parse(stringifySourceCode);
+    }
 
     const setUnsavedSourceCode = (sourceCodeData: UnsavedSourceCode) => {
       const stringifySourceCode = JSON.stringify(sourceCodeData);
