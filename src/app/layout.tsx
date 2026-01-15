@@ -11,8 +11,22 @@ import MobileBlockUI from '@/shared/ui/moblieBlockUI/MoblieBlockUI';
 import ConditionalNavigationBar from '@/features/auth/ui/ConditionalNavigationBar';
 
 export const metadata: Metadata = {
-  title: 'EZ-CODE - 코딩 테스트',
+  title: {
+    default: 'EZ-CODE - 코딩 테스트 플랫폼',
+    template: '%s | EZ-CODE',
+  },
   description: 'EZ-CODE 코딩 테스트 플랫폼',
+  metadataBase: new URL('https://ezcode.my'),
+  openGraph: {
+    type: 'website',
+    url: 'https://ezcode.my',
+    title: 'EZ-CODE - 코딩 테스트 플랫폼',
+    description: 'EZ-CODE - 코딩 테스트 플랫폼',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: '/favicon.svg',
   },
