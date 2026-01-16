@@ -22,8 +22,8 @@ interface TerminalPanelProps {
   setMode: (mode: Mode) => void;
   mode: Mode;
   sourceCodeData: ISourceCode;
-  draftVersion: number;
   setDraftVersion: (version: number) => void;
+  draftVersionRef: React.RefObject<number>;
 }
 
 export default function TerminalPanel({
@@ -31,8 +31,8 @@ export default function TerminalPanel({
   setMode,
   mode,
   sourceCodeData,
-  draftVersion,
   setDraftVersion,
+  draftVersionRef,
 }: TerminalPanelProps) {
   const [isPanelButtonHovered, setIsPanelButtonHovered] = useState({
     review: false,
@@ -67,15 +67,16 @@ export default function TerminalPanel({
       authGuardTrigger();
       return;
     }
-    const newVersion = saveDraft({
+    saveDraft({
       problemId: Number(problemId),
       languageId: sourceCodeData.languageId,
       code: sourceCodeData.sourceCode,
-      version: draftVersion,
+      version: draftVersionRef.current,
+    }).then((newVersion) => {
+      if (typeof newVersion === 'number') {
+        setDraftVersion(newVersion);
+      }
     });
-    if (typeof newVersion === 'number') {
-      setDraftVersion(newVersion);
-    }
     clearResults();
     mutateAsync({ ...sourceCodeData, sessionKey: submitPrepareData.sessionKey || '' });
     setMode('result');
