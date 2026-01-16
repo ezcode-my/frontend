@@ -13,10 +13,10 @@ export default function useWithDraw() {
 
   /** 회원 탈퇴 클릭 */
   const handleWithDrawClick = async () => {
+    router.push('/');
     const res = await ApiHelper.delete(API_URL.AUTH.WITHDRAW);
     if (res.data.status === 200) {
       toast.success('회원 탈퇴가 완료되었습니다.');
-      router.push('/');
       Cookies.remove('refreshToken');
       Cookies.remove('accessToken');
       setUser(null);

@@ -34,11 +34,11 @@ export const useLogoutMutation = () => {
   const router = useRouter();
   return useMutation({
     mutationFn: async () => {
+      router.push('/');
       const response = await ApiHelper.post<string>(API_URL.AUTH.LOGOUT, { reqType: 'client' });
       return response;
     },
     onSuccess: async () => {
-      console.log('로그아웃');
       // await signOut({ redirect: false, callbackUrl: '/' });
       Cookies.remove('refreshToken');
       Cookies.remove('accessToken');
