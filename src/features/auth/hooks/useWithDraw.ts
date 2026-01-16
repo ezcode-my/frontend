@@ -16,14 +16,24 @@ export default function useWithDraw() {
     router.push('/');
     const res = await ApiHelper.delete(API_URL.AUTH.WITHDRAW);
     if (res.data.status === 200) {
-      toast.success('회원 탈퇴가 완료되었습니다.');
-      Cookies.remove('refreshToken');
-      Cookies.remove('accessToken');
+      queryClient.removeQueries({ queryKey: ['my-info'] });
+      queryClient.removeQueries({ queryKey: ['my-ranking'] });
+      queryClient.removeQueries({ queryKey: ['my-review'] });
+
       setUser(null);
       queryClient.invalidateQueries({ queryKey: ['my-info'] });
       queryClient.invalidateQueries({ queryKey: ['my-ranking'] });
       queryClient.invalidateQueries({ queryKey: ['my-review'] });
       localStorage.clear();
+
+      Cookies.remove('refreshToken');
+      Cookies.remove('accessToken');
+
+      toast.success('회원 탈퇴가 완료되었습니다.');
+      router.replace('/');
+      // queryClient.invalidateQueries({ queryKey: ['my-info'] });
+      // queryClient.invalidateQueries({ queryKey: ['my-ranking'] });
+      // queryClient.invalidateQueries({ queryKey: ['my-review'] });
     } else {
       toast.error('회원 탈퇴에 실패했습니다. 잠시후 다시 시도해주세요.');
     }

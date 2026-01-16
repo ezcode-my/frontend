@@ -18,7 +18,7 @@ const Mypage = () => {
   } as const;
 
   // 소셜로그인은 비밀번호 변경 탭 안보이게
-  const tabComponents = data?.data.result.userAuthTypes.includes('EMAIL')
+  const tabComponents = data?.data?.result?.userAuthTypes?.includes('EMAIL')
     ? { ...baseTabs, password: <ChangePassword /> }
     : baseTabs;
   return (
