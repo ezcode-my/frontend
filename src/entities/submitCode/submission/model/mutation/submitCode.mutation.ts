@@ -42,6 +42,7 @@ export const useISubmissionForReviewMutation = (problemId: ProblemId) => {
 //작성중인 코드 저장
 export const useSaveDraftData = (hasAccessToken: boolean) => {
   return useMutation({
+    mutationKey: ['save-draft'],
     mutationFn: async (saveDraftData: ISaveDraftRequest) => {
       if (!hasAccessToken) return null;
       try {

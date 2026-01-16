@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CodeEditor from './CodeEditor';
 import TerminalOutput from './TerminalOutput';
 import TerminalPanel from './TerminalPanel';
@@ -23,10 +23,15 @@ export default function ProblemWorksSection({ problemId }: IProblemWorksSectionP
   const { user } = useUserStore((state) => state);
   const { data: draftData } = useGetDraftData(problemId, sourceCodeData.languageId);
   const [unsavedSourceCode] = handleUnsavedSourceCode();
+  const draftVersionRef = useRef(draftVersion);
 
   const handleChangeSourceCodeData = (key: string, value: string | number | boolean) => {
     setSourceCodeData((prev) => ({ ...prev, [key]: value }));
   };
+
+  useEffect(() => {
+    draftVersionRef.current = draftVersion;
+  }, [draftVersion]);
 
   useEffect(() => {
     if (!user) return;
@@ -48,7 +53,7 @@ export default function ProblemWorksSection({ problemId }: IProblemWorksSectionP
           languageId: draftData.languageId,
           sourceCode: draftData.code,
         });
-        setDraftVersion(draftData.version);
+        handleChangeDraftVersion(draftData.version);
       } else {
         // Draft가 없으면 해당 언어의 템플릿 코드 사용
         const templateData = fetchSourceCodeData(targetLanguageId);
@@ -62,8 +67,8 @@ export default function ProblemWorksSection({ problemId }: IProblemWorksSectionP
     }
   }, [draftData, user?.language?.id, sourceCodeData.languageId, isInitialLoad]);
 
-  const handleChangeDraftVersion = (version: number) => {
-    setDraftVersion(version);
+  const handleChangeDraftVersion = (newVersion: number) => {
+    setDraftVersion((prev) => (prev === 0 ? newVersion : Math.max(prev, newVersion)));
   };
 
   return (
@@ -72,17 +77,17 @@ export default function ProblemWorksSection({ problemId }: IProblemWorksSectionP
         problemId={problemId}
         sourceCodeData={sourceCodeData}
         onChangeSourceCodeData={handleChangeSourceCodeData}
-        draftVersion={draftVersion}
         setDraftVersion={handleChangeDraftVersion}
+        draftVersionRef={draftVersionRef}
       />
-      <div className="flex flex-1 flex-col bg-secondary-background rounded-[10px] shadow-lg ">
+      <div className="flex flex-1 flex-col bg-secondary-background rounded-[10px] shadow-lg">
         <TerminalPanel
           problemId={problemId}
           sourceCodeData={sourceCodeData}
           setMode={(mode) => setMode(mode)}
           mode={mode}
-          draftVersion={draftVersion}
           setDraftVersion={handleChangeDraftVersion}
+          draftVersionRef={draftVersionRef}
         />
         <TerminalOutput mode={mode} sourceCodeData={sourceCodeData} problemId={problemId} />
       </div>

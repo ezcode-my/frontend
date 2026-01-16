@@ -12,25 +12,28 @@ import { ISourceCode } from '@/entities/submitCode';
 import { useDebounce } from '@/shared/util/debounced';
 import { useSaveDraftData } from '@/entities/submitCode/submission/model/mutation/submitCode.mutation';
 import Cookies from 'js-cookie';
+import { useIsMutating } from '@tanstack/react-query';
+import { RefObject } from 'react';
 
 interface ICodeEditorProps {
   onChangeSourceCodeData: (key: 'sourceCode' | 'languageId', value: number | string) => void;
   sourceCodeData: ISourceCode;
   problemId: string;
-  draftVersion: number;
   setDraftVersion: (version: number) => void;
+  draftVersionRef: RefObject<number>;
 }
 export default function CodeEditor({
   onChangeSourceCodeData,
   sourceCodeData,
   problemId,
-  draftVersion,
   setDraftVersion,
+  draftVersionRef,
 }: ICodeEditorProps) {
   const { languageId } = sourceCodeData;
   const { debouncedFn, debounceStatus } = useDebounce(3000);
   const accessToken = Cookies.get('accessToken');
   const { mutateAsync: saveDraft } = useSaveDraftData(!!accessToken);
+  const isSaving = useIsMutating({ mutationKey: ['save-draft'] }) > 0;
 
   const handleChangeLanguage = (value: string) => {
     const languageId = Number(value);
@@ -40,18 +43,20 @@ export default function CodeEditor({
 
   const handleChangeCode = (value: string) => {
     onChangeSourceCodeData('sourceCode', value);
-    debouncedFn(() =>
+
+    debouncedFn(() => {
+      if (isSaving) return;
       saveDraft({
         problemId: Number(problemId),
         languageId: sourceCodeData.languageId,
-        code: sourceCodeData.sourceCode,
-        version: draftVersion,
+        code: value,
+        version: draftVersionRef.current,
       }).then((newVersion) => {
         if (typeof newVersion === 'number') {
           setDraftVersion(newVersion);
         }
-      })
-    );
+      });
+    });
   };
 
   return (
