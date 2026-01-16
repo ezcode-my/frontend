@@ -21,9 +21,6 @@ export default function useWithDraw() {
       queryClient.removeQueries({ queryKey: ['my-review'] });
 
       setUser(null);
-      queryClient.invalidateQueries({ queryKey: ['my-info'] });
-      queryClient.invalidateQueries({ queryKey: ['my-ranking'] });
-      queryClient.invalidateQueries({ queryKey: ['my-review'] });
       localStorage.clear();
 
       Cookies.remove('refreshToken');
